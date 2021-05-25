@@ -1,0 +1,16 @@
+{
+	"name" : "com.rito.rito-editor-gui",
+	"version": "1.0.0",
+	"displayName" :"Rito Editor GUI",
+	"description" :"Rito Editor GUI",
+	"unity": "2019.4",
+	"dependencies": {},
+	"keywords": ["rito","unity","editorplugin"],
+	"author":
+	{
+		"name":"Rito",
+		"email":"ghdtkals15@gmail.com",
+		"url":"https://github.com/rito15"
+	},
+	"category": "Unity"
+}
