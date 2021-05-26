@@ -34,6 +34,9 @@ namespace Rito.EditorPlugins.Demo
             private double[] doubleValues = new double[MaxLength];
             private string[] stringValues = new string[MaxLength];
             private bool[] boolValues = new bool[MaxLength];
+            private Material materialValue;
+            private GameObject gameObjectValue;
+            private UnityEngine.Object objectValue;
             private int[] intDropdownList = { 1, 2, 3, 4, 5, 6 };
             private float[] floatDropdownList = { 0.1f, 0.2f, 0.3f, 0.4f, 0.5f };
             private string[] stringDropdownList = { "String 1", "String 2", "String 3",  };
@@ -92,10 +95,10 @@ namespace Rito.EditorPlugins.Demo
                 boolField1.labelColor = Color.red;
                 boolField1.labelFontStyle = FontStyle.Bold;
 
-                toggle1.toggleColor = Color.blue * 5f;
+                toggle1.color = Color.blue * 5f;
 
                 toggleButton1.normalButtonColor = Color.red * 2f;
-                toggleButton1.fontStyle = FontStyle.Bold;
+                toggleButton1.normalFontStyle = FontStyle.Bold;
                 toggleButton1.textAlignment = TextAnchor.UpperRight;
                 toggleButton1.pressedTextColor = Color.yellow;
                 toggleButton1.pressedButtonColor = Color.red * 2f;
@@ -103,17 +106,16 @@ namespace Rito.EditorPlugins.Demo
 
             public override void OnInspectorGUI()
             {
-                REG.Options
+                REG.Options 
                     .SetMarginLeft(12f)
                     .SetMarginRight(24f)
                     .SetMarginTop(8f)
                     .SetMarginBottom(4f)
                     .DebugOn(true)
                     .DebugAll(true)
+                    .AllowTooltip(true)
                     .SetDebugRectColor(Color.cyan)
                     .Init();
-
-                InitStyles();
 
                 int i = 0, f = 0, d = 0, s = 0, b = 0;
 
@@ -124,12 +126,14 @@ namespace Rito.EditorPlugins.Demo
 
                 Button.Default
                     .SetData("Default Button")
+                    .SetTooltip("Default Button")
                     .DrawLayout();
 
                 boolValues[b] =
                     ToggleButton.Default
-                        .SetData("Toggle Button", boolValues[b++])
-                        .DrawLayout();
+                    .SetData("Toggle Button", boolValues[b++])
+                    .SetTooltip("Toggle Button")
+                    .DrawLayout();
 
                 #endregion
 
@@ -142,47 +146,56 @@ namespace Rito.EditorPlugins.Demo
 
                 Label.Default
                     .SetData("Default Label")
+                    .SetTooltip("Default Label")
                     .DrawLayout();
 
                 intValues[i] = 
                     IntField.Default
-                        .SetData("Default Int", intValues[i++])
-                        .DrawLayout();
+                    .SetData("Default Int", intValues[i++])
+                    .SetTooltip("Default Int")
+                    .DrawLayout();
 
                 floatValues[f] = 
                     FloatField.Default
-                        .SetData("Default Float", floatValues[f++])
-                        .DrawLayout();
+                    .SetData("Default Float", floatValues[f++])
+                    .SetTooltip("Default Float")
+                    .DrawLayout();
 
                 doubleValues[d] = 
                     DoubleField.Default
-                        .SetData("Default Double", doubleValues[d++])
-                        .DrawLayout();
+                    .SetData("Default Double", doubleValues[d++])
+                    .SetTooltip("Default Double")
+                    .DrawLayout();
 
                 stringValues[s] = 
                     StringField.Default
-                        .SetData("Default String", stringValues[s++], "Placeholder")
-                        .DrawLayout();
+                    .SetData("Default String", stringValues[s++], "Placeholder")
+                    .SetTooltip("Default String")
+                    .DrawLayout();
 
                 stringValues[s] =
                     TextField.Default
-                        .SetData(stringValues[s++], "Input here..")
-                        .DrawLayout();
+                    .SetData(stringValues[s++], "Input here..")
+                    .SetTooltip("Default TextField", 120f)
+                    .DrawLayout();
 
                 boolValues[b] =
                     BoolField.Default
-                        .SetData("Default Bool", boolValues[b++])
-                        .DrawLayout();
+                    .SetData("Default Bool", boolValues[b++])
+                    .SetTooltip("Default Bool")
+                    .DrawLayout();
 
                 boolValues[b] =
                     BoolField.Default
-                        .SetData("Default Bool(Left)", boolValues[b++], true, 0.4f)
-                        .DrawLayout();
+                    .SetData("Default Bool(Left)", boolValues[b++], true, 0.4f)
+                    .SetTooltip("Default Bool(L)")
+                    .DrawLayout();
 
                 boolValues[b] =
                     Toggle.Default
-                        .SetData(boolValues[b++])
-                        .DrawLayout();
+                    .SetData(boolValues[b++])
+                    .SetTooltip("Default Toggle")
+                    .DrawLayout();
 
                 #endregion
 
@@ -195,20 +208,48 @@ namespace Rito.EditorPlugins.Demo
 
                 intValues[i] = 
                     IntSlider.Default
-                        .SetData("Int Slider", intValues[i++], 0, 10)
-                        .DrawLayout();
-
-                IntSlider.Default.DrawTooltip("Int Slider", 60f, 20f);
+                    .SetData("Int Slider", intValues[i++], 0, 10)
+                    .SetTooltip("Int Slider", 60f, 20f)
+                    .DrawLayout();
 
                 floatValues[f] =
                     FloatSlider.Default
-                        .SetData("Float Slider", floatValues[f++], 0, 10)
-                        .DrawLayout();
+                    .SetData("Float Slider", floatValues[f++], 0, 10)
+                    .SetTooltip("Float Slider")
+                    .DrawLayout();
 
                 doubleValues[d] =
                     DoubleSlider.Default
-                        .SetData("Double Slider", doubleValues[d++], 0, 10)
-                        .DrawLayout();
+                    .SetData("Double Slider", doubleValues[d++], 0, 10)
+                    .SetTooltip("Double Slider")
+                    .DrawLayout();
+
+                #endregion
+
+                REG.Space(8f);
+
+                /***********************************************************************
+                *                               Object Fields
+                ***********************************************************************/
+                #region .
+
+                materialValue = 
+                    ObjectField<Material>.Default
+                    .SetData("Material Field", materialValue)
+                    .SetTooltip("Material Field", 120f)
+                    .DrawLayout();
+                
+                gameObjectValue = 
+                    ObjectField<GameObject>.Default
+                    .SetData("GameObject Field", gameObjectValue)
+                    .SetTooltip("GameObject Field", 120f)
+                    .DrawLayout();
+                
+                objectValue = 
+                    ObjectField<UnityEngine.Object>.Default
+                    .SetData("Object Field", objectValue)
+                    .SetTooltip("Object Field", 120f)
+                    .DrawLayout();
 
                 #endregion
 
@@ -221,10 +262,12 @@ namespace Rito.EditorPlugins.Demo
 
                 Box.Default
                     .SetData(1f)
+                    .SetTooltip("Default Box")
                     .Draw(0f, 1f, -1f, 40f, -1f, 1f);
 
                 Label.Default
                     .SetData("Box")
+                    .SetTooltip("Label 1")
                     .DrawLayout();
 
                 Label.Default
@@ -245,6 +288,7 @@ namespace Rito.EditorPlugins.Demo
 
                 HeaderBox.Default
                     .SetData("Header", outlineWidth, 4f)
+                    .SetTooltip("Header Box")
                     .Draw(0f, 1f, -1f, headerHeight, 40f, -2f, 2f);
 
                 REG.Space(headerHeight + outlineWidth);
@@ -263,6 +307,7 @@ namespace Rito.EditorPlugins.Demo
 
                 HeaderBox.Default
                     .SetData("Header", outlineWidth)
+                    .SetTooltip("Header Box(Outlined)", 160f)
                     .DrawLayout(2, 1f);
 
                 REG.Space(outlineWidth);
@@ -289,6 +334,7 @@ namespace Rito.EditorPlugins.Demo
                 boolValues[b] = 
                 FoldoutHeaderBox.Default
                     .SetData(boolValues[b], "Header (Foldout)", outlineWidth, 2f)
+                    .SetTooltip("Foldout Header Box(Outlined)", 200f)
                     .DrawLayout(2, 0f);
 
                 if (boolValues[b])
@@ -303,7 +349,7 @@ namespace Rito.EditorPlugins.Demo
                         .SetData("Content 2")
                         .DrawLayout();
 
-                    Label.Default.DrawTooltip("Label Tooltip", 100f, 20f);
+                    Label.Default.SetTooltip("Label Tooltip", 100f, 20f);
                 }
                 b++;
 
@@ -312,39 +358,50 @@ namespace Rito.EditorPlugins.Demo
                 REG.Space(8f);
 
                 /***********************************************************************
-                *                           Help Boxes
+                *                               Help Boxes
                 ***********************************************************************/
                 #region .
 
-                HelpBox.Default.SetData("Help Box 1", MessageType.Info).DrawLayout();
-                HelpBox.Default.DrawTooltip("Help Box Tooltip 1", 120f, 20f);
+                HelpBox.Default
+                    .SetData("Help Box 1", MessageType.Info)
+                    .SetTooltip("Help Box (Info)", 120f)
+                    .DrawLayout();
 
-                HelpBox.Default.SetData("Help Box 2", MessageType.Warning).DrawLayout();
-                HelpBox.Default.DrawTooltip("Help Box Tooltip 2", 120f, 20f);
+                HelpBox.Default
+                    .SetData("Help Box 2", MessageType.Warning)
+                    .SetTooltip("Help Box (Warning)", 120f)
+                    .DrawLayout();
 
-                HelpBox.Default.SetData("Help Box 3", MessageType.Error).DrawLayout();
-                HelpBox.Default.DrawTooltip("Help Box Tooltip 3", 120f, 20f);
+                HelpBox.Default
+                    .SetData("Help Box 3", MessageType.Error)
+                    .SetTooltip("Help Box (Error)", 120f)
+                    .DrawLayout();
 
                 #endregion
 
+                REG.Space(8f);
+
                 /***********************************************************************
-                *                               Dropdown
+                *                               Dropdowns
                 ***********************************************************************/
                 #region .
 
                 intValues[i] = 
                 Dropdown<int>.Default
                     .SetData("Int Dropdown", intDropdownList, intValues[i++])
+                    .SetTooltip("Int Dropdown", 120f)
                     .DrawLayout();
 
                 intValues[i] = 
                 Dropdown<float>.Default
                     .SetData("Float Dropdown", floatDropdownList, intValues[i++])
+                    .SetTooltip("Float Dropdown", 120f)
                     .DrawLayout();
 
                 intValues[i] = 
                 Dropdown<string>.Default
                     .SetData("String Dropdown", stringDropdownList, intValues[i++])
+                    .SetTooltip("String Dropdown", 120f)
                     .DrawLayout();
 
                 #endregion

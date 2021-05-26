@@ -48,19 +48,24 @@ namespace Rito.EditorPlugins
             /// <summary> 렉트 디버그 사용 가능 여부 설정 </summary>
             public OptionBuilder DebugOn(bool value)
             {
-                DrawingElement.debugOn = value;
+                REG.ShowDebugToggle = value;
                 return this;
             }
             /// <summary> 모든 렉트에 자동 디버그 </summary>
             public OptionBuilder DebugAll(bool value)
             {
-                DrawingElement.debugAll = value;
+                REG.DebugAllRect = value;
                 return this;
             }
             /// <summary> 디버그 렉트 색상 설정 </summary>
             public OptionBuilder SetDebugRectColor(in Color color)
             {
-                DrawingElement.debugColor = color;
+                REG.DebugColor = color;
+                return this;
+            }
+            public OptionBuilder AllowTooltip(bool value)
+            {
+                REG.ShowTooltip = value;
                 return this;
             }
             public void Init()
@@ -72,7 +77,7 @@ namespace Rito.EditorPlugins
                 REG.CurrentY = marginTop;
 
                 // 인스펙터 상단부에 디버그 On/Off 토글 생성
-                if (DrawingElement.debugOn)
+                if (REG.ShowDebugToggle)
                 {
                     Rect toggleRect = new Rect(marginLeft, 2f, 120f, 20f);
                     Rect line = new Rect(0f, 0f, EditorGUIUtility.currentViewWidth, 24f);
@@ -80,11 +85,11 @@ namespace Rito.EditorPlugins
                     EditorGUI.DrawRect(line, Color.black);
                     using (var cc = new EditorGUI.ChangeCheckScope())
                     {
-                        DrawingElement.debugOnOption =
-                            EditorGUI.ToggleLeft(toggleRect, "Show Debug Rect", DrawingElement.debugOnOption);
+                        REG.DebugOn =
+                            EditorGUI.ToggleLeft(toggleRect, "Show Debug Rect", REG.DebugOn);
 
                         if(cc.changed)
-                            PlayerPrefs.SetInt(DrawingElement.DebugOnPrefName, DrawingElement.debugOnOption ? 1 : 0);
+                            PlayerPrefs.SetInt(REG.DebugOnPrefName, REG.DebugOn ? 1 : 0);
                     }
                     REG.Space(24f);
                 }
@@ -93,7 +98,35 @@ namespace Rito.EditorPlugins
 
         #endregion
         /***********************************************************************
-        *                               Private Fields
+        *                               Debug
+        ***********************************************************************/
+        #region .
+
+        /// <summary> 인스펙터 상단에 디버그 토글을 표시할지 여부 </summary>
+        public static bool ShowDebugToggle { get; private set; }
+
+        /// <summary> 디버그 토글로 제어 - 디버그 활성화 여부 결정 </summary>
+        public static bool DebugOn { get; private set; }
+
+        /// <summary> 모든 Rect 영역 디버그 표시 여부 </summary>
+        public static bool DebugAllRect { get; private set; }
+
+        /// <summary> 최종적으로 디버그 실행 가능 여부 </summary>
+        public static bool DebugActivated => ShowDebugToggle && DebugOn;
+
+        public static Color DebugColor { get; private set; } = Color.red;
+
+        public const string DebugOnPrefName = "Rito_EditorGUI_DebugOn";
+
+        [InitializeOnLoadMethod]
+        static void LoadPrefsData()
+        {
+            DebugOn = PlayerPrefs.GetInt(DebugOnPrefName) == 1;
+        }
+
+        #endregion
+        /***********************************************************************
+        *                               Fields, Properties
         ***********************************************************************/
         #region .
         private static float marginTop;
@@ -101,17 +134,13 @@ namespace Rito.EditorPlugins
         private static float marginRight;
         private static float marginBottom;
 
-        private static Dictionary<GUIStyle, GUIStyle> styleRecordDict = new Dictionary<GUIStyle, GUIStyle>();
-
-        #endregion
-        /***********************************************************************
-        *                               Fields, Properties
-        ***********************************************************************/
-        #region .
         /// <summary> OnInspectorGUI 최상단에서 .Init()까지 호출 </summary>
         public static OptionBuilder Options => OptionBuilder.Instance;
         public static float CurrentY { get; private set; }
         public static float ViewWidth { get; private set; }
+
+        /// <summary> 툴팁을 표시할 수 있는지 여부 </summary>
+        public static bool ShowTooltip { get; private set; } = true;
 
         public static List<OverlayTooltip> TooltipList { get; } = new List<OverlayTooltip>();
 
@@ -158,24 +187,36 @@ namespace Rito.EditorPlugins
 
             // 컨트롤 없는 부분에 클릭할 경우 강제로 포커스 제거
             if (Event.current.type == EventType.MouseDown)
-                EditorGUI.FocusTextInControl("");
-
-            // 매 에디터 프레임마다 다시 그려주기
-            if (Event.current.type == EventType.Layout)
-                editor.Repaint();
-
-            Vector2 mPos = Event.current.mousePosition;
-
-            foreach (var tooltip in TooltipList)
             {
-                if (tooltip.mouseTargetRect.Contains(mPos))
+                EditorGUI.FocusTextInControl("");
+            }
+
+            if (ShowTooltip)
+            {
+                // 매 에디터 프레임마다 다시 그려주기
+                if (Event.current.type == EventType.Layout)
                 {
-                    GUI.Box(new Rect(mPos.x, mPos.y, tooltip.width, tooltip.height), tooltip.text);
-                    //editor.Repaint();
+                    editor.Repaint();
+                }
+
+                Vector2 mPos = Event.current.mousePosition;
+
+                // 툴팁 영역이 겹칠 경우, 더 나중에 그려진 컨트롤의 툴팁 표시
+                for(int i = TooltipList.Count - 1; i >= 0; i--)
+                {
+                    OverlayTooltip tooltip = TooltipList[i];
+
+                    if (tooltip.rect.Contains(mPos))
+                    {
+                        GUI.Box(new Rect(mPos.x + 10f, mPos.y, tooltip.width, tooltip.height), tooltip.text);
+                        //editor.Repaint();
+                        break;
+                    }
                 }
             }
 
-            TooltipList.Clear();
+            if(TooltipList.Count > 0)
+                TooltipList.Clear();
         }
 
         #endregion
