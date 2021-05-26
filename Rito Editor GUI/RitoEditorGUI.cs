@@ -25,6 +25,14 @@ namespace Rito.EditorPlugins
             public static OptionBuilder Instance { get; } = new OptionBuilder();
             private OptionBuilder() { }
 
+            public OptionBuilder SetMargins(float left = 0f, float right = 0f, float top = 0f, float bottom = 0f)
+            {
+                REG.marginLeft = left;
+                REG.marginRight = right;
+                REG.marginTop = top;
+                REG.marginBottom = bottom;
+                return this;
+            }
             public OptionBuilder SetMarginTop(float value)
             {
                 REG.marginTop = value;
@@ -93,6 +101,12 @@ namespace Rito.EditorPlugins
                     }
                     REG.Space(24f);
                 }
+
+                // Finalize() 여부 검사
+                if (initAndFinalizationCount < 2f)
+                    initAndFinalizationCount++;
+                else
+                    Debug.LogError("OnInspector() 하단에서 RitoEditorGUI.Finalize(this)를 호출하세요.");
             }
         }
 
@@ -117,6 +131,8 @@ namespace Rito.EditorPlugins
         public static Color DebugColor { get; private set; } = Color.red;
 
         public const string DebugOnPrefName = "Rito_EditorGUI_DebugOn";
+
+        private static int initAndFinalizationCount = 0;
 
         [InitializeOnLoadMethod]
         static void LoadPrefsData()
@@ -217,6 +233,12 @@ namespace Rito.EditorPlugins
 
             if(TooltipList.Count > 0)
                 TooltipList.Clear();
+
+            // Init() 여부 검사
+            if(initAndFinalizationCount == 0)
+                Debug.LogError("OnInspectorGUI() 상단에서 RItoEditorGUI.Options.Init()을 호출하세요.");
+            else
+                initAndFinalizationCount = 0;
         }
 
         #endregion

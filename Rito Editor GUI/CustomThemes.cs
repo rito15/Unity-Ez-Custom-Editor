@@ -13,47 +13,58 @@ namespace Rito.EditorPlugins
     {
         public static Label White { get; } = new Label
         {
-            textColor = Color.white
+            textColor = RColor.Normal.White
         };
         public static Label Gray { get; } = new Label
         {
+            textColor = RColor.Normal.Gray
         };
         public static Label Black { get; } = new Label
         {
+            textColor = RColor.Normal.Black
         };
         public static Label Red { get; } = new Label
         {
+            textColor = RColor.Normal.Red
         };
         public static Label Blue { get; } = new Label
         {
+            textColor = RColor.Normal.Blue
         };
         public static Label Green { get; } = new Label
         {
+            textColor = RColor.Normal.Green
         };
         public static Label Yellow { get; } = new Label
         {
+            textColor = RColor.Normal.Yellow
         };
         public static Label Orange { get; } = new Label
         {
+            textColor = RColor.Normal.Orange
         };
         public static Label Brown { get; } = new Label
         {
+            textColor = RColor.Normal.Brown
         };
         public static Label Cyan { get; } = new Label
         {
+            textColor = RColor.Normal.Cyan
         };
-        public static Label Purple { get; } = new Label
+        public static Label Violet { get; } = new Label
         {
+            textColor = RColor.Normal.Violet
         };
         public static Label Pink { get; } = new Label
         {
+            textColor = RColor.Normal.Pink
         };
     }
     public partial class Button
     {
         public static Button White { get; } = new Button
         {
-            textColor = Color.white
+            textColor = RColor.Normal.White
         };
         public static Button Gray { get; } = new Button
         {
@@ -82,7 +93,7 @@ namespace Rito.EditorPlugins
         public static Button Cyan { get; } = new Button
         {
         };
-        public static Button Purple { get; } = new Button
+        public static Button Violet { get; } = new Button
         {
         };
         public static Button Pink { get; } = new Button
@@ -121,7 +132,7 @@ namespace Rito.EditorPlugins
         public static ToggleButton Cyan { get; } = new ToggleButton
         {
         };
-        public static ToggleButton Purple { get; } = new ToggleButton
+        public static ToggleButton Violet { get; } = new ToggleButton
         {
         };
         public static ToggleButton Pink { get; } = new ToggleButton
@@ -160,7 +171,7 @@ namespace Rito.EditorPlugins
         public static IntField Cyan { get; } = new IntField
         {
         };
-        public static IntField Purple { get; } = new IntField
+        public static IntField Violet { get; } = new IntField
         {
         };
         public static IntField Pink { get; } = new IntField
@@ -199,7 +210,7 @@ namespace Rito.EditorPlugins
         public static FloatField Cyan { get; } = new FloatField
         {
         };
-        public static FloatField Purple { get; } = new FloatField
+        public static FloatField Violet { get; } = new FloatField
         {
         };
         public static FloatField Pink { get; } = new FloatField
@@ -238,7 +249,7 @@ namespace Rito.EditorPlugins
         public static DoubleField Cyan { get; } = new DoubleField
         {
         };
-        public static DoubleField Purple { get; } = new DoubleField
+        public static DoubleField Violet { get; } = new DoubleField
         {
         };
         public static DoubleField Pink { get; } = new DoubleField
@@ -277,7 +288,7 @@ namespace Rito.EditorPlugins
         public static StringField Cyan { get; } = new StringField
         {
         };
-        public static StringField Purple { get; } = new StringField
+        public static StringField Violet { get; } = new StringField
         {
         };
         public static StringField Pink { get; } = new StringField
@@ -316,7 +327,7 @@ namespace Rito.EditorPlugins
         public static TextField Cyan { get; } = new TextField
         {
         };
-        public static TextField Purple { get; } = new TextField
+        public static TextField Violet { get; } = new TextField
         {
         };
         public static TextField Pink { get; } = new TextField
@@ -355,7 +366,7 @@ namespace Rito.EditorPlugins
         public static BoolField Cyan { get; } = new BoolField
         {
         };
-        public static BoolField Purple { get; } = new BoolField
+        public static BoolField Violet { get; } = new BoolField
         {
         };
         public static BoolField Pink { get; } = new BoolField
@@ -394,7 +405,7 @@ namespace Rito.EditorPlugins
         public static Toggle Cyan { get; } = new Toggle
         {
         };
-        public static Toggle Purple { get; } = new Toggle
+        public static Toggle Violet { get; } = new Toggle
         {
         };
         public static Toggle Pink { get; } = new Toggle
@@ -433,7 +444,7 @@ namespace Rito.EditorPlugins
         public static ObjectField<T> Cyan { get; } = new ObjectField<T>
         {
         };
-        public static ObjectField<T> Purple { get; } = new ObjectField<T>
+        public static ObjectField<T> Violet { get; } = new ObjectField<T>
         {
         };
         public static ObjectField<T> Pink { get; } = new ObjectField<T>
@@ -472,7 +483,7 @@ namespace Rito.EditorPlugins
         public static IntSlider Cyan { get; } = new IntSlider
         {
         };
-        public static IntSlider Purple { get; } = new IntSlider
+        public static IntSlider Violet { get; } = new IntSlider
         {
         };
         public static IntSlider Pink { get; } = new IntSlider
@@ -511,7 +522,7 @@ namespace Rito.EditorPlugins
         public static FloatSlider Cyan { get; } = new FloatSlider
         {
         };
-        public static FloatSlider Purple { get; } = new FloatSlider
+        public static FloatSlider Violet { get; } = new FloatSlider
         {
         };
         public static FloatSlider Pink { get; } = new FloatSlider
@@ -550,7 +561,7 @@ namespace Rito.EditorPlugins
         public static DoubleSlider Cyan { get; } = new DoubleSlider
         {
         };
-        public static DoubleSlider Purple { get; } = new DoubleSlider
+        public static DoubleSlider Violet { get; } = new DoubleSlider
         {
         };
         public static DoubleSlider Pink { get; } = new DoubleSlider
@@ -589,7 +600,7 @@ namespace Rito.EditorPlugins
         public static Box Cyan { get; } = new Box
         {
         };
-        public static Box Purple { get; } = new Box
+        public static Box Violet { get; } = new Box
         {
         };
         public static Box Pink { get; } = new Box
@@ -628,7 +639,7 @@ namespace Rito.EditorPlugins
         public static HeaderBox Cyan { get; } = new HeaderBox
         {
         };
-        public static HeaderBox Purple { get; } = new HeaderBox
+        public static HeaderBox Violet { get; } = new HeaderBox
         {
         };
         public static HeaderBox Pink { get; } = new HeaderBox
@@ -667,7 +678,7 @@ namespace Rito.EditorPlugins
         public static FoldoutHeaderBox Cyan { get; } = new FoldoutHeaderBox
         {
         };
-        public static FoldoutHeaderBox Purple { get; } = new FoldoutHeaderBox
+        public static FoldoutHeaderBox Violet { get; } = new FoldoutHeaderBox
         {
         };
         public static FoldoutHeaderBox Pink { get; } = new FoldoutHeaderBox
@@ -706,7 +717,7 @@ namespace Rito.EditorPlugins
         public static HelpBox Cyan { get; } = new HelpBox
         {
         };
-        public static HelpBox Purple { get; } = new HelpBox
+        public static HelpBox Violet { get; } = new HelpBox
         {
         };
         public static HelpBox Pink { get; } = new HelpBox
@@ -745,7 +756,7 @@ namespace Rito.EditorPlugins
         public static Dropdown<T> Cyan { get; } = new Dropdown<T>
         {
         };
-        public static Dropdown<T> Purple { get; } = new Dropdown<T>
+        public static Dropdown<T> Violet { get; } = new Dropdown<T>
         {
         };
         public static Dropdown<T> Pink { get; } = new Dropdown<T>

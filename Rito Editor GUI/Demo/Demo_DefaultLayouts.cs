@@ -13,9 +13,9 @@ using REG = Rito.EditorPlugins.RitoEditorGUI;
 
 namespace Rito.EditorPlugins.Demo
 {
-    public class Demo_RitoEditorGUI : MonoBehaviour
+    public class Demo_DefaultLayouts : MonoBehaviour
     {
-        [CustomEditor(typeof(Demo_RitoEditorGUI))]
+        [CustomEditor(typeof(Demo_DefaultLayouts))]
         private class CE : UnityEditor.Editor
         {
             private Label label1 = new Label();
