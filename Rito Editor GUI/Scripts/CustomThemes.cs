@@ -11,13 +11,13 @@ namespace Rito.EditorUtilities
 {
     public partial class Label
     {
+        public static Label Gray { get; } = new Label
+        {
+            textColor = RColor.Gray.Bright
+        };
         public static Label White { get; } = new Label
         {
             textColor = RColor.white
-        };
-        public static Label Gray { get; } = new Label
-        {
-            textColor = RColor.gray
         };
         public static Label Black { get; } = new Label
         {
@@ -26,12 +26,15 @@ namespace Rito.EditorUtilities
     }
     public partial class Button
     {
-        public static Button White { get; } = new Button
-        {
-            textColor = RColor.white
-        };
         public static Button Gray { get; } = new Button
         {
+            textColor = RColor.Gray.Bright
+        };
+        public static Button White { get; } = new Button
+        {
+            textColor = RColor.black,
+            hoverTextColor = RColor.Gray.Dark,
+            buttonColor = RColor.white * 2.5f,
         };
         public static Button Black { get; } = new Button
         {
@@ -39,11 +42,15 @@ namespace Rito.EditorUtilities
     }
     public partial class ToggleButton
     {
+        public static ToggleButton Gray { get; } = new ToggleButton { };
         public static ToggleButton White { get; } = new ToggleButton
         {
-        };
-        public static ToggleButton Gray { get; } = new ToggleButton
-        {
+            normalTextColor = RColor.black,
+            hoverTextColor = RColor.Gray.Dark,
+            normalButtonColor = RColor.white * 2.5f,
+
+            pressedTextColor = RColor.black,
+            pressedButtonColor = RColor.white * 2.5f,
         };
         public static ToggleButton Black { get; } = new ToggleButton
         {
@@ -51,40 +58,28 @@ namespace Rito.EditorUtilities
     }
     public partial class IntField
     {
+        public static IntField Gray { get; } = new IntField { };
         public static IntField White { get; } = new IntField
         {
         };
-        public static IntField Gray { get; } = new IntField
+        public static IntField Black { get; } = new IntField
         {
         };
     }
     public partial class FloatField
     {
+        public static FloatField Gray { get; } = new FloatField { };
         public static FloatField White { get; } = new FloatField
-        {
-        };
-        public static FloatField Gray { get; } = new FloatField
         {
         };
         public static FloatField Black { get; } = new FloatField
         {
         };
-        public static FloatField Red { get; } = new FloatField
-        {
-        };
-        public static FloatField Blue { get; } = new FloatField
-        {
-        };
-        public static FloatField Green { get; } = new FloatField
-        {
-        };
     }
     public partial class DoubleField
     {
+        public static DoubleField Gray { get; } = new DoubleField { };
         public static DoubleField White { get; } = new DoubleField
-        {
-        };
-        public static DoubleField Gray { get; } = new DoubleField
         {
         };
         public static DoubleField Black { get; } = new DoubleField
@@ -93,22 +88,28 @@ namespace Rito.EditorUtilities
     }
     public partial class StringField
     {
+        public static StringField Gray { get; } = new StringField { };
         public static StringField White { get; } = new StringField
-        {
-        };
-        public static StringField Gray { get; } = new StringField
         {
         };
         public static StringField Black { get; } = new StringField
         {
         };
     }
-    public partial class TextField
+    public partial class ObjectField<T>
     {
-        public static TextField White { get; } = new TextField
+        public static ObjectField<T> Gray { get; } = new ObjectField<T> { };
+        public static ObjectField<T> White { get; } = new ObjectField<T>
         {
         };
-        public static TextField Gray { get; } = new TextField
+        public static ObjectField<T> Black { get; } = new ObjectField<T>
+        {
+        };
+    }
+    public partial class TextField
+    {
+        public static TextField Gray { get; } = new TextField { };
+        public static TextField White { get; } = new TextField
         {
         };
         public static TextField Black { get; } = new TextField
@@ -117,10 +118,8 @@ namespace Rito.EditorUtilities
     }
     public partial class BoolField
     {
+        public static BoolField Gray { get; } = new BoolField { };
         public static BoolField White { get; } = new BoolField
-        {
-        };
-        public static BoolField Gray { get; } = new BoolField
         {
         };
         public static BoolField Black { get; } = new BoolField
@@ -129,34 +128,28 @@ namespace Rito.EditorUtilities
     }
     public partial class Toggle
     {
+        public static Toggle Gray { get; } = new Toggle { };
         public static Toggle White { get; } = new Toggle
-        {
-        };
-        public static Toggle Gray { get; } = new Toggle
         {
         };
         public static Toggle Black { get; } = new Toggle
         {
         };
     }
-    public partial class ObjectField<T>
+    public partial class ColorField
     {
-        public static ObjectField<T> White { get; } = new ObjectField<T>
+        public static ColorField Gray { get; } = new ColorField { };
+        public static ColorField White { get; } = new ColorField
         {
         };
-        public static ObjectField<T> Gray { get; } = new ObjectField<T>
-        {
-        };
-        public static ObjectField<T> Black { get; } = new ObjectField<T>
+        public static ColorField Black { get; } = new ColorField
         {
         };
     }
     public partial class IntSlider
     {
+        public static IntSlider Gray { get; } = new IntSlider { };
         public static IntSlider White { get; } = new IntSlider
-        {
-        };
-        public static IntSlider Gray { get; } = new IntSlider
         {
         };
         public static IntSlider Black { get; } = new IntSlider
@@ -203,6 +196,10 @@ namespace Rito.EditorUtilities
     {
         public static HeaderBox White { get; } = new HeaderBox
         {
+            headerTextColor = RColor.black,
+            headerColor = RColor.white,
+            contentColor = RColor.Gray,
+            outlineColor = RColor.black
         };
         public static HeaderBox Gray { get; } = new HeaderBox
         {

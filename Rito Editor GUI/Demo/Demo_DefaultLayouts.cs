@@ -24,7 +24,13 @@ namespace Rito.EditorUtilities.Demo
             private double[] doubleValues = new double[MaxLength];
             private string[] stringValues = new string[MaxLength];
             private bool[] boolValues = new bool[MaxLength];
-            private Color colorValue = Color.white;
+            private Vector2 vector2Value;
+            private Vector3 vector3Value;
+            private Vector4 vector4Value;
+            private Vector2Int vector2IntValue;
+            private Vector3Int vector3IntValue;
+            private Color colorValue1 = Color.white;
+            private Color colorValue2 = Color.white;
 
             private Material materialValue;
             private GameObject gameObjectValue;
@@ -96,6 +102,36 @@ namespace Rito.EditorUtilities.Demo
                     .SetTooltip("Double Field")
                     .DrawLayout();
 
+                vector2Value = 
+                    Vector2Field.Default
+                    .SetData("Vector2 Field", vector2Value)
+                    .SetTooltip("Vector2 Field")
+                    .DrawLayout();
+
+                vector2IntValue =
+                    Vector2IntField.Default
+                    .SetData("Vector2Int Field", vector2IntValue)
+                    .SetTooltip("Vector2Int Field")
+                    .DrawLayout();
+
+                vector3Value = 
+                    Vector3Field.Default
+                    .SetData("Vector3 Field", vector3Value)
+                    .SetTooltip("Vector3 Field")
+                    .DrawLayout();
+
+                vector3IntValue =
+                    Vector3IntField.Default
+                    .SetData("Vector3Int Field", vector3IntValue)
+                    .SetTooltip("Vector3Int Field")
+                    .DrawLayout();
+
+                vector4Value = 
+                    Vector4Field.Default
+                    .SetData("Vector4 Field", vector4Value)
+                    .SetTooltip("Vector4 Field")
+                    .DrawLayout();
+
                 stringValues[s] = 
                     StringField.Default
                     .SetData("String Field", stringValues[s++], "Placeholder")
@@ -126,10 +162,16 @@ namespace Rito.EditorUtilities.Demo
                     .SetTooltip("Toggle")
                     .DrawLayout();
 
-                colorValue = 
+                colorValue1 = 
                     ColorField.Default
-                    .SetData("Color Field", colorValue)
-                    .SetTooltip("Color Field", 150f)
+                    .SetData("Color Field", colorValue1)
+                    .SetTooltip("Color Field")
+                    .DrawLayout();
+
+                colorValue2 = 
+                    ColorPicker.Default
+                    .SetData(colorValue2)
+                    .SetTooltip("Color Picker")
                     .DrawLayout();
 
                 #endregion

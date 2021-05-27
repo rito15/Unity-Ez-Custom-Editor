@@ -45,7 +45,7 @@ namespace Rito.EditorUtilities
         }
     }
 
-    public abstract class DrawingElement<T>
+    public abstract class GUIElement
     {
         protected Rect rect;
 
@@ -57,6 +57,7 @@ namespace Rito.EditorUtilities
         public const float DefaultControlHeight = 18f; // 컨트롤의 기본 높이
         public const float DefaultControlMargin = 2f;  // 컨트롤의 기본 하단 여백
 
+
         /// <summary> 마지막으로 그린 Rect 가져오기 </summary>
         public Rect GetLastRect()
         {
@@ -64,7 +65,7 @@ namespace Rito.EditorUtilities
         }
 
         /// <summary> 컨트롤에 마우스가 올라갈 경우 툴팁 상자 표시하도록 설정 </summary>
-        public DrawingElement<T> SetTooltip(string text, float width = 100f, float height = 20f)
+        public GUIElement SetTooltip(string text, float width = 100f, float height = 20f)
         {
             tooltipFlag = true;
             tooltipText = text;
@@ -95,20 +96,6 @@ namespace Rito.EditorUtilities
             EditorGUI.DrawRect(left, color);
             EditorGUI.DrawRect(right, color);
         }
-
-
-        public abstract T Draw(in float xLeft, in float xRight, float yOffset, in float height,
-            in float xLeftOffset = 0f, in float xRightOffset = 0f);
-
-        /// <summary> 레이아웃 요소로 그리기 </summary>
-        public virtual T DrawLayout()
-        {
-            var ret = Draw(0f, 1f, 0f, DefaultControlHeight);
-            REG.Space(DefaultControlHeight + DefaultControlMargin);
-
-            return ret;
-        }
-
 
         /// <summary> 툴팁 등록 여부 확인 및 요청 </summary>
         protected void CheckTooltip()
@@ -143,6 +130,33 @@ namespace Rito.EditorUtilities
             in float xLeftOffset, in float xRightOffset)
         {
             rect = REG.GetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
+        }
+    }
+    public abstract class DrawingElement<T> : GUIElement
+    {
+        /// <summary> 컨트롤에 마우스가 올라갈 경우 툴팁 상자 표시하도록 설정 </summary>
+        public new DrawingElement<T> SetTooltip(string text, float width = 100f, float height = 20f)
+        {
+            tooltipFlag = true;
+            tooltipText = text;
+            tooltipWidth = width;
+            tooltipHeight = height;
+            return this;
+        }
+
+        public virtual T Draw(in float xLeft, in float xRight, float yOffset, in float height,
+            in float xLeftOffset = 0f, in float xRightOffset = 0f)
+        {
+            return default;
+        }
+
+        /// <summary> 레이아웃 요소로 그리기 </summary>
+        public virtual T DrawLayout()
+        {
+            var ret = Draw(0f, 1f, 0f, DefaultControlHeight);
+            REG.Space(DefaultControlHeight + DefaultControlMargin);
+
+            return ret;
         }
     }
 
@@ -227,6 +241,7 @@ namespace Rito.EditorUtilities
 
         // Styles
         public Color textColor = Color.white;
+        public Color hoverTextColor = Color.white;
         public TextAnchor textAlignment = TextAnchor.MiddleCenter;
         public int fontSize = 12;
         public FontStyle fontStyle = FontStyle.Normal;
@@ -282,6 +297,7 @@ namespace Rito.EditorUtilities
             var oldBackgroundColor = GUI.backgroundColor;
             GUI.backgroundColor = buttonColor;
             style.normal.textColor = textColor;
+            style.hover.textColor = hoverTextColor;
             style.fontSize = fontSize;
             style.fontStyle = fontStyle;
             style.alignment = textAlignment;
@@ -312,6 +328,7 @@ namespace Rito.EditorUtilities
 
         // Styles - Button Normal
         public Color normalTextColor = Color.white;
+        public Color hoverTextColor = Color.white;
         public Color normalButtonColor = Color.white;
         public FontStyle normalFontStyle = FontStyle.Normal;
 
@@ -408,6 +425,7 @@ namespace Rito.EditorUtilities
             GUI.backgroundColor = value ? pressedButtonColor.AddRGB(0.5f) : normalButtonColor;
 
             style.normal.textColor = value ? pressedTextColor : normalTextColor;
+            style.hover.textColor = hoverTextColor;
             style.fontSize = fontSize;
             style.fontStyle = value ? pressedFontStyle : normalFontStyle;
             style.alignment = textAlignment;
@@ -448,68 +466,6 @@ namespace Rito.EditorUtilities
         public FontStyle inputFontStyle = FontStyle.Normal;
         public TextAnchor inputTextAlignment = TextAnchor.MiddleLeft;
 
-        /***********************************************************************
-        *                               Style Setters
-        ***********************************************************************/
-        #region .
-        public ValueField<T> SetLabelColor(Color color)
-        {
-            this.labelColor = color;
-            return this;
-        }
-        public ValueField<T> SetLabelFontSize(int fontSize)
-        {
-            this.labelFontSize = fontSize;
-            return this;
-        }
-        public ValueField<T> SetLabelFontStyle(FontStyle fontStyle)
-        {
-            this.labelFontStyle = fontStyle;
-            return this;
-        }
-        public ValueField<T> SetLabelTextAlignment(TextAnchor alignment)
-        {
-            this.labelAlignment = alignment;
-            return this;
-        }
-        
-        public ValueField<T> SetInputTextColor(Color color)
-        {
-            this.inputTextColor = color;
-            return this;
-        }
-        public ValueField<T> SetInputBackgroundColor(Color color)
-        {
-            this.inputBackgroundColor = color;
-            return this;
-        }
-        public ValueField<T> SetInputFontSize(int fontSize)
-        {
-            this.inputFontSize = fontSize;
-            return this;
-        }
-        public ValueField<T> SetInputFontStyle(FontStyle fontStyle)
-        {
-            this.inputFontStyle = fontStyle;
-            return this;
-        }
-        public ValueField<T> SetInputTextAlignment(TextAnchor allignment)
-        {
-            this.inputTextAlignment = allignment;
-            return this;
-        }
-
-        #endregion
-
-        public ValueField<T> SetData(string label, T value, float widthThreshold = 0.4f)
-        {
-            this.labelContent = new GUIContent(label);
-
-            this.value = value;
-            this.widthThreshold = widthThreshold;
-            return this;
-        }
-
         public override T Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
@@ -517,7 +473,8 @@ namespace Rito.EditorUtilities
 
             if (labelStyle == null)
                 labelStyle = new GUIStyle(GUI.skin.label);
-            if (inputStyle == null)
+
+            if(inputStyle == null)
                 inputStyle = new GUIStyle(GUI.skin.textField);
 
             ref float t = ref widthThreshold;
@@ -538,7 +495,7 @@ namespace Rito.EditorUtilities
             inputStyle.fontStyle = inputFontStyle;
             inputStyle.alignment = inputTextAlignment;
 
-            DrawGUI(labelRect, inputRect);
+            DrawFields(labelRect, inputRect);
 
             GUI.backgroundColor = oldBackgroundColor;
 
@@ -549,39 +506,104 @@ namespace Rito.EditorUtilities
             return value;
         }
 
-        protected abstract void DrawGUI(in Rect labelRect, in Rect inputRect);
+        protected abstract void DrawFields(in Rect labelRect, in Rect inputRect);
     }
-    public partial class IntField : ValueField<int>
+    public abstract class ValueFieldWithSetters<T> : ValueField<T>
+    {
+        /***********************************************************************
+        *                               Style Setters
+        ***********************************************************************/
+        #region .
+        public ValueFieldWithSetters<T> SetLabelColor(Color color)
+        {
+            this.labelColor = color;
+            return this;
+        }
+        public ValueFieldWithSetters<T> SetLabelFontSize(int fontSize)
+        {
+            this.labelFontSize = fontSize;
+            return this;
+        }
+        public ValueFieldWithSetters<T> SetLabelFontStyle(FontStyle fontStyle)
+        {
+            this.labelFontStyle = fontStyle;
+            return this;
+        }
+        public ValueFieldWithSetters<T> SetLabelTextAlignment(TextAnchor alignment)
+        {
+            this.labelAlignment = alignment;
+            return this;
+        }
+
+        public ValueFieldWithSetters<T> SetInputTextColor(Color color)
+        {
+            this.inputTextColor = color;
+            return this;
+        }
+        public ValueFieldWithSetters<T> SetInputBackgroundColor(Color color)
+        {
+            this.inputBackgroundColor = color;
+            return this;
+        }
+        public ValueFieldWithSetters<T> SetInputFontSize(int fontSize)
+        {
+            this.inputFontSize = fontSize;
+            return this;
+        }
+        public ValueFieldWithSetters<T> SetInputFontStyle(FontStyle fontStyle)
+        {
+            this.inputFontStyle = fontStyle;
+            return this;
+        }
+        public ValueFieldWithSetters<T> SetInputTextAlignment(TextAnchor allignment)
+        {
+            this.inputTextAlignment = allignment;
+            return this;
+        }
+
+        #endregion
+
+        public ValueFieldWithSetters<T> SetData(string label, T value, float widthThreshold = 0.4f)
+        {
+            this.labelContent = new GUIContent(label);
+
+            this.value = value;
+            this.widthThreshold = widthThreshold;
+            return this;
+        }
+    }
+
+    public partial class IntField : ValueFieldWithSetters<int>
     {
         public static IntField Default { get; } = new IntField();
 
-        protected override void DrawGUI(in Rect labelRect, in Rect inputRect)
+        protected override void DrawFields(in Rect labelRect, in Rect inputRect)
         {
             EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
             value = EditorGUI.IntField(inputRect, value, inputStyle);
         }
     }
-    public partial class FloatField : ValueField<float>
+    public partial class FloatField : ValueFieldWithSetters<float>
     {
         public static FloatField Default { get; } = new FloatField();
 
-        protected override void DrawGUI(in Rect labelRect, in Rect inputRect)
+        protected override void DrawFields(in Rect labelRect, in Rect inputRect)
         {
             EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
             value = EditorGUI.FloatField(inputRect, value, inputStyle);
         }
     }
-    public partial class DoubleField : ValueField<double>
+    public partial class DoubleField : ValueFieldWithSetters<double>
     {
         public static DoubleField Default { get; } = new DoubleField();
 
-        protected override void DrawGUI(in Rect labelRect, in Rect inputRect)
+        protected override void DrawFields(in Rect labelRect, in Rect inputRect)
         {
             EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
             value = EditorGUI.DoubleField(inputRect, value, inputStyle);
         }
     }
-    public partial class StringField : ValueField<string>
+    public partial class StringField : ValueFieldWithSetters<string>
     {
         public static StringField Default { get; } = new StringField();
 
@@ -646,7 +668,7 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        protected override void DrawGUI(in Rect labelRect, in Rect inputRect)
+        protected override void DrawFields(in Rect labelRect, in Rect inputRect)
         {
             EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
 
@@ -660,7 +682,116 @@ namespace Rito.EditorUtilities
                 EditorGUI.LabelField(inputRect, placeholder, inputStyle);
         }
     }
-    public partial class ObjectField<T> : ValueField<T> where T : UnityEngine.Object
+
+    public abstract class VectorFieldBase<T> : ValueFieldWithSetters<T>
+    {
+        public override T Draw(in float xLeft, in float xRight, float yOffset, in float height,
+            in float xLeftOffset = 0f, in float xRightOffset = 0f)
+        {
+            SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
+
+            if (labelStyle == null)
+                labelStyle = new GUIStyle(GUI.skin.label);
+
+            ref float t = ref widthThreshold;
+            float omt = 1f - t;
+            Rect labelRect = new Rect(rect.x, rect.y, rect.width * t, rect.height);
+            Rect inputRect = new Rect(rect.x + rect.width * t, rect.y, rect.width * omt, rect.height);
+
+            var oldBackgroundColor = GUI.backgroundColor;
+            var oldTextColor = EditorStyles.numberField.normal.textColor;
+            var oldHoverTextColor = EditorStyles.numberField.hover.textColor;
+            var oldFontSize = EditorStyles.numberField.fontSize;
+            var oldFontStyle = EditorStyles.numberField.fontStyle;
+            var oldTextAlign = EditorStyles.numberField.alignment;
+
+            GUI.backgroundColor = inputBackgroundColor;
+            EditorStyles.numberField.normal.textColor = inputTextColor;
+            EditorStyles.numberField.hover.textColor = inputTextColor.AddRGB(0.5f);
+            EditorStyles.numberField.fontSize = inputFontSize;
+            EditorStyles.numberField.fontStyle = inputFontStyle;
+            EditorStyles.numberField.alignment = inputTextAlignment;
+
+            labelStyle.normal.textColor = labelColor;
+            labelStyle.fontSize = labelFontSize;
+            labelStyle.fontStyle = labelFontStyle;
+            labelStyle.alignment = labelAlignment;
+
+            DrawFields(labelRect, inputRect);
+
+            GUI.backgroundColor = oldBackgroundColor;
+            EditorStyles.numberField.normal.textColor = oldTextColor;
+            EditorStyles.numberField.hover.textColor = oldHoverTextColor;
+            EditorStyles.numberField.fontSize = oldFontSize;
+            EditorStyles.numberField.fontStyle = oldFontStyle;
+            EditorStyles.numberField.alignment = oldTextAlign;
+
+            CheckTooltip();
+            if (REG.DebugAllRect)
+                DebugRect();
+
+            return value;
+        }
+        protected override void DrawFields(in Rect labelRect, in Rect inputRect)
+        {
+            EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
+
+            var oldLabelColor = EditorStyles.label.normal.textColor;
+            EditorStyles.label.normal.textColor = labelColor;
+
+            DrawVectorField(inputRect);
+
+            EditorStyles.label.normal.textColor = oldLabelColor;
+        }
+        protected abstract void DrawVectorField(in Rect inputRect);
+    }
+    public partial class Vector2Field : VectorFieldBase<Vector2>
+    {
+        public static Vector2Field Default { get; } = new Vector2Field();
+
+        protected override void DrawVectorField(in Rect inputRect)
+        {
+            value = EditorGUI.Vector2Field(inputRect, "", value);
+        }
+    }
+    public partial class Vector3Field : VectorFieldBase<Vector3>
+    {
+        public static Vector3Field Default { get; } = new Vector3Field();
+
+        protected override void DrawVectorField(in Rect inputRect)
+        {
+            value = EditorGUI.Vector3Field(inputRect, "", value);
+        }
+    }
+    public partial class Vector4Field : VectorFieldBase<Vector4>
+    {
+        public static Vector4Field Default { get; } = new Vector4Field();
+
+        protected override void DrawVectorField(in Rect inputRect)
+        {
+            value = EditorGUI.Vector4Field(inputRect, "", value);
+        }
+    }
+    public partial class Vector2IntField : VectorFieldBase<Vector2Int>
+    {
+        public static Vector2IntField Default { get; } = new Vector2IntField();
+
+        protected override void DrawVectorField(in Rect inputRect)
+        {
+            value = EditorGUI.Vector2IntField(inputRect, "", value);
+        }
+    }
+    public partial class Vector3IntField : VectorFieldBase<Vector3Int>
+    {
+        public static Vector3IntField Default { get; } = new Vector3IntField();
+
+        protected override void DrawVectorField(in Rect inputRect)
+        {
+            value = EditorGUI.Vector3IntField(inputRect, "", value);
+        }
+    }
+
+    public partial class ObjectField<T> : ValueFieldWithSetters<T> where T : UnityEngine.Object
     {
         public static ObjectField<T> Default { get; } = new ObjectField<T>();
 
@@ -683,8 +814,6 @@ namespace Rito.EditorUtilities
 
             if (labelStyle == null)
                 labelStyle = new GUIStyle(GUI.skin.label);
-            if (inputStyle == null)
-                inputStyle = new GUIStyle(EditorStyles.objectField);
 
             ref float t = ref widthThreshold;
             float omt = 1f - t;
@@ -708,6 +837,7 @@ namespace Rito.EditorUtilities
             labelStyle.normal.textColor = labelColor;
             labelStyle.fontSize = labelFontSize;
             labelStyle.fontStyle = labelFontStyle;
+            labelStyle.alignment = labelAlignment;
 
             // Draw
             EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
@@ -727,7 +857,90 @@ namespace Rito.EditorUtilities
             return value;
         }
 
-        protected override void DrawGUI(in Rect labelRect, in Rect inputRect) { }
+        protected override void DrawFields(in Rect labelRect, in Rect inputRect) { }
+    }
+    public partial class Dropdown<T> : ValueField<int>
+    {
+        public static Dropdown<T> Default { get; } = new Dropdown<T>();
+
+        // Data
+        protected T[] options;
+        protected string[] stringValues;
+
+        // value : selected Index
+
+        /***********************************************************************
+        *                               Style Setters
+        ***********************************************************************/
+        #region .
+        public Dropdown<T> SetLabelColor(Color color)
+        {
+            this.labelColor = color;
+            return this;
+        }
+        public Dropdown<T> SetLabelFontSize(int fontSize)
+        {
+            this.labelFontSize = fontSize;
+            return this;
+        }
+        public Dropdown<T> SetLabelFontStyle(FontStyle fontStyle)
+        {
+            this.labelFontStyle = fontStyle;
+            return this;
+        }
+        public Dropdown<T> SetLabelTextAlignment(TextAnchor alignment)
+        {
+            this.labelAlignment = alignment;
+            return this;
+        }
+
+        public Dropdown<T> SetInputTextColor(Color color)
+        {
+            this.inputTextColor = color;
+            return this;
+        }
+        public Dropdown<T> SetInputBackgroundColor(Color color)
+        {
+            this.inputBackgroundColor = color;
+            return this;
+        }
+        public Dropdown<T> SetInputFontSize(int fontSize)
+        {
+            this.inputFontSize = fontSize;
+            return this;
+        }
+        public Dropdown<T> SetInputFontStyle(FontStyle fontStyle)
+        {
+            this.inputFontStyle = fontStyle;
+            return this;
+        }
+        public Dropdown<T> SetInputTextAlignment(TextAnchor allignment)
+        {
+            this.inputTextAlignment = allignment;
+            return this;
+        }
+
+        #endregion
+
+        public Dropdown<T> SetData(string label, T[] options, int selectedIndex, float widthThreshold = 0.4f)
+        {
+            this.labelContent = new GUIContent(label);
+            this.options = options;
+            this.value = selectedIndex;
+            this.widthThreshold = widthThreshold;
+
+            this.stringValues = new string[options.Length];
+            for (int i = 0; i < options.Length; i++)
+                this.stringValues[i] = options[i].ToString();
+
+            return this;
+        }
+
+        protected override void DrawFields(in Rect labelRect, in Rect inputRect)
+        {
+            EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
+            value = EditorGUI.Popup(inputRect, value, stringValues, inputStyle);
+        }
     }
 
     public partial class TextField : DrawingElement<string>
@@ -1073,6 +1286,43 @@ namespace Rito.EditorUtilities
             return value;
         }
     }
+    public partial class ColorPicker : DrawingElement<Color>
+    {
+        public static ColorPicker Default { get; } = new ColorPicker();
+
+        // Data
+        protected Color value = Color.white;
+
+        // Styles - Color Picker
+        public Color colorPickerColor = Color.white;
+
+        public ColorPicker SetData(Color value)
+        {
+            this.value = value;
+
+            return this;
+        }
+
+        public override Color Draw(in float xLeft, in float xRight, float yOffset, in float height,
+            in float xLeftOffset = 0f, in float xRightOffset = 0f)
+        {
+            SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
+
+            var oldColor = GUI.backgroundColor;
+            GUI.backgroundColor = colorPickerColor;
+
+            value = EditorGUI.ColorField(rect, "", value);
+
+            GUI.backgroundColor = oldColor;
+
+            // End
+            CheckTooltip();
+            if (REG.DebugAllRect)
+                DebugRect();
+
+            return value;
+        }
+    }
 
     public abstract class ValueSlider<T> : DrawingElement<T>
     {
@@ -1216,7 +1466,7 @@ namespace Rito.EditorUtilities
         }
     }
 
-    public partial class Box : DrawingElement<None>
+    public partial class Box : GUIElement
     {
         public static Box Default { get; } = new Box();
 
@@ -1251,7 +1501,17 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public override None Draw(in float xLeft, in float xRight, float yOffset, in float height,
+        /// <summary> 컨트롤에 마우스가 올라갈 경우 툴팁 상자 표시하도록 설정 </summary>
+        public new Box SetTooltip(string text, float width = 100f, float height = 20f)
+        {
+            tooltipFlag = true;
+            tooltipText = text;
+            tooltipWidth = width;
+            tooltipHeight = height;
+            return this;
+        }
+
+        public void Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -1279,14 +1539,26 @@ namespace Rito.EditorUtilities
             CheckTooltip();
             if (REG.DebugAllRect)
                 DebugRect();
+        }
 
-            return None.Empty;
+        /// <summary>
+        /// 레이아웃 요소들을 감싸는 박스 그리기
+        /// </summary>
+        /// <param name="contentCount">레이아웃 요소 개수</param>
+        /// <param name="paddingHorizontal">좌우 내부 여백</param>
+        /// <param name="paddingVertical">상하 내부 여백</param>
+        public void DrawLayout(int contentCount, float paddingHorizontal = 0f, float paddingVertical = 0f)
+        {
+            if (contentCount < 0) contentCount = 0;
+
+            const float OneHeight = DefaultControlHeight + DefaultControlMargin;
+            Draw(0f, 1f, -paddingVertical, OneHeight * contentCount + paddingVertical * 2f,
+                -paddingHorizontal, paddingHorizontal);
         }
     }
-    public partial class HeaderBox : DrawingElement<None>
-    {
-        public static HeaderBox Default { get; } = new HeaderBox();
 
+    public abstract class HeaderBoxBase<T> : GUIElement
+    {
         protected GUIStyle headerStyle;
 
         // Data
@@ -1304,6 +1576,33 @@ namespace Rito.EditorUtilities
         public Color headerColor = Color.gray;
         public Color contentColor = Color.gray.SetA(0.5f);
         public Color outlineColor = Color.black;
+
+        public abstract T Draw(in float xLeft, in float xRight, float yOffset,
+            in float headerHeight, in float contentHeight,
+            in float xLeftOffset = 0f, in float xRightOffset = 0f);
+
+        /// <summary>
+        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
+        /// </summary>
+        /// <param name="contentCount">레이아웃 요소 개수</param>
+        /// <param name="paddingHorizontal">좌우 내부 여백</param>
+        /// <param name="paddingVertical">상하 내부 여백</param>
+        public T DrawLayout(int contentCount, float paddingHorizontal = 0f, float paddingVertical = 0f)
+        {
+            if (contentCount < 0) contentCount = 0;
+
+            const float OneHeight = DefaultControlHeight + DefaultControlMargin;
+            var ret = Draw(0f, 1f, -paddingVertical, OneHeight, OneHeight * contentCount + paddingVertical * 2f,
+                -paddingHorizontal, paddingHorizontal);
+
+            REG.Space(OneHeight);
+
+            return ret;
+        }
+    }
+    public partial class HeaderBox : HeaderBoxBase<None>
+    {
+        public static HeaderBox Default { get; } = new HeaderBox();
 
         /***********************************************************************
         *                               Style Setters
@@ -1367,7 +1666,7 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public void Draw(in float xLeft, in float xRight, float yOffset, 
+        public override None Draw(in float xLeft, in float xRight, float yOffset, 
             in float headerHeight, in float contentHeight,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
@@ -1414,62 +1713,15 @@ namespace Rito.EditorUtilities
             CheckTooltip();
             if (REG.DebugAllRect)
                 DebugRect();
+
+            return None.Empty;
         }
-
-        /// <summary>
-        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
-        /// </summary>
-        /// <param name="contentCount">레이아웃 요소 개수</param>
-        /// <param name="paddingHorizontal">좌우 내부 여백</param>
-        /// <param name="paddingVertical">상하 내부 여백</param>
-        public void DrawLayout(int contentCount, float paddingHorizontal = 0f, float paddingVertical = 0f)
-        {
-            if(contentCount < 0) contentCount = 0;
-
-            const float OneHeight = DefaultControlHeight + DefaultControlMargin;
-            Draw(0f, 1f, -paddingVertical, OneHeight, OneHeight * contentCount + paddingVertical * 2f,
-                -paddingHorizontal, paddingHorizontal);
-
-            REG.Space(OneHeight);
-        }
-
-        [Obsolete("Instead Use Another Draw Method")]
-        public override None Draw(in float xLeft, in float xRight, float yOffset, in float height,
-            in float xLeftOffset = 0, in float xRightOffset = 0)
-        {
-            throw new Exception("Instead Use Another Draw Method");
-        }
-
-        [Obsolete("Instead Use DrawLayout(int, float, float) Method")]
-        public override None DrawLayout()
-        {
-            throw new Exception("Instead Use DrawLayout(int, float, float) Method");
-        }
-
-
     }
-    public partial class FoldoutHeaderBox : DrawingElement<None>
+    public partial class FoldoutHeaderBox : HeaderBoxBase<bool>
     {
         public static FoldoutHeaderBox Default { get; } = new FoldoutHeaderBox();
 
-        protected GUIStyle headerStyle;
-
-        // Data
-        protected float outlineWidth = 0f;
-        protected string headerText = "Header";
-        protected float headerTextLeftPadding = 0f;
         protected bool foldout = true; // true : 펼쳐짐
-
-        // Styles - Header Text
-        public Color headerTextColor = Color.black;
-        public int headerFontSize = 12;
-        public FontStyle headerFontStyle = FontStyle.Bold;
-        public TextAnchor headerTextAlignment = TextAnchor.MiddleLeft;
-
-        // Styles - Box
-        public Color headerColor = Color.gray;
-        public Color contentColor = Color.gray.SetA(0.5f);
-        public Color outlineColor = Color.black;
 
         /***********************************************************************
         *                               Style Setters
@@ -1534,7 +1786,7 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public bool Draw(in float xLeft, in float xRight, float yOffset, 
+        public override bool Draw(in float xLeft, in float xRight, float yOffset, 
             in float headerHeight, in float contentHeight,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
@@ -1613,39 +1865,8 @@ namespace Rito.EditorUtilities
 
             return foldout;
         }
-
-        /// <summary>
-        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
-        /// </summary>
-        /// <param name="contentCount">레이아웃 요소 개수</param>
-        /// <param name="paddingHorizontal">좌우 내부 여백</param>
-        /// <param name="paddingVertical">상하 내부 여백</param>
-        public bool DrawLayout(int contentCount, float paddingHorizontal = 0f, float paddingVertical = 0f)
-        {
-            if (contentCount < 0) contentCount = 0;
-
-            const float OneHeight = DefaultControlHeight + DefaultControlMargin;
-            foldout = Draw(0f, 1f, -paddingVertical, OneHeight, OneHeight * contentCount + paddingVertical * 2f,
-                -paddingHorizontal, paddingHorizontal);
-
-            REG.Space(OneHeight);
-
-            return foldout;
-        }
-
-        [Obsolete("Instead Use Another Draw Method")]
-        public override None Draw(in float xLeft, in float xRight, float yOffset, in float height,
-            in float xLeftOffset = 0, in float xRightOffset = 0)
-        {
-            throw new Exception("Instead Use Another Draw Method");
-        }
-
-        [Obsolete("Instead Use DrawLayout(int, float, float) Method")]
-        public override None DrawLayout()
-        {
-            throw new Exception("Instead Use DrawLayout(int, float, float) Method");
-        }
     }
+
     public partial class HelpBox : DrawingElement<None>
     {
         public static HelpBox Default { get; } = new HelpBox();
@@ -1733,142 +1954,6 @@ namespace Rito.EditorUtilities
                 DebugRect();
 
             return None.Empty;
-        }
-    }
-    public partial class Dropdown<T> : DrawingElement<int>
-    {
-        public static Dropdown<T> Default { get; } = new Dropdown<T>();
-
-        protected GUIStyle labelStyle;
-        protected GUIStyle inputStyle;
-
-        // Data
-        protected GUIContent labelContent;
-        protected T[] values;
-        protected string[] stringValues;
-        protected int selectedIndex;
-        protected float widthThreshold = 0.4f;
-
-        // Styles - Label
-        public Color labelColor = Color.white;
-        public int labelFontSize = 12;
-        public FontStyle labelFontStyle = FontStyle.Normal;
-        public TextAnchor labelAlignment = TextAnchor.MiddleLeft;
-
-        // Styles - Input Field
-        public Color inputTextColor = Color.white;
-        public Color inputBackgroundColor = Color.white;
-        public int inputFontSize = 12;
-        public FontStyle inputFontStyle = FontStyle.Normal;
-        public TextAnchor inputTextAlignment = TextAnchor.MiddleLeft;
-
-        /***********************************************************************
-        *                               Style Setters
-        ***********************************************************************/
-        #region .
-        public Dropdown<T> SetLabelColor(Color color)
-        {
-            this.labelColor = color;
-            return this;
-        }
-        public Dropdown<T> SetLabelFontSize(int fontSize)
-        {
-            this.labelFontSize = fontSize;
-            return this;
-        }
-        public Dropdown<T> SetLabelFontStyle(FontStyle fontStyle)
-        {
-            this.labelFontStyle = fontStyle;
-            return this;
-        }
-        public Dropdown<T> SetLabelTextAlignment(TextAnchor alignment)
-        {
-            this.labelAlignment = alignment;
-            return this;
-        }
-
-        public Dropdown<T> SetInputTextColor(Color color)
-        {
-            this.inputTextColor = color;
-            return this;
-        }
-        public Dropdown<T> SetInputBackgroundColor(Color color)
-        {
-            this.inputBackgroundColor = color;
-            return this;
-        }
-        public Dropdown<T> SetInputFontSize(int fontSize)
-        {
-            this.inputFontSize = fontSize;
-            return this;
-        }
-        public Dropdown<T> SetInputFontStyle(FontStyle fontStyle)
-        {
-            this.inputFontStyle = fontStyle;
-            return this;
-        }
-        public Dropdown<T> SetInputTextAlignment(TextAnchor allignment)
-        {
-            this.inputTextAlignment = allignment;
-            return this;
-        }
-
-        #endregion
-
-        public Dropdown<T> SetData(string label, T[] values, int selectedIndex, float widthThreshold = 0.4f)
-        {
-            this.labelContent = new GUIContent(label);
-            this.values = values;
-            this.selectedIndex = selectedIndex;
-            this.widthThreshold = widthThreshold;
-
-            this.stringValues = new string[values.Length];
-            for (int i = 0; i < values.Length; i++)
-                this.stringValues[i] = values[i].ToString();
-
-            return this;
-        }
-
-        public override int Draw(in float xLeft, in float xRight, float yOffset, in float height,
-            in float xLeftOffset = 0f, in float xRightOffset = 0f)
-        {
-            SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
-
-            if (labelStyle == null)
-                labelStyle = new GUIStyle(GUI.skin.label);
-            if (inputStyle == null)
-                inputStyle = new GUIStyle(EditorStyles.popup);
-
-            ref float t = ref widthThreshold;
-            float omt = 1f - t;
-            Rect labelRect = new Rect(rect.x, rect.y, rect.width * t, rect.height);
-            Rect dropdownRect = new Rect(rect.x + rect.width * t, rect.y, rect.width * omt, rect.height);
-
-            var oldBackgroundColor = GUI.backgroundColor;
-            GUI.backgroundColor = inputBackgroundColor;
-
-            labelStyle.normal.textColor = labelColor;
-            labelStyle.fontSize = labelFontSize;
-            labelStyle.fontStyle = labelFontStyle;
-            labelStyle.alignment = labelAlignment;
-
-            inputStyle.normal.textColor = inputTextColor;
-            inputStyle.hover.textColor = inputTextColor;
-            inputStyle.focused.textColor = inputTextColor;
-            inputStyle.fontSize = inputFontSize;
-            inputStyle.fontStyle = inputFontStyle;
-            inputStyle.alignment = inputTextAlignment;
-
-            EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
-            selectedIndex = EditorGUI.Popup(dropdownRect, selectedIndex, stringValues, inputStyle);
-
-            GUI.backgroundColor = oldBackgroundColor;
-
-            CheckTooltip();
-            if (REG.DebugAllRect)
-                DebugRect();
-
-            return selectedIndex;
         }
     }
 
