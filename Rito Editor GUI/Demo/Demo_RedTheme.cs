@@ -19,16 +19,16 @@ namespace Rito.EditorUtilities.Demo
         {
             private Color[] rColors = new Color[]
             {
-                RColor.Dark  .Gold,
-                RColor.Dim   .Gold,
-                RColor.Normal.Gold,
-                RColor.Soft  .Gold,
-                RColor.Light .Gold,
-                RColor.Bright.Gold, 
+                RColor.Mint.Darker,
+                RColor.Mint.Dark,
+                RColor.Mint.Normal,
+                RColor.Mint.Soft,
+                RColor.Mint.Light,
+                RColor.Mint.Bright, 
             };
             private string[] labels =
             {
-                "Dim", "Dark", "Normal",
+                "Darker", "Dark", "Normal",
                 "Soft", "Light", "Bright"
             };
 
@@ -37,7 +37,8 @@ namespace Rito.EditorUtilities.Demo
             {
                 m = target as Demo_RedTheme;
             }
-
+            private GUIStyleState buttonStyleState;
+            private GUIStyle buttonStyle;
             public override void OnInspectorGUI()
             {
                 RitoEditorGUI.Options
@@ -67,6 +68,22 @@ namespace Rito.EditorUtilities.Demo
                 {
                     m.colors[i] = EditorGUILayout.ColorField(labels[i], m.colors[i]);
                 }
+
+                EditorGUI.BeginChangeCheck();
+                Undo.RecordObject(m, "");
+                m.colors[rColors.Length] = 
+                    EditorGUILayout.ColorField("Change All", m.colors[rColors.Length]);
+                var changed = EditorGUI.EndChangeCheck();
+
+                if (changed)
+                {
+                    Undo.RecordObject(m, "");
+                    for (int i = 0; i < rColors.Length; i++)
+                    {
+                        m.colors[i] = m.colors[rColors.Length];
+                    }
+                }
+
             }
         }
     }

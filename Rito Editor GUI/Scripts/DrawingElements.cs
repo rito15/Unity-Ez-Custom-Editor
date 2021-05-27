@@ -892,9 +892,6 @@ namespace Rito.EditorUtilities
             if (labelStyle == null)
                 labelStyle = new GUIStyle(GUI.skin.label);
 
-            var oldToggleColor = GUI.color;
-            GUI.color = toggleColor;
-
             labelStyle.normal.textColor = labelColor;
             labelStyle.fontSize = labelFontSize;
             labelStyle.fontStyle = labelFontStyle;
@@ -905,11 +902,18 @@ namespace Rito.EditorUtilities
             Rect leftRect = new Rect(rect.x, rect.y, rect.width * t, rect.height);
             Rect rightRect = new Rect(rect.x + rect.width * t, rect.y, rect.width * omt, rect.height);
 
+            // 1. Label
             EditorGUI.PrefixLabel(!toggleLeft ? leftRect : rightRect, labelContent, labelStyle);
+
+            // 2. Toggle
+            var oldToggleColor = GUI.color;
+            GUI.color = toggleColor;
+
             value = EditorGUI.Toggle(toggleLeft ? leftRect : rightRect, "", value);
 
             GUI.color = oldToggleColor;
 
+            // End
             CheckTooltip();
             if (REG.DebugAllRect)
                 DebugRect();
@@ -961,6 +965,107 @@ namespace Rito.EditorUtilities
 
             GUI.color = oldBackgroundColor;
 
+            CheckTooltip();
+            if (REG.DebugAllRect)
+                DebugRect();
+
+            return value;
+        }
+    }
+    public partial class ColorField : DrawingElement<Color>
+    {
+        public static ColorField Default { get; } = new ColorField();
+        protected GUIStyle labelStyle;
+
+        // Data
+        protected GUIContent labelContent;
+        protected Color value = Color.white;
+        protected float widthThreshold = 0.4f;
+
+        // Styles - Label
+        public Color labelColor = Color.white;
+        public int labelFontSize = 12;
+        public FontStyle labelFontStyle = FontStyle.Normal;
+        public TextAnchor labelAlignment = TextAnchor.MiddleLeft;
+
+        // Styles - Color Picker
+        public Color colorPickerColor = Color.white;
+
+        /***********************************************************************
+        *                               Style Setters
+        ***********************************************************************/
+        #region .
+
+        public ColorField SetLabelColor(Color color)
+        {
+            this.labelColor = color;
+            return this;
+        }
+        public ColorField SetLabelFontSize(int fontSize)
+        {
+            this.labelFontSize = fontSize;
+            return this;
+        }
+        public ColorField SetLabelFontStyle(FontStyle fontStyle)
+        {
+            this.labelFontStyle = fontStyle;
+            return this;
+        }
+        public ColorField SetLabelTextAlignment(TextAnchor allignment)
+        {
+            this.labelAlignment = allignment;
+            return this;
+        }
+
+        public ColorField SetColorPickerColor(Color color)
+        {
+            this.colorPickerColor = color;
+            return this;
+        }
+
+        #endregion
+
+        public ColorField SetData(string label, Color value, float widthThreshold = 0.4f)
+        {
+            this.labelContent = new GUIContent(label);
+            this.value = value;
+            this.widthThreshold = widthThreshold;
+
+            return this;
+        }
+
+        public override Color Draw(in float xLeft, in float xRight, float yOffset, in float height,
+            in float xLeftOffset = 0f, in float xRightOffset = 0f)
+        {
+            SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
+
+            // Styles
+            if (labelStyle == null)
+                labelStyle = new GUIStyle(GUI.skin.label);
+
+            labelStyle.normal.textColor = labelColor;
+            labelStyle.fontSize = labelFontSize;
+            labelStyle.fontStyle = labelFontStyle;
+            labelStyle.alignment = labelAlignment;
+
+            // Rects
+            ref float t = ref widthThreshold;
+            float omt = 1f - t;
+            Rect labelRect = new Rect(rect.x, rect.y, rect.width * t, rect.height);
+            Rect inputRect = new Rect(rect.x + rect.width * t, rect.y, rect.width * omt, rect.height);
+
+            // 1. Label
+            EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
+
+            // 2. Field
+            var oldColor = GUI.backgroundColor;
+            GUI.backgroundColor = colorPickerColor;
+
+            value = EditorGUI.ColorField(inputRect, "", value);
+
+            GUI.backgroundColor = oldColor;
+
+            // End
             CheckTooltip();
             if (REG.DebugAllRect)
                 DebugRect();

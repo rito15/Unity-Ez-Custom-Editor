@@ -18,91 +18,20 @@ namespace Rito.EditorUtilities.Demo
         [CustomEditor(typeof(Demo_DefaultLayouts))]
         private class CE : UnityEditor.Editor
         {
-            private Label label1 = new Label();
-            private Button button1 = new Button();
-            private IntField intField1 = new IntField();
-            private FloatField floatField1 = new FloatField();
-            private DoubleField doubleField1 = new DoubleField();
-            private BoolField boolField1 = new BoolField();
-            private StringField stringField1 = new StringField();
-            private Toggle toggle1 = new Toggle();
-            private ToggleButton toggleButton1 = new ToggleButton();
-
             const int MaxLength = 50;
             private int[] intValues = new int[MaxLength];
             private float[] floatValues = new float[MaxLength];
             private double[] doubleValues = new double[MaxLength];
             private string[] stringValues = new string[MaxLength];
             private bool[] boolValues = new bool[MaxLength];
+            private Color colorValue = Color.white;
+
             private Material materialValue;
             private GameObject gameObjectValue;
             private UnityEngine.Object objectValue;
             private int[] intDropdownList = { 1, 2, 3, 4, 5, 6 };
             private float[] floatDropdownList = { 0.1f, 0.2f, 0.3f, 0.4f, 0.5f };
             private string[] stringDropdownList = { "String 1", "String 2", "String 3",  };
-
-            private void InitStyles()
-            {
-                label1.fontSize = 14;
-                label1.fontStyle = FontStyle.BoldAndItalic;
-                label1.textColor = Color.magenta;
-                label1.textAlignment = TextAnchor.LowerRight;
-                label1.textColor = Color.red;
-                label1.fontSize = 16;
-
-                button1.textAlignment = TextAnchor.UpperLeft;
-                button1.textColor = Color.yellow;
-                button1.fontSize = 14;
-                button1.fontStyle = FontStyle.Bold;
-                button1.buttonColor = Color.red * 2f;
-
-                intField1.labelFontSize = 14;
-                intField1.labelColor = Color.blue;
-                intField1.labelFontStyle = FontStyle.Bold;
-                intField1.inputFontSize = 16;
-                intField1.inputTextColor = Color.white;
-                intField1.inputBackgroundColor = Color.blue * 5f;
-                intField1.inputFontStyle = FontStyle.Italic;
-                intField1.inputTextAlignment = TextAnchor.MiddleCenter;
-
-                floatField1.labelFontSize = 14;
-                floatField1.labelColor = Color.yellow;
-                floatField1.labelFontStyle = FontStyle.Bold;
-                floatField1.inputFontSize = 16;
-                floatField1.inputTextColor = Color.black;
-                floatField1.inputBackgroundColor = Color.yellow * 5f;
-                floatField1.inputFontStyle = FontStyle.BoldAndItalic;
-                floatField1.inputTextAlignment = TextAnchor.MiddleRight;
-
-                doubleField1.labelFontSize = 16;
-                doubleField1.labelColor = Color.red;
-                doubleField1.labelFontStyle = FontStyle.Bold;
-                doubleField1.inputFontSize = 16;
-                doubleField1.inputTextColor = Color.green;
-                doubleField1.inputBackgroundColor = Color.red * 5f;
-                doubleField1.inputFontStyle = FontStyle.Bold;
-                doubleField1.inputTextAlignment = TextAnchor.MiddleRight;
-
-                stringField1.labelFontSize = 12;
-                stringField1.labelColor = Color.black;
-                stringField1.labelFontStyle = FontStyle.BoldAndItalic;
-                stringField1.inputFontSize = 14;
-                stringField1.inputTextColor = Color.magenta;
-                stringField1.inputBackgroundColor = Color.black;
-                stringField1.inputFontStyle = FontStyle.Bold;
-                stringField1.inputTextAlignment = TextAnchor.MiddleCenter;
-
-                boolField1.labelColor = Color.red;
-                boolField1.labelFontStyle = FontStyle.Bold;
-
-                toggle1.color = Color.blue * 5f;
-
-                toggleButton1.normalButtonColor = Color.red * 2f;
-                toggleButton1.normalFontStyle = FontStyle.Bold;
-                toggleButton1.textAlignment = TextAnchor.UpperRight;
-                toggleButton1.pressedTextColor = Color.yellow;
-                toggleButton1.pressedButtonColor = Color.red * 2f;
-            }
 
             public override void OnInspectorGUI()
             {
@@ -145,32 +74,32 @@ namespace Rito.EditorUtilities.Demo
                 #region .
 
                 Label.Default
-                    .SetData("Default Label")
-                    .SetTooltip("Default Label")
+                    .SetData("Label Field")
+                    .SetTooltip("Label Field")
                     .DrawLayout();
 
                 intValues[i] = 
                     IntField.Default
-                    .SetData("Default Int", intValues[i++])
-                    .SetTooltip("Default Int")
+                    .SetData("Int Field", intValues[i++])
+                    .SetTooltip("Int Field")
                     .DrawLayout();
 
                 floatValues[f] = 
                     FloatField.Default
-                    .SetData("Default Float", floatValues[f++])
-                    .SetTooltip("Default Float")
+                    .SetData("Float Field", floatValues[f++])
+                    .SetTooltip("Float Field")
                     .DrawLayout();
 
                 doubleValues[d] = 
                     DoubleField.Default
-                    .SetData("Default Double", doubleValues[d++])
-                    .SetTooltip("Default Double")
+                    .SetData("Double Field", doubleValues[d++])
+                    .SetTooltip("Double Field")
                     .DrawLayout();
 
                 stringValues[s] = 
                     StringField.Default
-                    .SetData("Default String", stringValues[s++], "Placeholder")
-                    .SetTooltip("Default String")
+                    .SetData("String Field", stringValues[s++], "Placeholder")
+                    .SetTooltip("String Field")
                     .DrawLayout();
 
                 stringValues[s] =
@@ -181,20 +110,26 @@ namespace Rito.EditorUtilities.Demo
 
                 boolValues[b] =
                     BoolField.Default
-                    .SetData("Default Bool", boolValues[b++])
-                    .SetTooltip("Default Bool")
+                    .SetData("Bool Field", boolValues[b++])
+                    .SetTooltip("Bool Field")
                     .DrawLayout();
 
                 boolValues[b] =
                     BoolField.Default
-                    .SetData("Default Bool(Left)", boolValues[b++], true, 0.4f)
-                    .SetTooltip("Default Bool(L)")
+                    .SetData("Bool Field(Left)", boolValues[b++], true, 0.4f)
+                    .SetTooltip("Bool Field(L)")
                     .DrawLayout();
 
                 boolValues[b] =
                     Toggle.Default
                     .SetData(boolValues[b++])
-                    .SetTooltip("Default Toggle")
+                    .SetTooltip("Toggle")
+                    .DrawLayout();
+
+                colorValue = 
+                    ColorField.Default
+                    .SetData("Color Field", colorValue)
+                    .SetTooltip("Color Field", 150f)
                     .DrawLayout();
 
                 #endregion

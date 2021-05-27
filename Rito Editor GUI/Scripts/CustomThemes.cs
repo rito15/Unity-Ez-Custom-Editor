@@ -13,90 +13,27 @@ namespace Rito.EditorUtilities
     {
         public static Label White { get; } = new Label
         {
-            textColor = RColor.Normal.White
+            textColor = RColor.white
         };
         public static Label Gray { get; } = new Label
         {
-            textColor = RColor.Normal.Gray
+            textColor = RColor.gray
         };
         public static Label Black { get; } = new Label
         {
-            textColor = RColor.Normal.Black
-        };
-        public static Label Red { get; } = new Label
-        {
-            textColor = RColor.Normal.Red
-        };
-        public static Label Blue { get; } = new Label
-        {
-            textColor = RColor.Normal.Blue
-        };
-        public static Label Green { get; } = new Label
-        {
-            textColor = RColor.Normal.Green
-        };
-        public static Label Yellow { get; } = new Label
-        {
-            textColor = RColor.Normal.Yellow
-        };
-        public static Label Orange { get; } = new Label
-        {
-            textColor = RColor.Normal.Orange
-        };
-        public static Label Brown { get; } = new Label
-        {
-            textColor = RColor.Normal.Brown
-        };
-        public static Label Cyan { get; } = new Label
-        {
-            textColor = RColor.Normal.Cyan
-        };
-        public static Label Violet { get; } = new Label
-        {
-            textColor = RColor.Normal.Violet
-        };
-        public static Label Pink { get; } = new Label
-        {
-            textColor = RColor.Normal.Pink
+            textColor = RColor.black
         };
     }
     public partial class Button
     {
         public static Button White { get; } = new Button
         {
-            textColor = RColor.Normal.White
+            textColor = RColor.white
         };
         public static Button Gray { get; } = new Button
         {
         };
         public static Button Black { get; } = new Button
-        {
-        };
-        public static Button Red { get; } = new Button
-        {
-        };
-        public static Button Blue { get; } = new Button
-        {
-        };
-        public static Button Green { get; } = new Button
-        {
-        };
-        public static Button Yellow { get; } = new Button
-        {
-        };
-        public static Button Orange { get; } = new Button
-        {
-        };
-        public static Button Brown { get; } = new Button
-        {
-        };
-        public static Button Cyan { get; } = new Button
-        {
-        };
-        public static Button Violet { get; } = new Button
-        {
-        };
-        public static Button Pink { get; } = new Button
         {
         };
     }
@@ -111,33 +48,6 @@ namespace Rito.EditorUtilities
         public static ToggleButton Black { get; } = new ToggleButton
         {
         };
-        public static ToggleButton Red { get; } = new ToggleButton
-        {
-        };
-        public static ToggleButton Blue { get; } = new ToggleButton
-        {
-        };
-        public static ToggleButton Green { get; } = new ToggleButton
-        {
-        };
-        public static ToggleButton Yellow { get; } = new ToggleButton
-        {
-        };
-        public static ToggleButton Orange { get; } = new ToggleButton
-        {
-        };
-        public static ToggleButton Brown { get; } = new ToggleButton
-        {
-        };
-        public static ToggleButton Cyan { get; } = new ToggleButton
-        {
-        };
-        public static ToggleButton Violet { get; } = new ToggleButton
-        {
-        };
-        public static ToggleButton Pink { get; } = new ToggleButton
-        {
-        };
     }
     public partial class IntField
     {
@@ -145,36 +55,6 @@ namespace Rito.EditorUtilities
         {
         };
         public static IntField Gray { get; } = new IntField
-        {
-        };
-        public static IntField Black { get; } = new IntField
-        {
-        };
-        public static IntField Red { get; } = new IntField
-        {
-        };
-        public static IntField Blue { get; } = new IntField
-        {
-        };
-        public static IntField Green { get; } = new IntField
-        {
-        };
-        public static IntField Yellow { get; } = new IntField
-        {
-        };
-        public static IntField Orange { get; } = new IntField
-        {
-        };
-        public static IntField Brown { get; } = new IntField
-        {
-        };
-        public static IntField Cyan { get; } = new IntField
-        {
-        };
-        public static IntField Violet { get; } = new IntField
-        {
-        };
-        public static IntField Pink { get; } = new IntField
         {
         };
     }
@@ -198,24 +78,6 @@ namespace Rito.EditorUtilities
         public static FloatField Green { get; } = new FloatField
         {
         };
-        public static FloatField Yellow { get; } = new FloatField
-        {
-        };
-        public static FloatField Orange { get; } = new FloatField
-        {
-        };
-        public static FloatField Brown { get; } = new FloatField
-        {
-        };
-        public static FloatField Cyan { get; } = new FloatField
-        {
-        };
-        public static FloatField Violet { get; } = new FloatField
-        {
-        };
-        public static FloatField Pink { get; } = new FloatField
-        {
-        };
     }
     public partial class DoubleField
     {
@@ -226,33 +88,6 @@ namespace Rito.EditorUtilities
         {
         };
         public static DoubleField Black { get; } = new DoubleField
-        {
-        };
-        public static DoubleField Red { get; } = new DoubleField
-        {
-        };
-        public static DoubleField Blue { get; } = new DoubleField
-        {
-        };
-        public static DoubleField Green { get; } = new DoubleField
-        {
-        };
-        public static DoubleField Yellow { get; } = new DoubleField
-        {
-        };
-        public static DoubleField Orange { get; } = new DoubleField
-        {
-        };
-        public static DoubleField Brown { get; } = new DoubleField
-        {
-        };
-        public static DoubleField Cyan { get; } = new DoubleField
-        {
-        };
-        public static DoubleField Violet { get; } = new DoubleField
-        {
-        };
-        public static DoubleField Pink { get; } = new DoubleField
         {
         };
     }
@@ -267,33 +102,6 @@ namespace Rito.EditorUtilities
         public static StringField Black { get; } = new StringField
         {
         };
-        public static StringField Red { get; } = new StringField
-        {
-        };
-        public static StringField Blue { get; } = new StringField
-        {
-        };
-        public static StringField Green { get; } = new StringField
-        {
-        };
-        public static StringField Yellow { get; } = new StringField
-        {
-        };
-        public static StringField Orange { get; } = new StringField
-        {
-        };
-        public static StringField Brown { get; } = new StringField
-        {
-        };
-        public static StringField Cyan { get; } = new StringField
-        {
-        };
-        public static StringField Violet { get; } = new StringField
-        {
-        };
-        public static StringField Pink { get; } = new StringField
-        {
-        };
     }
     public partial class TextField
     {
@@ -304,33 +112,6 @@ namespace Rito.EditorUtilities
         {
         };
         public static TextField Black { get; } = new TextField
-        {
-        };
-        public static TextField Red { get; } = new TextField
-        {
-        };
-        public static TextField Blue { get; } = new TextField
-        {
-        };
-        public static TextField Green { get; } = new TextField
-        {
-        };
-        public static TextField Yellow { get; } = new TextField
-        {
-        };
-        public static TextField Orange { get; } = new TextField
-        {
-        };
-        public static TextField Brown { get; } = new TextField
-        {
-        };
-        public static TextField Cyan { get; } = new TextField
-        {
-        };
-        public static TextField Violet { get; } = new TextField
-        {
-        };
-        public static TextField Pink { get; } = new TextField
         {
         };
     }
@@ -345,33 +126,6 @@ namespace Rito.EditorUtilities
         public static BoolField Black { get; } = new BoolField
         {
         };
-        public static BoolField Red { get; } = new BoolField
-        {
-        };
-        public static BoolField Blue { get; } = new BoolField
-        {
-        };
-        public static BoolField Green { get; } = new BoolField
-        {
-        };
-        public static BoolField Yellow { get; } = new BoolField
-        {
-        };
-        public static BoolField Orange { get; } = new BoolField
-        {
-        };
-        public static BoolField Brown { get; } = new BoolField
-        {
-        };
-        public static BoolField Cyan { get; } = new BoolField
-        {
-        };
-        public static BoolField Violet { get; } = new BoolField
-        {
-        };
-        public static BoolField Pink { get; } = new BoolField
-        {
-        };
     }
     public partial class Toggle
     {
@@ -382,33 +136,6 @@ namespace Rito.EditorUtilities
         {
         };
         public static Toggle Black { get; } = new Toggle
-        {
-        };
-        public static Toggle Red { get; } = new Toggle
-        {
-        };
-        public static Toggle Blue { get; } = new Toggle
-        {
-        };
-        public static Toggle Green { get; } = new Toggle
-        {
-        };
-        public static Toggle Yellow { get; } = new Toggle
-        {
-        };
-        public static Toggle Orange { get; } = new Toggle
-        {
-        };
-        public static Toggle Brown { get; } = new Toggle
-        {
-        };
-        public static Toggle Cyan { get; } = new Toggle
-        {
-        };
-        public static Toggle Violet { get; } = new Toggle
-        {
-        };
-        public static Toggle Pink { get; } = new Toggle
         {
         };
     }
@@ -423,33 +150,6 @@ namespace Rito.EditorUtilities
         public static ObjectField<T> Black { get; } = new ObjectField<T>
         {
         };
-        public static ObjectField<T> Red { get; } = new ObjectField<T>
-        {
-        };
-        public static ObjectField<T> Blue { get; } = new ObjectField<T>
-        {
-        };
-        public static ObjectField<T> Green { get; } = new ObjectField<T>
-        {
-        };
-        public static ObjectField<T> Yellow { get; } = new ObjectField<T>
-        {
-        };
-        public static ObjectField<T> Orange { get; } = new ObjectField<T>
-        {
-        };
-        public static ObjectField<T> Brown { get; } = new ObjectField<T>
-        {
-        };
-        public static ObjectField<T> Cyan { get; } = new ObjectField<T>
-        {
-        };
-        public static ObjectField<T> Violet { get; } = new ObjectField<T>
-        {
-        };
-        public static ObjectField<T> Pink { get; } = new ObjectField<T>
-        {
-        };
     }
     public partial class IntSlider
     {
@@ -460,33 +160,6 @@ namespace Rito.EditorUtilities
         {
         };
         public static IntSlider Black { get; } = new IntSlider
-        {
-        };
-        public static IntSlider Red { get; } = new IntSlider
-        {
-        };
-        public static IntSlider Blue { get; } = new IntSlider
-        {
-        };
-        public static IntSlider Green { get; } = new IntSlider
-        {
-        };
-        public static IntSlider Yellow { get; } = new IntSlider
-        {
-        };
-        public static IntSlider Orange { get; } = new IntSlider
-        {
-        };
-        public static IntSlider Brown { get; } = new IntSlider
-        {
-        };
-        public static IntSlider Cyan { get; } = new IntSlider
-        {
-        };
-        public static IntSlider Violet { get; } = new IntSlider
-        {
-        };
-        public static IntSlider Pink { get; } = new IntSlider
         {
         };
     }
@@ -501,33 +174,6 @@ namespace Rito.EditorUtilities
         public static FloatSlider Black { get; } = new FloatSlider
         {
         };
-        public static FloatSlider Red { get; } = new FloatSlider
-        {
-        };
-        public static FloatSlider Blue { get; } = new FloatSlider
-        {
-        };
-        public static FloatSlider Green { get; } = new FloatSlider
-        {
-        };
-        public static FloatSlider Yellow { get; } = new FloatSlider
-        {
-        };
-        public static FloatSlider Orange { get; } = new FloatSlider
-        {
-        };
-        public static FloatSlider Brown { get; } = new FloatSlider
-        {
-        };
-        public static FloatSlider Cyan { get; } = new FloatSlider
-        {
-        };
-        public static FloatSlider Violet { get; } = new FloatSlider
-        {
-        };
-        public static FloatSlider Pink { get; } = new FloatSlider
-        {
-        };
     }
     public partial class DoubleSlider
     {
@@ -538,33 +184,6 @@ namespace Rito.EditorUtilities
         {
         };
         public static DoubleSlider Black { get; } = new DoubleSlider
-        {
-        };
-        public static DoubleSlider Red { get; } = new DoubleSlider
-        {
-        };
-        public static DoubleSlider Blue { get; } = new DoubleSlider
-        {
-        };
-        public static DoubleSlider Green { get; } = new DoubleSlider
-        {
-        };
-        public static DoubleSlider Yellow { get; } = new DoubleSlider
-        {
-        };
-        public static DoubleSlider Orange { get; } = new DoubleSlider
-        {
-        };
-        public static DoubleSlider Brown { get; } = new DoubleSlider
-        {
-        };
-        public static DoubleSlider Cyan { get; } = new DoubleSlider
-        {
-        };
-        public static DoubleSlider Violet { get; } = new DoubleSlider
-        {
-        };
-        public static DoubleSlider Pink { get; } = new DoubleSlider
         {
         };
     }
@@ -579,33 +198,6 @@ namespace Rito.EditorUtilities
         public static Box Black { get; } = new Box
         {
         };
-        public static Box Red { get; } = new Box
-        {
-        };
-        public static Box Blue { get; } = new Box
-        {
-        };
-        public static Box Green { get; } = new Box
-        {
-        };
-        public static Box Yellow { get; } = new Box
-        {
-        };
-        public static Box Orange { get; } = new Box
-        {
-        };
-        public static Box Brown { get; } = new Box
-        {
-        };
-        public static Box Cyan { get; } = new Box
-        {
-        };
-        public static Box Violet { get; } = new Box
-        {
-        };
-        public static Box Pink { get; } = new Box
-        {
-        };
     }
     public partial class HeaderBox
     {
@@ -616,33 +208,6 @@ namespace Rito.EditorUtilities
         {
         };
         public static HeaderBox Black { get; } = new HeaderBox
-        {
-        };
-        public static HeaderBox Red { get; } = new HeaderBox
-        {
-        };
-        public static HeaderBox Blue { get; } = new HeaderBox
-        {
-        };
-        public static HeaderBox Green { get; } = new HeaderBox
-        {
-        };
-        public static HeaderBox Yellow { get; } = new HeaderBox
-        {
-        };
-        public static HeaderBox Orange { get; } = new HeaderBox
-        {
-        };
-        public static HeaderBox Brown { get; } = new HeaderBox
-        {
-        };
-        public static HeaderBox Cyan { get; } = new HeaderBox
-        {
-        };
-        public static HeaderBox Violet { get; } = new HeaderBox
-        {
-        };
-        public static HeaderBox Pink { get; } = new HeaderBox
         {
         };
     }
@@ -657,33 +222,6 @@ namespace Rito.EditorUtilities
         public static FoldoutHeaderBox Black { get; } = new FoldoutHeaderBox
         {
         };
-        public static FoldoutHeaderBox Red { get; } = new FoldoutHeaderBox
-        {
-        };
-        public static FoldoutHeaderBox Blue { get; } = new FoldoutHeaderBox
-        {
-        };
-        public static FoldoutHeaderBox Green { get; } = new FoldoutHeaderBox
-        {
-        };
-        public static FoldoutHeaderBox Yellow { get; } = new FoldoutHeaderBox
-        {
-        };
-        public static FoldoutHeaderBox Orange { get; } = new FoldoutHeaderBox
-        {
-        };
-        public static FoldoutHeaderBox Brown { get; } = new FoldoutHeaderBox
-        {
-        };
-        public static FoldoutHeaderBox Cyan { get; } = new FoldoutHeaderBox
-        {
-        };
-        public static FoldoutHeaderBox Violet { get; } = new FoldoutHeaderBox
-        {
-        };
-        public static FoldoutHeaderBox Pink { get; } = new FoldoutHeaderBox
-        {
-        };
     }
     public partial class HelpBox
     {
@@ -696,33 +234,6 @@ namespace Rito.EditorUtilities
         public static HelpBox Black { get; } = new HelpBox
         {
         };
-        public static HelpBox Red { get; } = new HelpBox
-        {
-        };
-        public static HelpBox Blue { get; } = new HelpBox
-        {
-        };
-        public static HelpBox Green { get; } = new HelpBox
-        {
-        };
-        public static HelpBox Yellow { get; } = new HelpBox
-        {
-        };
-        public static HelpBox Orange { get; } = new HelpBox
-        {
-        };
-        public static HelpBox Brown { get; } = new HelpBox
-        {
-        };
-        public static HelpBox Cyan { get; } = new HelpBox
-        {
-        };
-        public static HelpBox Violet { get; } = new HelpBox
-        {
-        };
-        public static HelpBox Pink { get; } = new HelpBox
-        {
-        };
     }
     public partial class Dropdown<T>
     {
@@ -733,33 +244,6 @@ namespace Rito.EditorUtilities
         {
         };
         public static Dropdown<T> Black { get; } = new Dropdown<T>
-        {
-        };
-        public static Dropdown<T> Red { get; } = new Dropdown<T>
-        {
-        };
-        public static Dropdown<T> Blue { get; } = new Dropdown<T>
-        {
-        };
-        public static Dropdown<T> Green { get; } = new Dropdown<T>
-        {
-        };
-        public static Dropdown<T> Yellow { get; } = new Dropdown<T>
-        {
-        };
-        public static Dropdown<T> Orange { get; } = new Dropdown<T>
-        {
-        };
-        public static Dropdown<T> Brown { get; } = new Dropdown<T>
-        {
-        };
-        public static Dropdown<T> Cyan { get; } = new Dropdown<T>
-        {
-        };
-        public static Dropdown<T> Violet { get; } = new Dropdown<T>
-        {
-        };
-        public static Dropdown<T> Pink { get; } = new Dropdown<T>
         {
         };
     }
