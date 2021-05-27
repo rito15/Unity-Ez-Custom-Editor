@@ -9,9 +9,9 @@ using UnityEditor;
 // 날짜 : 2021-05-24 AM 1:33:13
 // 작성자 : Rito
 
-using REG = Rito.EditorPlugins.RitoEditorGUI;
+using REG = Rito.EditorUtilities.RitoEditorGUI;
 
-namespace Rito.EditorPlugins.Demo
+namespace Rito.EditorUtilities.Demo
 {
     public class Demo_DefaultLayouts : MonoBehaviour
     {

@@ -1,5 +1,5 @@
 {
-    "name": "Rito.EditorPlugins.RitoEditorGUI",
+    "name": "Rito.EditorUtilities.RitoEditorGUI",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

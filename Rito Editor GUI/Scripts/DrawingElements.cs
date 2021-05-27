@@ -22,7 +22,7 @@ using UnityEditor;
 // 날짜 : 2021-05-24 AM 1:32:18
 // 작성자 : Rito
 
-namespace Rito.EditorPlugins
+namespace Rito.EditorUtilities
 {
     using REG = RitoEditorGUI;
 

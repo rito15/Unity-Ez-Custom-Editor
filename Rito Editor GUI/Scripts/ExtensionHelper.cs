@@ -6,7 +6,7 @@ using UnityEngine;
 // 날짜 : 2021-05-24 PM 9:31:38
 // 작성자 : Rito
 
-namespace Rito.EditorPlugins
+namespace Rito.EditorUtilities
 {
     public static class ExtensionHelper
     {

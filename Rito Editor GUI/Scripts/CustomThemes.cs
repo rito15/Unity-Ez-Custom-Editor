@@ -7,7 +7,7 @@ using UnityEditor;
 // 날짜 : 2021-05-26 PM 3:34:43
 // 작성자 : Rito
 
-namespace Rito.EditorPlugins
+namespace Rito.EditorUtilities
 {
     public partial class Label
     {

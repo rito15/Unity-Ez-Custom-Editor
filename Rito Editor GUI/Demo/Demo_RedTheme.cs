@@ -7,7 +7,7 @@ using UnityEditor;
 // 날짜 : 2021-05-27 AM 2:31:20
 // 작성자 : Rito
 
-namespace Rito.EditorPlugins.Demo
+namespace Rito.EditorUtilities.Demo
 {
     public class Demo_RedTheme : MonoBehaviour
     {
