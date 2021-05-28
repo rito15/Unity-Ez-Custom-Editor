@@ -68,7 +68,7 @@ namespace Rito.EditorUtilities.Demo
                     ToggleButton.Default
                     .SetData("Toggle Button", boolValues[b++])
                     .SetTooltip("Toggle Button")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 #endregion
 
@@ -84,95 +84,100 @@ namespace Rito.EditorUtilities.Demo
                     .SetTooltip("Label Field")
                     .DrawLayout();
 
+                SelectableLabel.Default
+                    .SetData("Selectable Label")
+                    .SetTooltip("Selectable Label")
+                    .DrawLayout();
+
                 intValues[i] = 
                     IntField.Default
                     .SetData("Int Field", intValues[i++])
                     .SetTooltip("Int Field")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 floatValues[f] = 
                     FloatField.Default
                     .SetData("Float Field", floatValues[f++])
                     .SetTooltip("Float Field")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 doubleValues[d] = 
                     DoubleField.Default
                     .SetData("Double Field", doubleValues[d++])
                     .SetTooltip("Double Field")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 vector2Value = 
                     Vector2Field.Default
                     .SetData("Vector2 Field", vector2Value)
                     .SetTooltip("Vector2 Field")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 vector2IntValue =
                     Vector2IntField.Default
                     .SetData("Vector2Int Field", vector2IntValue)
                     .SetTooltip("Vector2Int Field")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 vector3Value = 
                     Vector3Field.Default
                     .SetData("Vector3 Field", vector3Value)
                     .SetTooltip("Vector3 Field")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 vector3IntValue =
                     Vector3IntField.Default
                     .SetData("Vector3Int Field", vector3IntValue)
                     .SetTooltip("Vector3Int Field")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 vector4Value = 
                     Vector4Field.Default
                     .SetData("Vector4 Field", vector4Value)
                     .SetTooltip("Vector4 Field")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 stringValues[s] = 
                     StringField.Default
                     .SetData("String Field", stringValues[s++], "Placeholder")
                     .SetTooltip("String Field")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 stringValues[s] =
-                    TextField.Default
+                    TextArea.Default
                     .SetData(stringValues[s++], "Input here..")
                     .SetTooltip("Default TextField", 120f)
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 boolValues[b] =
                     BoolField.Default
                     .SetData("Bool Field", boolValues[b++])
                     .SetTooltip("Bool Field")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 boolValues[b] =
                     BoolField.Default
                     .SetData("Bool Field(Left)", boolValues[b++], true, 0.4f)
                     .SetTooltip("Bool Field(L)")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 boolValues[b] =
                     Toggle.Default
                     .SetData(boolValues[b++])
                     .SetTooltip("Toggle")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 colorValue1 = 
                     ColorField.Default
                     .SetData("Color Field", colorValue1)
                     .SetTooltip("Color Field")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 colorValue2 = 
                     ColorPicker.Default
                     .SetData(colorValue2)
                     .SetTooltip("Color Picker")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 #endregion
 
@@ -187,19 +192,19 @@ namespace Rito.EditorUtilities.Demo
                     IntSlider.Default
                     .SetData("Int Slider", intValues[i++], 0, 10)
                     .SetTooltip("Int Slider", 60f, 20f)
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 floatValues[f] =
                     FloatSlider.Default
                     .SetData("Float Slider", floatValues[f++], 0, 10)
                     .SetTooltip("Float Slider")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 doubleValues[d] =
                     DoubleSlider.Default
                     .SetData("Double Slider", doubleValues[d++], 0, 10)
                     .SetTooltip("Double Slider")
-                    .DrawLayout();
+                    .DrawLayout().Margin(4f).Get();
 
                 #endregion
 
@@ -214,19 +219,19 @@ namespace Rito.EditorUtilities.Demo
                     ObjectField<Material>.Default
                     .SetData("Material Field", materialValue)
                     .SetTooltip("Material Field", 120f)
-                    .DrawLayout();
+                    .DrawLayout().Get();
                 
                 gameObjectValue = 
                     ObjectField<GameObject>.Default
                     .SetData("GameObject Field", gameObjectValue)
                     .SetTooltip("GameObject Field", 120f)
-                    .DrawLayout();
+                    .DrawLayout().Get();
                 
                 objectValue = 
                     ObjectField<UnityEngine.Object>.Default
                     .SetData("Object Field", objectValue)
                     .SetTooltip("Object Field", 120f)
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 #endregion
 
@@ -245,11 +250,11 @@ namespace Rito.EditorUtilities.Demo
                 Label.Default
                     .SetData("Box")
                     .SetTooltip("Label 1")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 Label.Default
                     .SetData("Box")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 #endregion
 
@@ -272,11 +277,11 @@ namespace Rito.EditorUtilities.Demo
 
                 Label.Default
                     .SetData("Content 1")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 Label.Default
                     .SetData("Content 2")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 REG.Space(8f);
 
@@ -291,11 +296,11 @@ namespace Rito.EditorUtilities.Demo
 
                 Label.Default
                     .SetData("Content 1")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 Label.Default
                     .SetData("Content 2")
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 #endregion
 
@@ -308,11 +313,10 @@ namespace Rito.EditorUtilities.Demo
 
                 outlineWidth = 2f;
 
-                boolValues[b] = 
                 FoldoutHeaderBox.Default
                     .SetData(boolValues[b], "Header (Foldout)", outlineWidth, 2f)
                     .SetTooltip("Foldout Header Box(Outlined)", 200f)
-                    .DrawLayout(2, 0f);
+                    .DrawLayout(2, 0f).Get(out boolValues[b]);
 
                 if (boolValues[b])
                 {
@@ -320,11 +324,11 @@ namespace Rito.EditorUtilities.Demo
 
                     Label.Default
                         .SetData("Content 1")
-                        .DrawLayout();
+                        .DrawLayout().Get();
 
                     Label.Default
                         .SetData("Content 2")
-                        .DrawLayout();
+                        .DrawLayout().Get();
 
                     Label.Default.SetTooltip("Label Tooltip", 100f, 20f);
                 }
@@ -342,17 +346,17 @@ namespace Rito.EditorUtilities.Demo
                 HelpBox.Default
                     .SetData("Help Box 1", MessageType.Info)
                     .SetTooltip("Help Box (Info)", 120f)
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 HelpBox.Default
                     .SetData("Help Box 2", MessageType.Warning)
                     .SetTooltip("Help Box (Warning)", 120f)
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 HelpBox.Default
                     .SetData("Help Box 3", MessageType.Error)
                     .SetTooltip("Help Box (Error)", 120f)
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 #endregion
 
@@ -367,19 +371,19 @@ namespace Rito.EditorUtilities.Demo
                 Dropdown<int>.Default
                     .SetData("Int Dropdown", intDropdownList, intValues[i++])
                     .SetTooltip("Int Dropdown", 120f)
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 intValues[i] = 
                 Dropdown<float>.Default
                     .SetData("Float Dropdown", floatDropdownList, intValues[i++])
                     .SetTooltip("Float Dropdown", 120f)
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 intValues[i] = 
                 Dropdown<string>.Default
                     .SetData("String Dropdown", stringDropdownList, intValues[i++])
                     .SetTooltip("String Dropdown", 120f)
-                    .DrawLayout();
+                    .DrawLayout().Get();
 
                 #endregion
 

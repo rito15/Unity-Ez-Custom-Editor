@@ -31,9 +31,18 @@ namespace Rito.EditorUtilities.Demo
 
                 int i = 0, f = 0, d = 0, b = 0;
 
+                Box.White
+                    .SetData(2f)
+                    .Draw(40f);
+
+                Label.White.SetData("Label 1")
+                    .Draw(0.02f, 0.3f, 0f, 18f);
+
+                RitoEditorGUI.Space(40f, 8f);
+
                 HeaderBox.White
                     .SetData("Header Box", 2f, 2f)
-                    .Draw(0f, 1f, 0f, 20f, 40f);
+                    .Draw(20f, 40f);
 
                 RitoEditorGUI.Space(28f);
 
@@ -41,12 +50,18 @@ namespace Rito.EditorUtilities.Demo
                     .SetData("Button")
                     .Draw(0.02f, 0.49f, 0f, 28f);
 
-                m.boolValues[b] = 
                 ToggleButton.White
                     .SetData("Toggle Button", m.boolValues[b++])
-                    .Draw(0.51f, 0.98f, 0f, 28f);
+                    .Draw(0.51f, 0.98f, 0f, 28f).Get(out m.boolValues[b]);
 
                 RitoEditorGUI.Space(40f);
+
+
+
+                TextArea.White
+                    .SetTextAlignment(TextAnchor.UpperLeft)
+                    .SetData("", "Text Area")
+                    .DrawLayout(4);
 
                 RitoEditorGUI.Finalize(this);
             }

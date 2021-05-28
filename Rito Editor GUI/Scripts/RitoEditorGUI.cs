@@ -71,6 +71,17 @@ namespace Rito.EditorUtilities
                 REG.DebugColor = color;
                 return this;
             }
+            /// <summary> 레이아웃 요소의 기본 높이, 하단 여백 설정 </summary>
+            public OptionBuilder SetLayoutControlHeight(float height = 18f, float bottomMargin = 2f)
+            {
+                if(height < 0f) height = 0f;
+                if(bottomMargin < 0f) bottomMargin = 0f;
+
+                LayoutControlHeight = height;
+                LayoutControlBottomMargin = bottomMargin;
+
+                return this;
+            }
             public OptionBuilder AllowTooltip(bool value)
             {
                 REG.ShowTooltip = value;
@@ -155,6 +166,11 @@ namespace Rito.EditorUtilities
         public static float CurrentY { get; private set; }
         public static float ViewWidth { get; private set; }
 
+        /// <summary> 레이아웃 요소의 기본 높이 </summary>
+        public static float LayoutControlHeight { get; private set; } = 18f;
+        /// <summary> 레이아웃 요소의 기본 하단 여백 </summary>
+        public static float LayoutControlBottomMargin { get; private set; } = 2f;
+
         /// <summary> 툴팁을 표시할 수 있는지 여부 </summary>
         public static bool ShowTooltip { get; private set; } = true;
 
@@ -166,6 +182,7 @@ namespace Rito.EditorUtilities
         ***********************************************************************/
         #region .
         public static void Space(float height = 8f) => CurrentY += height;
+        public static void Space(float height, float space) => CurrentY += (height + space);
 
         // xLeft : Rect 좌측 끝의 위치 비율(0 ~ 1)
         // xRight : Rect 우측 끝의 위치 비율(0 ~ 1)

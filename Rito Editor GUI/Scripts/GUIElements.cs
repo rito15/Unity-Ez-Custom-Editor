@@ -45,17 +45,16 @@ namespace Rito.EditorUtilities
         }
     }
 
-    public abstract class GUIElement
+    public abstract class GUIElement<R> where R : GUIElement<R>
     {
         protected Rect rect;
+
+        protected bool isLastLayoutElement = false; // 마지막으로 그린 요소가 레이아웃 요소였는지 여부
 
         protected bool tooltipFlag = false; // 툴팁 등록 여부 설정
         protected float tooltipWidth;
         protected float tooltipHeight;
         protected string tooltipText;
-
-        public const float DefaultControlHeight = 18f; // 컨트롤의 기본 높이
-        public const float DefaultControlMargin = 2f;  // 컨트롤의 기본 하단 여백
 
 
         /// <summary> 마지막으로 그린 Rect 가져오기 </summary>
@@ -65,13 +64,27 @@ namespace Rito.EditorUtilities
         }
 
         /// <summary> 컨트롤에 마우스가 올라갈 경우 툴팁 상자 표시하도록 설정 </summary>
-        public GUIElement SetTooltip(string text, float width = 100f, float height = 20f)
+        public virtual R SetTooltip(string text, float width = 100f, float height = 20f)
         {
             tooltipFlag = true;
             tooltipText = text;
             tooltipWidth = width;
             tooltipHeight = height;
-            return this;
+            return this as R;
+        }
+
+        /// <summary> 하단 여백 지정 </summary>
+        public virtual R Space(float height)
+        {
+            REG.Space(height);
+            return this as R;
+        }
+        /// <summary> 높이를 제외한 하단 여백 지정 </summary>
+        public virtual R Margin(float margin = 0f)
+        {
+            if(!isLastLayoutElement) margin += rect.height;
+            REG.Space(margin);
+            return this as R;
         }
 
         /// <summary> Rect 위치 가시화하여 보여주기 </summary>
@@ -119,6 +132,15 @@ namespace Rito.EditorUtilities
             }
         }
 
+        /// <summary> Draw() 마무리 </summary>
+        protected void EndDraw()
+        {
+            CheckTooltip();
+            if (REG.DebugAllRect)
+                DebugRect();
+            isLastLayoutElement = false;
+        }
+
         // xLeft, xRight : ViewWidth에 대한 Rect 좌우 지점의 비율(0 ~ 1)
         /// <summary> 그려질 지점의 Rect 설정 </summary>
         protected void SetRect(in float xLeft, in float xRight, float yOffset, in float height)
@@ -132,35 +154,34 @@ namespace Rito.EditorUtilities
             rect = REG.GetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
         }
     }
-    public abstract class DrawingElement<T> : GUIElement
+    public abstract class DrawingElement<T, R> : GUIElement<R> where R : DrawingElement<T, R>
     {
-        /// <summary> 컨트롤에 마우스가 올라갈 경우 툴팁 상자 표시하도록 설정 </summary>
-        public new DrawingElement<T> SetTooltip(string text, float width = 100f, float height = 20f)
-        {
-            tooltipFlag = true;
-            tooltipText = text;
-            tooltipWidth = width;
-            tooltipHeight = height;
-            return this;
-        }
+        protected T value;
 
-        public virtual T Draw(in float xLeft, in float xRight, float yOffset, in float height,
+        public virtual R Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             return default;
         }
 
-        /// <summary> 레이아웃 요소로 그리기 </summary>
-        public virtual T DrawLayout()
-        {
-            var ret = Draw(0f, 1f, 0f, DefaultControlHeight);
-            REG.Space(DefaultControlHeight + DefaultControlMargin);
+        public virtual R Draw(in float height)
+            => Draw(0f, 1f, 0f, height, 0f, 0f);
 
-            return ret;
+        /// <summary> 레이아웃 요소로 그리기 </summary>
+        public virtual R DrawLayout()
+        {
+            Draw(0f, 1f, 0f, REG.LayoutControlHeight);
+            REG.Space(REG.LayoutControlHeight + REG.LayoutControlBottomMargin);
+
+            isLastLayoutElement = true;
+            return this as R;
         }
+
+        public virtual T Get() => value;
+        public virtual void Get(out T value) => value = this.value;
     }
 
-    public partial class Label : DrawingElement<None>
+    public partial class Label : DrawingElement<None, Label>
     {
         public static Label Default { get; } = new Label();
         public static Label Bold { get; } = new Label { fontStyle = FontStyle.Bold };
@@ -209,7 +230,7 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public override None Draw(in float xLeft, in float xRight, float yOffset, in float height,
+        public override Label Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -224,14 +245,36 @@ namespace Rito.EditorUtilities
 
             EditorGUI.LabelField(rect, text, style);
 
-            CheckTooltip();
-            if (REG.DebugAllRect)
-                DebugRect();
+            EndDraw();
 
-            return None.Empty;
+            return this;
         }
     }
-    public partial class Button : DrawingElement<bool>
+    public partial class SelectableLabel : Label
+    {
+        public static new SelectableLabel Default { get; } = new SelectableLabel();
+
+        public override Label Draw(in float xLeft, in float xRight, float yOffset, in float height,
+            in float xLeftOffset = 0f, in float xRightOffset = 0f)
+        {
+            SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
+
+            if (style == null)
+                style = new GUIStyle(GUI.skin.label);
+
+            style.normal.textColor = textColor;
+            style.fontSize = fontSize;
+            style.fontStyle = fontStyle;
+            style.alignment = textAlignment;
+
+            EditorGUI.SelectableLabel(rect, text, style);
+
+            EndDraw();
+            return this;
+        }
+    }
+
+    public partial class Button : DrawingElement<bool, Button>
     {
         public static Button Default { get; } = new Button();
         protected GUIStyle style;
@@ -286,7 +329,7 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public override bool Draw(in float xLeft, in float xRight, float yOffset, in float height,
+        public override Button Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -302,25 +345,21 @@ namespace Rito.EditorUtilities
             style.fontStyle = fontStyle;
             style.alignment = textAlignment;
 
-            bool pressed = GUI.Button(rect, text, style);
+            value = GUI.Button(rect, text, style);
 
             GUI.backgroundColor = oldBackgroundColor;
 
-            CheckTooltip();
-            if (REG.DebugAllRect)
-                DebugRect();
-
-            return pressed;
+            EndDraw();
+            return this;
         }
     }
-    public partial class ToggleButton : DrawingElement<bool>
+    public partial class ToggleButton : DrawingElement<bool, ToggleButton>
     {
         public static ToggleButton Default { get; } = new ToggleButton();
         protected GUIStyle style;
 
         // Data
         protected string label = "Toggle Button";
-        protected bool value = false;
 
         // Styles
         public int fontSize = 12;
@@ -413,7 +452,7 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public override bool Draw(in float xLeft, in float xRight, float yOffset, in float height,
+        public override ToggleButton Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -435,22 +474,18 @@ namespace Rito.EditorUtilities
 
             GUI.backgroundColor = oldBackgroundColor;
 
-            CheckTooltip();
-            if (REG.DebugAllRect)
-                DebugRect();
-
-            return value;
+            EndDraw();
+            return this;
         }
     }
 
-    public abstract class ValueField<T> : DrawingElement<T>
+    public abstract class ValueField<T, R> : DrawingElement<T, R> where R : ValueField<T, R>
     {
         protected GUIStyle labelStyle;
         protected GUIStyle inputStyle;
 
         // Data
         protected GUIContent labelContent;
-        protected T value;
         protected float widthThreshold = 0.4f;
 
         // Styles - Label
@@ -465,8 +500,61 @@ namespace Rito.EditorUtilities
         public int inputFontSize = 12;
         public FontStyle inputFontStyle = FontStyle.Normal;
         public TextAnchor inputTextAlignment = TextAnchor.MiddleLeft;
+        
+        /***********************************************************************
+        *                               Style Setters
+        ***********************************************************************/
+        #region .
+        public R SetLabelColor(Color color)
+        {
+            this.labelColor = color;
+            return this as R;
+        }
+        public R SetLabelFontSize(int fontSize)
+        {
+            this.labelFontSize = fontSize;
+            return this as R;
+        }
+        public R SetLabelFontStyle(FontStyle fontStyle)
+        {
+            this.labelFontStyle = fontStyle;
+            return this as R;
+        }
+        public R SetLabelTextAlignment(TextAnchor alignment)
+        {
+            this.labelAlignment = alignment;
+            return this as R;
+        }
 
-        public override T Draw(in float xLeft, in float xRight, float yOffset, in float height,
+        public R SetInputTextColor(Color color)
+        {
+            this.inputTextColor = color;
+            return this as R;
+        }
+        public R SetInputBackgroundColor(Color color)
+        {
+            this.inputBackgroundColor = color;
+            return this as R;
+        }
+        public R SetInputFontSize(int fontSize)
+        {
+            this.inputFontSize = fontSize;
+            return this as R;
+        }
+        public R SetInputFontStyle(FontStyle fontStyle)
+        {
+            this.inputFontStyle = fontStyle;
+            return this as R;
+        }
+        public R SetInputTextAlignment(TextAnchor allignment)
+        {
+            this.inputTextAlignment = allignment;
+            return this as R;
+        }
+
+        #endregion
+
+        public override R Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -475,7 +563,7 @@ namespace Rito.EditorUtilities
                 labelStyle = new GUIStyle(GUI.skin.label);
 
             if(inputStyle == null)
-                inputStyle = new GUIStyle(GUI.skin.textField);
+                InitInputStyle();
 
             ref float t = ref widthThreshold;
             float omt = 1f - t;
@@ -499,91 +587,38 @@ namespace Rito.EditorUtilities
 
             GUI.backgroundColor = oldBackgroundColor;
 
-            CheckTooltip();
-            if (REG.DebugAllRect)
-                DebugRect();
-
-            return value;
+            EndDraw();
+            return this as R;
         }
+
+        protected virtual void InitInputStyle() 
+            => inputStyle = new GUIStyle(GUI.skin.textField);
 
         protected abstract void DrawFields(in Rect labelRect, in Rect inputRect);
     }
-    public abstract class ValueFieldWithSetters<T> : ValueField<T>
+    public abstract class ValueFieldWithSetter<T, R> : ValueField<T, R>
+        where R : ValueFieldWithSetter<T, R>
     {
-        /***********************************************************************
-        *                               Style Setters
-        ***********************************************************************/
-        #region .
-        public ValueFieldWithSetters<T> SetLabelColor(Color color)
-        {
-            this.labelColor = color;
-            return this;
-        }
-        public ValueFieldWithSetters<T> SetLabelFontSize(int fontSize)
-        {
-            this.labelFontSize = fontSize;
-            return this;
-        }
-        public ValueFieldWithSetters<T> SetLabelFontStyle(FontStyle fontStyle)
-        {
-            this.labelFontStyle = fontStyle;
-            return this;
-        }
-        public ValueFieldWithSetters<T> SetLabelTextAlignment(TextAnchor alignment)
-        {
-            this.labelAlignment = alignment;
-            return this;
-        }
-
-        public ValueFieldWithSetters<T> SetInputTextColor(Color color)
-        {
-            this.inputTextColor = color;
-            return this;
-        }
-        public ValueFieldWithSetters<T> SetInputBackgroundColor(Color color)
-        {
-            this.inputBackgroundColor = color;
-            return this;
-        }
-        public ValueFieldWithSetters<T> SetInputFontSize(int fontSize)
-        {
-            this.inputFontSize = fontSize;
-            return this;
-        }
-        public ValueFieldWithSetters<T> SetInputFontStyle(FontStyle fontStyle)
-        {
-            this.inputFontStyle = fontStyle;
-            return this;
-        }
-        public ValueFieldWithSetters<T> SetInputTextAlignment(TextAnchor allignment)
-        {
-            this.inputTextAlignment = allignment;
-            return this;
-        }
-
-        #endregion
-
-        public ValueFieldWithSetters<T> SetData(string label, T value, float widthThreshold = 0.4f)
+        public R SetData(string label, T value, float widthThreshold = 0.4f)
         {
             this.labelContent = new GUIContent(label);
 
             this.value = value;
             this.widthThreshold = widthThreshold;
-            return this;
+            return this as R;
         }
     }
 
-    public partial class IntField : ValueFieldWithSetters<int>
+    public partial class IntField : ValueFieldWithSetter<int, IntField>
     {
         public static IntField Default { get; } = new IntField();
-
         protected override void DrawFields(in Rect labelRect, in Rect inputRect)
         {
             EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
             value = EditorGUI.IntField(inputRect, value, inputStyle);
         }
     }
-    public partial class FloatField : ValueFieldWithSetters<float>
+    public partial class FloatField : ValueFieldWithSetter<float, FloatField>
     {
         public static FloatField Default { get; } = new FloatField();
 
@@ -593,7 +628,7 @@ namespace Rito.EditorUtilities
             value = EditorGUI.FloatField(inputRect, value, inputStyle);
         }
     }
-    public partial class DoubleField : ValueFieldWithSetters<double>
+    public partial class DoubleField : ValueFieldWithSetter<double, DoubleField>
     {
         public static DoubleField Default { get; } = new DoubleField();
 
@@ -603,60 +638,11 @@ namespace Rito.EditorUtilities
             value = EditorGUI.DoubleField(inputRect, value, inputStyle);
         }
     }
-    public partial class StringField : ValueFieldWithSetters<string>
+    public partial class StringField : ValueFieldWithSetter<string, StringField>
     {
         public static StringField Default { get; } = new StringField();
 
         protected string placeholder = "";
-
-        /***********************************************************************
-        *                               Style Setters
-        ***********************************************************************/
-        #region .
-
-        public new StringField SetLabelColor(Color color)
-        {
-            this.labelColor = color;
-            return this;
-        }
-        public new StringField SetLabelFontSize(int fontSize)
-        {
-            this.labelFontSize = fontSize;
-            return this;
-        }
-        public new StringField SetLabelFontStyle(FontStyle fontStyle)
-        {
-            this.labelFontStyle = fontStyle;
-            return this;
-        }
-        
-        public new StringField SetInputTextColor(Color color)
-        {
-            this.inputTextColor = color;
-            return this;
-        }
-        public new StringField SetInputBackgroundColor(Color color)
-        {
-            this.inputBackgroundColor = color;
-            return this;
-        }
-        public new StringField SetInputFontSize(int fontSize)
-        {
-            this.inputFontSize = fontSize;
-            return this;
-        }
-        public new StringField SetInputFontStyle(FontStyle fontStyle)
-        {
-            this.inputFontStyle = fontStyle;
-            return this;
-        }
-        public new StringField SetInputTextAlignment(TextAnchor allignment)
-        {
-            this.inputTextAlignment = allignment;
-            return this;
-        }
-
-        #endregion
 
         public StringField SetData(string label, string value, string placeholder = "", float widthThreshold = 0.4f)
         {
@@ -683,9 +669,10 @@ namespace Rito.EditorUtilities
         }
     }
 
-    public abstract class VectorFieldBase<T> : ValueFieldWithSetters<T>
+    public abstract class VectorFieldBase<T, R> : ValueFieldWithSetter<T, R>
+        where R : VectorFieldBase<T, R>
     {
-        public override T Draw(in float xLeft, in float xRight, float yOffset, in float height,
+        public override R Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -726,11 +713,8 @@ namespace Rito.EditorUtilities
             EditorStyles.numberField.fontStyle = oldFontStyle;
             EditorStyles.numberField.alignment = oldTextAlign;
 
-            CheckTooltip();
-            if (REG.DebugAllRect)
-                DebugRect();
-
-            return value;
+            EndDraw();
+            return this as R;
         }
         protected override void DrawFields(in Rect labelRect, in Rect inputRect)
         {
@@ -745,7 +729,7 @@ namespace Rito.EditorUtilities
         }
         protected abstract void DrawVectorField(in Rect inputRect);
     }
-    public partial class Vector2Field : VectorFieldBase<Vector2>
+    public partial class Vector2Field : VectorFieldBase<Vector2, Vector2Field>
     {
         public static Vector2Field Default { get; } = new Vector2Field();
 
@@ -754,7 +738,7 @@ namespace Rito.EditorUtilities
             value = EditorGUI.Vector2Field(inputRect, "", value);
         }
     }
-    public partial class Vector3Field : VectorFieldBase<Vector3>
+    public partial class Vector3Field : VectorFieldBase<Vector3, Vector3Field>
     {
         public static Vector3Field Default { get; } = new Vector3Field();
 
@@ -763,7 +747,7 @@ namespace Rito.EditorUtilities
             value = EditorGUI.Vector3Field(inputRect, "", value);
         }
     }
-    public partial class Vector4Field : VectorFieldBase<Vector4>
+    public partial class Vector4Field : VectorFieldBase<Vector4, Vector4Field>
     {
         public static Vector4Field Default { get; } = new Vector4Field();
 
@@ -772,7 +756,7 @@ namespace Rito.EditorUtilities
             value = EditorGUI.Vector4Field(inputRect, "", value);
         }
     }
-    public partial class Vector2IntField : VectorFieldBase<Vector2Int>
+    public partial class Vector2IntField : VectorFieldBase<Vector2Int, Vector2IntField>
     {
         public static Vector2IntField Default { get; } = new Vector2IntField();
 
@@ -781,7 +765,7 @@ namespace Rito.EditorUtilities
             value = EditorGUI.Vector2IntField(inputRect, "", value);
         }
     }
-    public partial class Vector3IntField : VectorFieldBase<Vector3Int>
+    public partial class Vector3IntField : VectorFieldBase<Vector3Int, Vector3IntField>
     {
         public static Vector3IntField Default { get; } = new Vector3IntField();
 
@@ -791,7 +775,7 @@ namespace Rito.EditorUtilities
         }
     }
 
-    public partial class ObjectField<T> : ValueFieldWithSetters<T> where T : UnityEngine.Object
+    public partial class ObjectField<T> : ValueFieldWithSetter<T, ObjectField<T>> where T : UnityEngine.Object
     {
         public static ObjectField<T> Default { get; } = new ObjectField<T>();
 
@@ -807,7 +791,7 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public override T Draw(in float xLeft, in float xRight, float yOffset, in float height,
+        public override ObjectField<T> Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -850,16 +834,13 @@ namespace Rito.EditorUtilities
             EditorStyles.objectField.fontStyle = oldFontStyle;
             EditorStyles.objectField.alignment = oldTextAlign;
 
-            CheckTooltip();
-            if (REG.DebugAllRect)
-                DebugRect();
-
-            return value;
+            EndDraw();
+            return this;
         }
 
         protected override void DrawFields(in Rect labelRect, in Rect inputRect) { }
     }
-    public partial class Dropdown<T> : ValueField<int>
+    public partial class Dropdown<T> : ValueField<int, Dropdown<T>>
     {
         public static Dropdown<T> Default { get; } = new Dropdown<T>();
 
@@ -868,59 +849,6 @@ namespace Rito.EditorUtilities
         protected string[] stringValues;
 
         // value : selected Index
-
-        /***********************************************************************
-        *                               Style Setters
-        ***********************************************************************/
-        #region .
-        public Dropdown<T> SetLabelColor(Color color)
-        {
-            this.labelColor = color;
-            return this;
-        }
-        public Dropdown<T> SetLabelFontSize(int fontSize)
-        {
-            this.labelFontSize = fontSize;
-            return this;
-        }
-        public Dropdown<T> SetLabelFontStyle(FontStyle fontStyle)
-        {
-            this.labelFontStyle = fontStyle;
-            return this;
-        }
-        public Dropdown<T> SetLabelTextAlignment(TextAnchor alignment)
-        {
-            this.labelAlignment = alignment;
-            return this;
-        }
-
-        public Dropdown<T> SetInputTextColor(Color color)
-        {
-            this.inputTextColor = color;
-            return this;
-        }
-        public Dropdown<T> SetInputBackgroundColor(Color color)
-        {
-            this.inputBackgroundColor = color;
-            return this;
-        }
-        public Dropdown<T> SetInputFontSize(int fontSize)
-        {
-            this.inputFontSize = fontSize;
-            return this;
-        }
-        public Dropdown<T> SetInputFontStyle(FontStyle fontStyle)
-        {
-            this.inputFontStyle = fontStyle;
-            return this;
-        }
-        public Dropdown<T> SetInputTextAlignment(TextAnchor allignment)
-        {
-            this.inputTextAlignment = allignment;
-            return this;
-        }
-
-        #endregion
 
         public Dropdown<T> SetData(string label, T[] options, int selectedIndex, float widthThreshold = 0.4f)
         {
@@ -936,6 +864,10 @@ namespace Rito.EditorUtilities
             return this;
         }
 
+
+        protected override void InitInputStyle()
+            => inputStyle = new GUIStyle(EditorStyles.popup);
+
         protected override void DrawFields(in Rect labelRect, in Rect inputRect)
         {
             EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
@@ -943,13 +875,12 @@ namespace Rito.EditorUtilities
         }
     }
 
-    public partial class TextField : DrawingElement<string>
+    public partial class TextArea : DrawingElement<string, TextArea>
     {
-        public static TextField Default { get; } = new TextField();
+        public static TextArea Default { get; } = new TextArea();
         protected GUIStyle inputStyle;
 
         // Data
-        protected string value = "";
         protected string placeholder = "";
 
         // Styles - Input Field
@@ -964,27 +895,27 @@ namespace Rito.EditorUtilities
         ***********************************************************************/
         #region .
 
-        public TextField SetTextColor(Color color)
+        public TextArea SetTextColor(Color color)
         {
             this.textColor = color;
             return this;
         }
-        public TextField SetBackgroundColor(Color color)
+        public TextArea SetBackgroundColor(Color color)
         {
             this.backgroundColor = color;
             return this;
         }
-        public TextField SetFontSize(int fontSize)
+        public TextArea SetFontSize(int fontSize)
         {
             this.fontSize = fontSize;
             return this;
         }
-        public TextField SetFontStyle(FontStyle fontStyle)
+        public TextArea SetFontStyle(FontStyle fontStyle)
         {
             this.fontStyle = fontStyle;
             return this;
         }
-        public TextField SetTextAlignment(TextAnchor allignment)
+        public TextArea SetTextAlignment(TextAnchor allignment)
         {
             this.textAlignment = allignment;
             return this;
@@ -992,14 +923,14 @@ namespace Rito.EditorUtilities
 
         #endregion
 
-        public TextField SetData(string value, string placeholder = "")
+        public TextArea SetData(string value, string placeholder = "")
         {
             this.value = value;
             this.placeholder = placeholder;
             return this;
         }
 
-        public override string Draw(in float xLeft, in float xRight, float yOffset, in float height,
+        public override TextArea Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -1016,7 +947,7 @@ namespace Rito.EditorUtilities
             inputStyle.alignment = textAlignment;
 
             GUI.SetNextControlName("TextField");
-            value = EditorGUI.TextField(rect, value, inputStyle);
+            value = EditorGUI.TextArea(rect, value, inputStyle);
 
             // Placeholder
             inputStyle.normal.textColor = textColor.SetA(0.5f);
@@ -1026,21 +957,28 @@ namespace Rito.EditorUtilities
 
             GUI.backgroundColor = oldBackgroundColor;
 
-            CheckTooltip();
-            if (REG.DebugAllRect)
-                DebugRect();
+            EndDraw();
+            return this;
+        }
+        public TextArea DrawLayout(int lineCount)
+        {
+            if(lineCount < 1) lineCount = 1;
+            float height = (REG.LayoutControlHeight + REG.LayoutControlBottomMargin) * lineCount;
 
-            return value;
+            Draw(0f, 1f, 0f, height - REG.LayoutControlBottomMargin);
+            REG.Space(height);
+
+            isLastLayoutElement = true;
+            return this;
         }
     }
-    public partial class BoolField : DrawingElement<bool>
+    public partial class BoolField : DrawingElement<bool, BoolField>
     {
         public static BoolField Default { get; } = new BoolField();
         protected GUIStyle labelStyle;
 
         // Data
         protected GUIContent labelContent;
-        protected bool value = false;
         protected float widthThreshold = 0.4f;
         protected bool toggleLeft = false;
 
@@ -1097,7 +1035,7 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public override bool Draw(in float xLeft, in float xRight, float yOffset, in float height,
+        public override BoolField Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -1126,21 +1064,14 @@ namespace Rito.EditorUtilities
 
             GUI.color = oldToggleColor;
 
-            // End
-            CheckTooltip();
-            if (REG.DebugAllRect)
-                DebugRect();
-
-            return value;
+            EndDraw();
+            return this;
         }
     }
-    public partial class Toggle : DrawingElement<bool>
+    public partial class Toggle : DrawingElement<bool, Toggle>
     {
         public static Toggle Default { get; } = new Toggle();
         protected GUIStyle style;
-
-        // Data
-        protected bool value = false;
 
         // Style
         public Color color = Color.white;
@@ -1163,7 +1094,7 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public override bool Draw(in float xLeft, in float xRight, float yOffset, in float height,
+        public override Toggle Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -1178,21 +1109,17 @@ namespace Rito.EditorUtilities
 
             GUI.color = oldBackgroundColor;
 
-            CheckTooltip();
-            if (REG.DebugAllRect)
-                DebugRect();
-
-            return value;
+            EndDraw();
+            return this;
         }
     }
-    public partial class ColorField : DrawingElement<Color>
+    public partial class ColorField : DrawingElement<Color, ColorField>
     {
         public static ColorField Default { get; } = new ColorField();
         protected GUIStyle labelStyle;
 
         // Data
         protected GUIContent labelContent;
-        protected Color value = Color.white;
         protected float widthThreshold = 0.4f;
 
         // Styles - Label
@@ -1247,7 +1174,7 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public override Color Draw(in float xLeft, in float xRight, float yOffset, in float height,
+        public override ColorField Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -1278,20 +1205,14 @@ namespace Rito.EditorUtilities
 
             GUI.backgroundColor = oldColor;
 
-            // End
-            CheckTooltip();
-            if (REG.DebugAllRect)
-                DebugRect();
-
-            return value;
+            EndDraw();
+            return this;
         }
     }
-    public partial class ColorPicker : DrawingElement<Color>
+    public partial class ColorPicker : DrawingElement<Color, ColorPicker>
     {
         public static ColorPicker Default { get; } = new ColorPicker();
 
-        // Data
-        protected Color value = Color.white;
 
         // Styles - Color Picker
         public Color colorPickerColor = Color.white;
@@ -1303,7 +1224,7 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public override Color Draw(in float xLeft, in float xRight, float yOffset, in float height,
+        public override ColorPicker Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -1315,23 +1236,18 @@ namespace Rito.EditorUtilities
 
             GUI.backgroundColor = oldColor;
 
-            // End
-            CheckTooltip();
-            if (REG.DebugAllRect)
-                DebugRect();
-
-            return value;
+            EndDraw();
+            return this;
         }
     }
 
-    public abstract class ValueSlider<T> : DrawingElement<T>
+    public abstract class ValueSlider<T, R> : DrawingElement<T, R> where R : ValueSlider<T, R>
     {
         protected GUIStyle labelStyle;
         protected GUIStyle sliderStyle;
 
         // Data
         protected GUIContent labelContent;
-        protected T value;
         protected T minValue;
         protected T maxValue;
         protected float widthThreshold = 0.4f;
@@ -1351,41 +1267,41 @@ namespace Rito.EditorUtilities
         ***********************************************************************/
         #region .
 
-        public ValueSlider<T> SetLabelColor(Color color)
+        public R SetLabelColor(Color color)
         {
             this.labelColor = color;
-            return this;
+            return this as R;
         }
-        public ValueSlider<T> SetLabelFontSize(int fontSize)
+        public R SetLabelFontSize(int fontSize)
         {
             this.labelFontSize = fontSize;
-            return this;
+            return this as R;
         }
-        public ValueSlider<T> SetLabelFontStyle(FontStyle fontStyle)
+        public R SetLabelFontStyle(FontStyle fontStyle)
         {
             this.labelFontStyle = fontStyle;
-            return this;
+            return this as R;
         }
-        public ValueSlider<T> SetLabelTextAlignment(TextAnchor alignment)
+        public R SetLabelTextAlignment(TextAnchor alignment)
         {
             this.labelAlignment = alignment;
-            return this;
+            return this as R;
         }
-
-        public ValueSlider<T> SetSliderColor(Color color)
+        
+        public R SetSliderColor(Color color)
         {
             this.sliderColor = color;
-            return this;
+            return this as R;
         }
-        public ValueSlider<T> SetValueColor(Color color)
+        public R SetValueColor(Color color)
         {
             this.valueColor = color;
-            return this;
+            return this as R;
         }
 
         #endregion
 
-        public ValueSlider<T> SetData(string label, T value, T minValue, T maxValue, float widthThreshold = 0.4f)
+        public R SetData(string label, T value, T minValue, T maxValue, float widthThreshold = 0.4f)
         {
             this.labelContent = new GUIContent(label);
 
@@ -1393,10 +1309,10 @@ namespace Rito.EditorUtilities
             this.minValue = minValue;
             this.maxValue = maxValue;
             this.widthThreshold = widthThreshold;
-            return this;
+            return this as R;
         }
 
-        public override T Draw(in float xLeft, in float xRight, float yOffset, in float height,
+        public override R Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -1427,15 +1343,12 @@ namespace Rito.EditorUtilities
             GUI.backgroundColor = oldBackgroundColor;
             GUI.contentColor = oldContentColor;
 
-            CheckTooltip();
-            if (REG.DebugAllRect)
-                DebugRect();
-
-            return value;
+            EndDraw();
+            return this as R;
         }
         protected abstract void DrawGUI(in Rect labelRect, in Rect sliderRect);
     }
-    public partial class IntSlider : ValueSlider<int>
+    public partial class IntSlider : ValueSlider<int, IntSlider>
     {
         public static IntSlider Default { get; } = new IntSlider();
 
@@ -1445,7 +1358,7 @@ namespace Rito.EditorUtilities
             value = EditorGUI.IntSlider(sliderRect, value, minValue, maxValue);
         }
     }
-    public partial class FloatSlider : ValueSlider<float>
+    public partial class FloatSlider : ValueSlider<float, FloatSlider>
     {
         public static FloatSlider Default { get; } = new FloatSlider();
 
@@ -1455,7 +1368,7 @@ namespace Rito.EditorUtilities
             value = EditorGUI.Slider(sliderRect, value, minValue, maxValue);
         }
     }
-    public partial class DoubleSlider : ValueSlider<double>
+    public partial class DoubleSlider : ValueSlider<double, DoubleSlider>
     {
         public static DoubleSlider Default { get; } = new DoubleSlider();
 
@@ -1466,7 +1379,7 @@ namespace Rito.EditorUtilities
         }
     }
 
-    public partial class Box : GUIElement
+    public partial class Box : GUIElement<Box>
     {
         public static Box Default { get; } = new Box();
 
@@ -1501,17 +1414,7 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        /// <summary> 컨트롤에 마우스가 올라갈 경우 툴팁 상자 표시하도록 설정 </summary>
-        public new Box SetTooltip(string text, float width = 100f, float height = 20f)
-        {
-            tooltipFlag = true;
-            tooltipText = text;
-            tooltipWidth = width;
-            tooltipHeight = height;
-            return this;
-        }
-
-        public void Draw(in float xLeft, in float xRight, float yOffset, in float height,
+        public Box Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -1536,10 +1439,11 @@ namespace Rito.EditorUtilities
             }
             EditorGUI.DrawRect(rect, color);
 
-            CheckTooltip();
-            if (REG.DebugAllRect)
-                DebugRect();
+            EndDraw();
+            return this;
         }
+
+        public Box Draw(in float height) => Draw(0f, 1f, 0f, height, 0f, 0f);
 
         /// <summary>
         /// 레이아웃 요소들을 감싸는 박스 그리기
@@ -1547,17 +1451,20 @@ namespace Rito.EditorUtilities
         /// <param name="contentCount">레이아웃 요소 개수</param>
         /// <param name="paddingHorizontal">좌우 내부 여백</param>
         /// <param name="paddingVertical">상하 내부 여백</param>
-        public void DrawLayout(int contentCount, float paddingHorizontal = 0f, float paddingVertical = 0f)
+        public Box DrawLayout(int contentCount, float paddingHorizontal = 0f, float paddingVertical = 0f)
         {
             if (contentCount < 0) contentCount = 0;
 
-            const float OneHeight = DefaultControlHeight + DefaultControlMargin;
+            float OneHeight = REG.LayoutControlHeight + REG.LayoutControlBottomMargin;
             Draw(0f, 1f, -paddingVertical, OneHeight * contentCount + paddingVertical * 2f,
                 -paddingHorizontal, paddingHorizontal);
+
+            isLastLayoutElement = true;
+            return this;
         }
     }
 
-    public abstract class HeaderBoxBase<T> : GUIElement
+    public abstract class HeaderBoxBase<R> : GUIElement<R> where R : HeaderBoxBase<R>
     {
         protected GUIStyle headerStyle;
 
@@ -1576,31 +1483,8 @@ namespace Rito.EditorUtilities
         public Color headerColor = Color.gray;
         public Color contentColor = Color.gray.SetA(0.5f);
         public Color outlineColor = Color.black;
-
-        public abstract T Draw(in float xLeft, in float xRight, float yOffset,
-            in float headerHeight, in float contentHeight,
-            in float xLeftOffset = 0f, in float xRightOffset = 0f);
-
-        /// <summary>
-        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
-        /// </summary>
-        /// <param name="contentCount">레이아웃 요소 개수</param>
-        /// <param name="paddingHorizontal">좌우 내부 여백</param>
-        /// <param name="paddingVertical">상하 내부 여백</param>
-        public T DrawLayout(int contentCount, float paddingHorizontal = 0f, float paddingVertical = 0f)
-        {
-            if (contentCount < 0) contentCount = 0;
-
-            const float OneHeight = DefaultControlHeight + DefaultControlMargin;
-            var ret = Draw(0f, 1f, -paddingVertical, OneHeight, OneHeight * contentCount + paddingVertical * 2f,
-                -paddingHorizontal, paddingHorizontal);
-
-            REG.Space(OneHeight);
-
-            return ret;
-        }
     }
-    public partial class HeaderBox : HeaderBoxBase<None>
+    public partial class HeaderBox : HeaderBoxBase<HeaderBox>
     {
         public static HeaderBox Default { get; } = new HeaderBox();
 
@@ -1656,17 +1540,7 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        /// <summary> 컨트롤에 마우스가 올라갈 경우 툴팁 상자 표시하도록 설정 </summary>
-        public new HeaderBox SetTooltip(string text, float width = 100f, float height = 20f)
-        {
-            tooltipFlag = true;
-            tooltipText = text;
-            tooltipWidth = width;
-            tooltipHeight = height;
-            return this;
-        }
-
-        public override None Draw(in float xLeft, in float xRight, float yOffset, 
+        public void Draw(in float xLeft, in float xRight, float yOffset, 
             in float headerHeight, in float contentHeight,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
@@ -1710,14 +1584,31 @@ namespace Rito.EditorUtilities
             EditorGUI.DrawRect(contentRect, contentColor);
             EditorGUI.LabelField(headerTextRect, headerText, headerStyle);
 
-            CheckTooltip();
-            if (REG.DebugAllRect)
-                DebugRect();
+            EndDraw();
+        }
+        
+        public void Draw(in float headerHeight, in float contentHeight)
+            => Draw(0f, 1f, 0f, headerHeight, contentHeight, 0f, 0f);
 
-            return None.Empty;
+        /// <summary>
+        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
+        /// </summary>
+        /// <param name="contentCount">레이아웃 요소 개수</param>
+        /// <param name="paddingHorizontal">좌우 내부 여백</param>
+        /// <param name="paddingVertical">상하 내부 여백</param>
+        public void DrawLayout(int contentCount, float paddingHorizontal = 0f, float paddingVertical = 0f)
+        {
+            if (contentCount < 0) contentCount = 0;
+
+            float OneHeight = REG.LayoutControlHeight + REG.LayoutControlBottomMargin;
+            Draw(0f, 1f, -paddingVertical, OneHeight, OneHeight * contentCount + paddingVertical * 2f,
+                -paddingHorizontal, paddingHorizontal);
+
+            REG.Space(OneHeight);
+            isLastLayoutElement = true;
         }
     }
-    public partial class FoldoutHeaderBox : HeaderBoxBase<bool>
+    public partial class FoldoutHeaderBox : HeaderBoxBase<FoldoutHeaderBox>
     {
         public static FoldoutHeaderBox Default { get; } = new FoldoutHeaderBox();
 
@@ -1776,17 +1667,7 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        /// <summary> 컨트롤에 마우스가 올라갈 경우 툴팁 상자 표시하도록 설정 </summary>
-        public new FoldoutHeaderBox SetTooltip(string text, float width = 100f, float height = 20f)
-        {
-            tooltipFlag = true;
-            tooltipText = text;
-            tooltipWidth = width;
-            tooltipHeight = height;
-            return this;
-        }
-
-        public override bool Draw(in float xLeft, in float xRight, float yOffset, 
+        public FoldoutHeaderBox Draw(in float xLeft, in float xRight, float yOffset, 
             in float headerHeight, in float contentHeight,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
@@ -1862,12 +1743,36 @@ namespace Rito.EditorUtilities
                     rect = headerRect;
                 DebugRect();
             }
-
-            return foldout;
+            isLastLayoutElement = false;
+            return this;
         }
+        public FoldoutHeaderBox Draw(in float headerHeight, in float contentHeight)
+            => Draw(0f, 1f, 0f, headerHeight, contentHeight, 0f, 0f);
+
+        /// <summary>
+        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
+        /// </summary>
+        /// <param name="contentCount">레이아웃 요소 개수</param>
+        /// <param name="paddingHorizontal">좌우 내부 여백</param>
+        /// <param name="paddingVertical">상하 내부 여백</param>
+        public FoldoutHeaderBox DrawLayout(int contentCount, float paddingHorizontal = 0f, float paddingVertical = 0f)
+        {
+            if (contentCount < 0) contentCount = 0;
+
+            float OneHeight = REG.LayoutControlHeight + REG.LayoutControlBottomMargin;
+            Draw(0f, 1f, -paddingVertical, OneHeight, OneHeight * contentCount + paddingVertical * 2f,
+                -paddingHorizontal, paddingHorizontal);
+
+            REG.Space(OneHeight);
+            isLastLayoutElement = true;
+            return this;
+        }
+
+        public virtual bool Get() => foldout;
+        public virtual void Get(out bool value) => value = this.foldout;
     }
 
-    public partial class HelpBox : DrawingElement<None>
+    public partial class HelpBox : DrawingElement<None, HelpBox>
     {
         public static HelpBox Default { get; } = new HelpBox();
 
@@ -1922,7 +1827,7 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public override None Draw(in float xLeft, in float xRight, float yOffset, in float height,
+        public override HelpBox Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -1949,11 +1854,8 @@ namespace Rito.EditorUtilities
             helpBoxStyle.fontStyle = oldFontStyle;
             helpBoxStyle.alignment = oldAlignment;
 
-            CheckTooltip();
-            if (REG.DebugAllRect)
-                DebugRect();
-
-            return None.Empty;
+            EndDraw();
+            return this;
         }
     }
 

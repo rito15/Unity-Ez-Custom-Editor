@@ -24,6 +24,21 @@ namespace Rito.EditorUtilities
             textColor = RColor.black
         };
     }
+    public partial class SelectableLabel
+    {
+        public static new SelectableLabel Gray { get; } = new SelectableLabel
+        {
+            textColor = RColor.Gray.Bright
+        };
+        public static new SelectableLabel White { get; } = new SelectableLabel
+        {
+            textColor = RColor.white
+        };
+        public static new SelectableLabel Black { get; } = new SelectableLabel
+        {
+            textColor = RColor.black
+        };
+    }
     public partial class Button
     {
         public static Button Gray { get; } = new Button
@@ -88,11 +103,73 @@ namespace Rito.EditorUtilities
     }
     public partial class StringField
     {
-        public static StringField Gray { get; } = new StringField { };
+        public static StringField Gray { get; } = new StringField 
+        { 
+        };
         public static StringField White { get; } = new StringField
         {
         };
         public static StringField Black { get; } = new StringField
+        {
+        };
+    }
+    public partial class Vector2Field
+    {
+        public static Vector2Field Gray { get; } = new Vector2Field
+        {
+        };
+        public static Vector2Field White { get; } = new Vector2Field
+        {
+        };
+        public static Vector2Field Black { get; } = new Vector2Field
+        {
+        };
+    }
+    public partial class Vector3Field
+    {
+        public static Vector3Field Gray { get; } = new Vector3Field
+        {
+        };
+        public static Vector3Field White { get; } = new Vector3Field
+        {
+        };
+        public static Vector3Field Black { get; } = new Vector3Field
+        {
+        };
+    }
+    public partial class Vector4Field
+    {
+        public static Vector4Field Gray { get; } = new Vector4Field
+        {
+        };
+        public static Vector4Field White { get; } = new Vector4Field
+        {
+        };
+        public static Vector4Field Black { get; } = new Vector4Field
+        {
+        };
+    }
+    public partial class Vector2IntField
+    {
+        public static Vector2IntField Gray { get; } = new Vector2IntField
+        {
+        };
+        public static Vector2IntField White { get; } = new Vector2IntField
+        {
+        };
+        public static Vector2IntField Black { get; } = new Vector2IntField
+        {
+        };
+    }
+    public partial class Vector3IntField
+    {
+        public static Vector3IntField Gray { get; } = new Vector3IntField
+        {
+        };
+        public static Vector3IntField White { get; } = new Vector3IntField
+        {
+        };
+        public static Vector3IntField Black { get; } = new Vector3IntField
         {
         };
     }
@@ -106,13 +183,25 @@ namespace Rito.EditorUtilities
         {
         };
     }
-    public partial class TextField
+    public partial class Dropdown<T>
     {
-        public static TextField Gray { get; } = new TextField { };
-        public static TextField White { get; } = new TextField
+        public static Dropdown<T> White { get; } = new Dropdown<T>
         {
         };
-        public static TextField Black { get; } = new TextField
+        public static Dropdown<T> Gray { get; } = new Dropdown<T>
+        {
+        };
+        public static Dropdown<T> Black { get; } = new Dropdown<T>
+        {
+        };
+    }
+    public partial class TextArea
+    {
+        public static TextArea Gray { get; } = new TextArea { };
+        public static TextArea White { get; } = new TextArea
+        {
+        };
+        public static TextArea Black { get; } = new TextArea
         {
         };
     }
@@ -143,6 +232,16 @@ namespace Rito.EditorUtilities
         {
         };
         public static ColorField Black { get; } = new ColorField
+        {
+        };
+    }
+    public partial class ColorPicker
+    {
+        public static ColorPicker Gray { get; } = new ColorPicker { };
+        public static ColorPicker White { get; } = new ColorPicker
+        {
+        };
+        public static ColorPicker Black { get; } = new ColorPicker
         {
         };
     }
@@ -184,6 +283,7 @@ namespace Rito.EditorUtilities
     {
         public static Box White { get; } = new Box
         {
+            color = RColor.Gray,
         };
         public static Box Gray { get; } = new Box
         {
@@ -229,18 +329,6 @@ namespace Rito.EditorUtilities
         {
         };
         public static HelpBox Black { get; } = new HelpBox
-        {
-        };
-    }
-    public partial class Dropdown<T>
-    {
-        public static Dropdown<T> White { get; } = new Dropdown<T>
-        {
-        };
-        public static Dropdown<T> Gray { get; } = new Dropdown<T>
-        {
-        };
-        public static Dropdown<T> Black { get; } = new Dropdown<T>
         {
         };
     }
