@@ -290,7 +290,7 @@ namespace Rito.EditorUtilities.Demo
                 HeaderBox.Default
                     .SetData("Header", outlineWidth)
                     .SetTooltip("Header Box(Outlined)", 160f)
-                    .DrawLayout(2, 1f);
+                    .DrawLayout(2, 0f, 2f);
 
                 REG.Space(outlineWidth);
 
@@ -316,7 +316,7 @@ namespace Rito.EditorUtilities.Demo
                 FoldoutHeaderBox.Default
                     .SetData(boolValues[b], "Header (Foldout)", outlineWidth, 2f)
                     .SetTooltip("Foldout Header Box(Outlined)", 200f)
-                    .DrawLayout(2, 0f).Get(out boolValues[b]);
+                    .DrawLayout(2, 0f, 2f).Get(out boolValues[b]);
 
                 if (boolValues[b])
                 {

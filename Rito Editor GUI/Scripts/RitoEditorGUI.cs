@@ -181,8 +181,17 @@ namespace Rito.EditorUtilities
         *                               Tiny Methods
         ***********************************************************************/
         #region .
-        public static void Space(float height = 8f) => CurrentY += height;
-        public static void Space(float height, float space) => CurrentY += (height + space);
+        public static void Space(float height = 8f)
+        {
+            CurrentY += height;
+            EditorGUILayout.Space(height);
+        }
+        public static void Space(float height, float space)
+        {
+            height += space;
+            CurrentY += (height);
+            EditorGUILayout.Space(height);
+        }
 
         // xLeft : Rect 좌측 끝의 위치 비율(0 ~ 1)
         // xRight : Rect 우측 끝의 위치 비율(0 ~ 1)
@@ -216,7 +225,7 @@ namespace Rito.EditorUtilities
         /// <summary> 반드시 OnInspectorGUI 최하단에서 호출 </summary>
         public static void Finalize(Editor editor)
         {
-            EditorGUILayout.Space(CurrentY + marginBottom);
+            EditorGUILayout.Space(marginBottom);
 
             // 컨트롤 없는 부분에 클릭할 경우 강제로 포커스 제거
             if (Event.current.type == EventType.MouseDown)

@@ -25,6 +25,8 @@ using UnityEditor;
 namespace Rito.EditorUtilities
 {
     using REG = RitoEditorGUI;
+    using floatPixel = System.Single;
+    using floatRatio = System.Single;
 
     public struct None { public static readonly None Empty = new None(); }
 
@@ -49,7 +51,7 @@ namespace Rito.EditorUtilities
     {
         protected Rect rect;
 
-        protected bool isLastLayoutElement = false; // 마지막으로 그린 요소가 레이아웃 요소였는지 여부
+        protected bool isLastLayout = false; // 마지막으로 그린 요소가 레이아웃 요소였는지 여부
 
         protected bool tooltipFlag = false; // 툴팁 등록 여부 설정
         protected float tooltipWidth;
@@ -74,21 +76,28 @@ namespace Rito.EditorUtilities
         }
 
         /// <summary> 하단 여백 지정 </summary>
-        public virtual R Space(float height)
+        public virtual R Space(floatPixel height)
         {
             REG.Space(height);
             return this as R;
         }
-        /// <summary> 높이를 제외한 하단 여백 지정 </summary>
-        public virtual R Margin(float margin = 0f)
+        /// <summary> rect 높이 + 지정 높이만큼 여백 지정 </summary>
+        public virtual R Margin(floatPixel margin = 0f)
         {
-            if(!isLastLayoutElement) margin += rect.height;
+            if(!isLastLayout) margin += rect.height;
             REG.Space(margin);
             return this as R;
         }
 
+        // 레이아웃 요소가 아닌 컨트롤을 레이아웃 요소처럼 그리는 효과
+        /// <summary> rect 높이 + 레이아웃 요소 기본 여백 + 추가 여백만큼 여백 지정 </summary>
+        public virtual R Layout(floatPixel margin = 0f)
+        {
+            return Margin(margin + REG.LayoutControlBottomMargin);
+        }
+
         /// <summary> Rect 위치 가시화하여 보여주기 </summary>
-        public void DebugRect(Color color = default, in float border = 1f)
+        public void DebugRect(Color color = default, in floatPixel border = 1f)
         {
             if(!REG.DebugActivated) return;
             if(rect == default) return;
@@ -138,18 +147,18 @@ namespace Rito.EditorUtilities
             CheckTooltip();
             if (REG.DebugAllRect)
                 DebugRect();
-            isLastLayoutElement = false;
+            isLastLayout = false;
         }
 
         // xLeft, xRight : ViewWidth에 대한 Rect 좌우 지점의 비율(0 ~ 1)
         /// <summary> 그려질 지점의 Rect 설정 </summary>
-        protected void SetRect(in float xLeft, in float xRight, float yOffset, in float height)
+        protected void SetRect(in floatRatio xLeft, in floatRatio xRight, in floatPixel yOffset, in floatPixel height)
         {
             rect = REG.GetRect(xLeft, xRight, yOffset, height);
         }
         /// <summary> 그려질 지점의 Rect 설정 </summary>
-        protected void SetRect(in float xLeft, in float xRight, float yOffset, in float height,
-            in float xLeftOffset, in float xRightOffset)
+        protected void SetRect(in floatRatio xLeft, in floatRatio xRight, in floatPixel yOffset, in floatPixel height,
+            in floatPixel xLeftOffset, in floatPixel xRightOffset)
         {
             rect = REG.GetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
         }
@@ -158,14 +167,17 @@ namespace Rito.EditorUtilities
     {
         protected T value;
 
-        public virtual R Draw(in float xLeft, in float xRight, float yOffset, in float height,
-            in float xLeftOffset = 0f, in float xRightOffset = 0f)
-        {
-            return default;
-        }
+        public abstract R Draw(in floatRatio xLeft, in floatRatio xRight, floatPixel yOffset, in floatPixel height,
+            in floatPixel xLeftOffset = 0f, in floatPixel xRightOffset = 0f);
 
-        public virtual R Draw(in float height)
+        public virtual R Draw(in floatPixel height)
             => Draw(0f, 1f, 0f, height, 0f, 0f);
+
+        public virtual R Draw(in floatRatio xLeft, in floatRatio xRight)
+            => Draw(xLeft, xRight, 0f, REG.LayoutControlHeight, 0f, 0f);
+
+        public virtual R Draw(in floatRatio xLeft, in floatRatio xRight, in floatPixel height)
+            => Draw(xLeft, xRight, 0f, height, 0f, 0f);
 
         /// <summary> 레이아웃 요소로 그리기 </summary>
         public virtual R DrawLayout()
@@ -173,7 +185,25 @@ namespace Rito.EditorUtilities
             Draw(0f, 1f, 0f, REG.LayoutControlHeight);
             REG.Space(REG.LayoutControlHeight + REG.LayoutControlBottomMargin);
 
-            isLastLayoutElement = true;
+            isLastLayout = true;
+            return this as R;
+        }
+        /// <summary> 레이아웃 요소로 그리기 + 좌우 여백(픽셀) 설정 </summary>
+        public virtual R DrawLayout(floatPixel marginHorizontal)
+        {
+            Draw(0f, 1f, 0f, REG.LayoutControlHeight, marginHorizontal, -marginHorizontal);
+            REG.Space(REG.LayoutControlHeight + REG.LayoutControlBottomMargin);
+
+            isLastLayout = true;
+            return this as R;
+        }
+        /// <summary> 레이아웃 요소로 그리기 + 좌우 여백(픽셀) 설정 </summary>
+        public virtual R DrawLayout(floatPixel marginLeft, floatPixel marginRight)
+        {
+            Draw(0f, 1f, 0f, REG.LayoutControlHeight, marginLeft, -marginRight);
+            REG.Space(REG.LayoutControlHeight + REG.LayoutControlBottomMargin);
+
+            isLastLayout = true;
             return this as R;
         }
 
@@ -863,6 +893,8 @@ namespace Rito.EditorUtilities
 
             return this;
         }
+        public Dropdown<T> SetData(string label, List<T> options, int selectedIndex, float widthThreshold = 0.4f)
+            => SetData(label, options.ToArray(), selectedIndex, widthThreshold);
 
 
         protected override void InitInputStyle()
@@ -968,7 +1000,7 @@ namespace Rito.EditorUtilities
             Draw(0f, 1f, 0f, height - REG.LayoutControlBottomMargin);
             REG.Space(height);
 
-            isLastLayoutElement = true;
+            isLastLayout = true;
             return this;
         }
     }
@@ -1443,23 +1475,62 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public Box Draw(in float height) => Draw(0f, 1f, 0f, height, 0f, 0f);
+        public Box Draw(in float height) 
+            => Draw(0f, 1f, 0f, height, 0f, 0f);
+        public Box Draw(in float xLeft, in float xRight)
+            => Draw(xLeft, xRight, 0f, REG.LayoutControlHeight, 0f, 0f);
+        public Box Draw(in float xLeft, in float xRight, in float height)
+            => Draw(xLeft, xRight, 0f, height, 0f, 0f);
 
         /// <summary>
-        /// 레이아웃 요소들을 감싸는 박스 그리기
+        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
         /// </summary>
         /// <param name="contentCount">레이아웃 요소 개수</param>
-        /// <param name="paddingHorizontal">좌우 내부 여백</param>
+        public Box DrawLayout(int contentCount)
+        {
+            return DrawLayout(contentCount, 0f, 0f, 0f, 0f);
+        }
+        /// <summary>
+        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
+        /// </summary>
+        /// <param name="contentCount">레이아웃 요소 개수</param>
         /// <param name="paddingVertical">상하 내부 여백</param>
-        public Box DrawLayout(int contentCount, float paddingHorizontal = 0f, float paddingVertical = 0f)
+        /// <param name="paddingHorizontal">좌우 내부 여백</param>
+        public Box DrawLayout(int contentCount, float paddingVertical, float paddingHorizontal)
+        {
+            return DrawLayout(contentCount, paddingVertical, paddingVertical, paddingHorizontal, paddingHorizontal);
+        }
+        /// <summary>
+        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
+        /// </summary>
+        /// <param name="contentCount">레이아웃 요소 개수</param>
+        /// <param name="paddingTop">상단 내부 여백</param>
+        /// <param name="paddingBottom">하단 내부 여백</param>
+        /// <param name="paddingLeft">좌측 내부 여백</param>
+        /// <param name="paddingRight">우측 내부 여백</param>
+        public Box DrawLayout(int contentCount, float paddingTop, float paddingBottom, float paddingLeft, float paddingRight)
         {
             if (contentCount < 0) contentCount = 0;
 
-            float OneHeight = REG.LayoutControlHeight + REG.LayoutControlBottomMargin;
-            Draw(0f, 1f, -paddingVertical, OneHeight * contentCount + paddingVertical * 2f,
-                -paddingHorizontal, paddingHorizontal);
+            float lcHeight = REG.LayoutControlHeight;
+            float lcMargin = REG.LayoutControlBottomMargin;
 
-            isLastLayoutElement = true;
+            // 모든 레이아웃 요소의 높이 합
+            float AllControlsHeight = (lcHeight + lcMargin) * contentCount;
+
+            Draw
+            (
+                xLeft:0f, xRight:1f, 
+                yOffset: -paddingTop, 
+                height:  paddingTop + lcMargin + AllControlsHeight + paddingBottom,
+                xLeftOffset: -paddingLeft,
+                xRightOffset: paddingRight
+            );
+
+            // 박스 상단 패딩
+            REG.Space(lcMargin);
+
+            isLastLayout = true;
             return this;
         }
     }
@@ -1473,6 +1544,8 @@ namespace Rito.EditorUtilities
         protected string headerText = "Header";
         protected float headerTextLeftPadding = 0f;
 
+        protected float headerHeight; // 헤더박스 높이 + 아웃라인 두께
+
         // Styles - Header Text
         public Color headerTextColor = Color.black;
         public int headerFontSize = 12;
@@ -1483,6 +1556,76 @@ namespace Rito.EditorUtilities
         public Color headerColor = Color.gray;
         public Color contentColor = Color.gray.SetA(0.5f);
         public Color outlineColor = Color.black;
+
+        /// <summary> (헤더 높이 + 아웃라인 두께) + 추가 여백 만큼 간격 이동 </summary>
+        public R HeaderSpace(float contentPaddingTop = 0f)
+        {
+            REG.Space(headerHeight + contentPaddingTop);
+            return this as R;
+        }
+
+        public abstract R Draw(in float xLeft, in float xRight, float yOffset,
+            in float headerHeight, in float contentHeight,
+            in float xLeftOffset = 0f, in float xRightOffset = 0f);
+
+        public R Draw(in float headerHeight, in float contentHeight)
+            => Draw(0f, 1f, 0f, headerHeight, contentHeight, 0f, 0f);
+        public R Draw(in float xLeft, in float xRight, in float headerHeight, in float contentHeight)
+            => Draw(xLeft, xRight, 0f, headerHeight, contentHeight, 0f, 0f);
+
+        /// <summary>
+        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
+        /// </summary>
+        /// <param name="contentCount">레이아웃 요소 개수</param>
+        public R DrawLayout(int contentCount)
+        {
+            return DrawLayout(contentCount, 0f, 0f, 0f, 0f);
+        }
+        /// <summary>
+        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
+        /// </summary>
+        /// <param name="contentCount">레이아웃 요소 개수</param>
+        /// <param name="paddingVertical">상하 내부 여백</param>
+        /// <param name="paddingHorizontal">좌우 내부 여백</param>
+        public R DrawLayout(int contentCount, float paddingVertical, float paddingHorizontal)
+        {
+            return DrawLayout(contentCount, paddingVertical, paddingVertical, paddingHorizontal, paddingHorizontal);
+        }
+        /// <summary>
+        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
+        /// </summary>
+        /// <param name="contentCount">레이아웃 요소 개수</param>
+        /// <param name="paddingTop">상단 내부 여백</param>
+        /// <param name="paddingBottom">하단 내부 여백</param>
+        /// <param name="paddingLeft">좌측 내부 여백</param>
+        /// <param name="paddingRight">우측 내부 여백</param>
+        public R DrawLayout(int contentCount, float paddingTop, float paddingBottom, float paddingLeft, float paddingRight)
+        {
+            if (contentCount < 0) contentCount = 0;
+
+            float lcHeight = REG.LayoutControlHeight;
+            float lcMargin = REG.LayoutControlBottomMargin;
+            float OneHeight = lcHeight + lcMargin;
+
+            // 모든 레이아웃 요소의 높이 합
+            float AllControlsHeight = OneHeight * contentCount;
+
+            Draw
+            (
+                xLeft: 0f, xRight: 1f,
+                yOffset: -paddingTop,
+                headerHeight: OneHeight,
+                contentHeight: outlineWidth + paddingTop + lcMargin + AllControlsHeight + paddingBottom,
+                xLeftOffset: -paddingLeft,
+                xRightOffset: paddingRight
+            );
+
+            // 박스 상단 패딩
+            REG.Space(lcMargin + OneHeight + outlineWidth);
+
+            isLastLayout = true;
+            return this as R;
+        }
     }
     public partial class HeaderBox : HeaderBoxBase<HeaderBox>
     {
@@ -1540,10 +1683,11 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public void Draw(in float xLeft, in float xRight, float yOffset, 
+        public override HeaderBox Draw(in float xLeft, in float xRight, float yOffset, 
             in float headerHeight, in float contentHeight,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            this.headerHeight = headerHeight + outlineWidth;
             SetRect(xLeft, xRight, yOffset, headerHeight + contentHeight + outlineWidth, xLeftOffset, xRightOffset);
 
             if(headerStyle == null)
@@ -1585,27 +1729,7 @@ namespace Rito.EditorUtilities
             EditorGUI.LabelField(headerTextRect, headerText, headerStyle);
 
             EndDraw();
-        }
-        
-        public void Draw(in float headerHeight, in float contentHeight)
-            => Draw(0f, 1f, 0f, headerHeight, contentHeight, 0f, 0f);
-
-        /// <summary>
-        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
-        /// </summary>
-        /// <param name="contentCount">레이아웃 요소 개수</param>
-        /// <param name="paddingHorizontal">좌우 내부 여백</param>
-        /// <param name="paddingVertical">상하 내부 여백</param>
-        public void DrawLayout(int contentCount, float paddingHorizontal = 0f, float paddingVertical = 0f)
-        {
-            if (contentCount < 0) contentCount = 0;
-
-            float OneHeight = REG.LayoutControlHeight + REG.LayoutControlBottomMargin;
-            Draw(0f, 1f, -paddingVertical, OneHeight, OneHeight * contentCount + paddingVertical * 2f,
-                -paddingHorizontal, paddingHorizontal);
-
-            REG.Space(OneHeight);
-            isLastLayoutElement = true;
+            return this;
         }
     }
     public partial class FoldoutHeaderBox : HeaderBoxBase<FoldoutHeaderBox>
@@ -1667,10 +1791,11 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public FoldoutHeaderBox Draw(in float xLeft, in float xRight, float yOffset, 
+        public override FoldoutHeaderBox Draw(in float xLeft, in float xRight, float yOffset, 
             in float headerHeight, in float contentHeight,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            this.headerHeight = headerHeight + outlineWidth;
             SetRect(xLeft, xRight, yOffset, headerHeight + contentHeight + outlineWidth, xLeftOffset, xRightOffset);
 
             if (headerStyle == null)
@@ -1743,28 +1868,7 @@ namespace Rito.EditorUtilities
                     rect = headerRect;
                 DebugRect();
             }
-            isLastLayoutElement = false;
-            return this;
-        }
-        public FoldoutHeaderBox Draw(in float headerHeight, in float contentHeight)
-            => Draw(0f, 1f, 0f, headerHeight, contentHeight, 0f, 0f);
-
-        /// <summary>
-        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
-        /// </summary>
-        /// <param name="contentCount">레이아웃 요소 개수</param>
-        /// <param name="paddingHorizontal">좌우 내부 여백</param>
-        /// <param name="paddingVertical">상하 내부 여백</param>
-        public FoldoutHeaderBox DrawLayout(int contentCount, float paddingHorizontal = 0f, float paddingVertical = 0f)
-        {
-            if (contentCount < 0) contentCount = 0;
-
-            float OneHeight = REG.LayoutControlHeight + REG.LayoutControlBottomMargin;
-            Draw(0f, 1f, -paddingVertical, OneHeight, OneHeight * contentCount + paddingVertical * 2f,
-                -paddingHorizontal, paddingHorizontal);
-
-            REG.Space(OneHeight);
-            isLastLayoutElement = true;
+            isLastLayout = false;
             return this;
         }
 
