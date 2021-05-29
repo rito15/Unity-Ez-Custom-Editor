@@ -54,7 +54,7 @@ namespace Rito.EditorUtilities
                 return this;
             }
             /// <summary> 디버그 렉트 색상 설정 </summary>
-            public OptionBuilder SetTooltipDebugColor(in Color color)
+            public OptionBuilder SetDebugTooltipColor(in Color color)
             {
                 REG.TooltipDebugColor = color;
                 return this;
@@ -113,8 +113,8 @@ namespace Rito.EditorUtilities
                 // 1. Rect Debugger
                 if (REG.ShowRectDebugToggle)
                 {
-                    Rect toggleRect = new Rect(marginLeft, REG.CurrentY + 2f, viewWidth, 20f);
-                    Rect line = new Rect(0f, REG.CurrentY, EditorGUIUtility.currentViewWidth, 24f);
+                    Rect toggleRect = new Rect(marginLeft, REG.CurrentY + 2f, viewWidth, DebugToggleHeight - 4f);
+                    Rect line = new Rect(0f, REG.CurrentY, EditorGUIUtility.currentViewWidth, DebugToggleHeight);
 
                     EditorGUI.DrawRect(line, Color.black);
                     using (var cc = new EditorGUI.ChangeCheckScope())
@@ -125,14 +125,14 @@ namespace Rito.EditorUtilities
                         if (cc.changed)
                             PlayerPrefs.SetInt(REG.RectDebugPrefName, REG.ToggleRectDebugOn ? 1 : 0);
                     }
-                    REG.Space(24f);
+                    REG.Space(DebugToggleHeight);
                 }
 
                 // 2. Tooltip Debugger
                 if (REG.ShowTooltipDebugToggle)
                 {
-                    Rect toggleRect = new Rect(marginLeft, REG.CurrentY + 2f, viewWidth, 20f);
-                    Rect line = new Rect(0f, REG.CurrentY, EditorGUIUtility.currentViewWidth, 24f);
+                    Rect toggleRect = new Rect(marginLeft, REG.CurrentY + 2f, viewWidth, DebugToggleHeight - 4f);
+                    Rect line = new Rect(0f, REG.CurrentY, EditorGUIUtility.currentViewWidth, DebugToggleHeight);
 
                     EditorGUI.DrawRect(line, Color.black);
                     using (var cc = new EditorGUI.ChangeCheckScope())
@@ -143,7 +143,7 @@ namespace Rito.EditorUtilities
                         if (cc.changed)
                             PlayerPrefs.SetInt(REG.TooltipDebugPrefName, REG.ToggleTooltipDebugOn ? 1 : 0);
                     }
-                    REG.Space(24f);
+                    REG.Space(DebugToggleHeight);
                 }
             }
         }
@@ -153,6 +153,8 @@ namespace Rito.EditorUtilities
         *                               Debug
         ***********************************************************************/
         #region .
+
+        private const float DebugToggleHeight = 24f;
 
         // 1. Rect Debugger
         /// <summary> 인스펙터 상단에 렉트 디버그 토글을 표시할지 여부 </summary>
@@ -252,9 +254,7 @@ namespace Rito.EditorUtilities
         }
         public static void Space(float height, float space)
         {
-            height += space;
-            CurrentY += (height);
-            EditorGUILayout.Space(height);
+            Space(height + space);
         }
 
         // xLeft : Rect 좌측 끝의 위치 비율(0 ~ 1)
@@ -303,7 +303,7 @@ namespace Rito.EditorUtilities
                 ErrorOccured = false;
             }
 
-            EditorGUILayout.Space(marginBottom);
+            Space(marginBottom);
 
             // 컨트롤 없는 부분에 클릭할 경우 강제로 포커스 제거
             if (Event.current.type == EventType.MouseDown)
@@ -318,6 +318,13 @@ namespace Rito.EditorUtilities
 
         private static void ShowTooltips(Editor editor)
         {
+            Rect Local_GetTooltipRect(in float width, in float height, in Vector2 mPos)
+            {
+                float tooltipRectX = (mPos.x < ViewWidth - width) ? mPos.x + 10f : mPos.x - width;
+                float tooltipRectY = (mPos.y < CurrentY - height) ? mPos.y : mPos.y - height;
+                return new Rect(tooltipRectX, tooltipRectY, width, height);
+            }
+
             // 1. 툴팁 디버거
             if (TooltipDebugActivated)
             {
@@ -329,29 +336,115 @@ namespace Rito.EditorUtilities
 
                 Vector2 mPos = Event.current.mousePosition;
 
+                bool tooltipShowed = false;
+
+                // 1-1. 각 컨트롤 영역
                 for (int i = DebugTooltipList.Count - 1; i >= 0; i--)
                 {
                     OverlayTooltip tooltip = DebugTooltipList[i];
+                    ref Rect curRect = ref tooltip.rect;
 
-                    if (tooltip.rect.Contains(mPos))
+                    if (curRect.Contains(mPos))
                     {
-                        EditorGUI.DrawRect(tooltip.rect, TooltipDebugColor);
+                        // [1] Control Rect
+                        EditorGUI.DrawRect(curRect, TooltipDebugColor);
 
-                        float infoRectWidth = 180f;
-                        float infoRectHeight = 80f;
-                        float infoRectX = (mPos.x < ViewWidth - infoRectWidth) ? mPos.x + 10f : mPos.x - infoRectWidth;
-                        float infoRectY = (mPos.y < CurrentY - infoRectHeight) ? mPos.y : mPos.y - infoRectHeight;
-                        Rect infoRect = new Rect(infoRectX, infoRectY, infoRectWidth, infoRectHeight);
-                        EditorGUI.DrawRect(infoRect, Color.black);
+                        // [2] Tooltip Rect
+                        float tooltipRectWidth = 180f;
+                        float tooltipRectHeight = 60f;
+                        Rect tooltipRect = Local_GetTooltipRect(tooltipRectWidth, tooltipRectHeight, mPos);
+                        EditorGUI.DrawRect(tooltipRect, Color.black.SetA(0.8f));
 
-                        infoRect.x += 10f;
-                        EditorGUI.LabelField(infoRect, tooltip.text);
+                        // [2] Tooltip Rect : Label
+                        float debugY = curRect.y;
+                        if (ShowRectDebugToggle) debugY -= DebugToggleHeight;
+                        if (ShowTooltipDebugToggle) debugY -= DebugToggleHeight;
 
+                        string debugInfoLeft =
+                            $"xMin : {curRect.x}\n" +
+                            $"xMax : {curRect.x + curRect.width}\n" +
+                            $"Width : {curRect.width}";
+                        string debugInfoRight =
+                            $"yMin : {debugY}\n" +
+                            $"yMax : {debugY + curRect.height}\n" +
+                            $"Height : {curRect.height}";
+
+                        tooltipRect.x += 10f;
+                        Rect leftRect = new Rect(tooltipRect);
+                        Rect rightRect = new Rect(tooltipRect);
+                        leftRect.width *= 0.5f;
+                        rightRect.width *= 0.5f;
+                        rightRect.x += rightRect.width;
+
+                        EditorGUI.LabelField(leftRect, debugInfoLeft);
+                        EditorGUI.LabelField(rightRect, debugInfoRight);
+
+                        tooltipShowed = true;
                         break;
                     }
                 }
-
                 DebugTooltipList.Clear();
+
+                // 1-2. 여백
+                if (!tooltipShowed)
+                {
+                    float yMin = 0f;
+                    if (ShowRectDebugToggle) yMin += DebugToggleHeight;
+                    if (ShowTooltipDebugToggle) yMin += DebugToggleHeight;
+
+                    float fullWidth = ViewWidth + marginLeft + marginRight;
+                    float fullHeight = CurrentY - yMin;
+
+                    // 윈도우 최하단의 기본 여백 영역
+                    const float DefaultMarginBottom = 10f;
+
+
+                    Rect[] marginRects = new Rect[]
+                    {
+                        // Top
+                        new Rect(0f, yMin, fullWidth, marginTop),
+                        // Bottom
+                        new Rect(0f, CurrentY - marginBottom, fullWidth, marginBottom), 
+
+                        // Left
+                        new Rect(0f, yMin, marginLeft, fullHeight), 
+                        // Right
+                        new Rect(marginLeft + ViewWidth, yMin, marginRight, fullHeight),
+
+                        // Bottom : Inspector Default Margin
+                        new Rect(0f, CurrentY, fullWidth, DefaultMarginBottom),
+                    };
+
+                    string[] tooltipStrings = new string[]
+                    {
+                        $"Margin Top : {marginTop} ({0f} ~ {marginTop})",
+                        $"Margin Bottom : {marginBottom} ({CurrentY - marginBottom - yMin} ~ {CurrentY - yMin})",
+
+                        $"Margin Left : {marginLeft} ({0f} ~ {marginLeft})",
+                        $"Margin Right : {marginRight} ({fullWidth - marginRight} ~ {fullWidth})",
+
+                        $"Default Margin : {DefaultMarginBottom} ({CurrentY - yMin} ~ {CurrentY + DefaultMarginBottom - yMin})",
+                    };
+
+                    for (int i = 0; i < marginRects.Length; i++)
+                    {
+                        if (marginRects[i].Contains(mPos))
+                        {
+                            EditorGUI.DrawRect(marginRects[i], TooltipDebugColor);
+
+                            Rect tooltipRect = Local_GetTooltipRect(200f, 25f, mPos);
+                            EditorGUI.DrawRect(tooltipRect, Color.black.SetA(0.8f));
+
+                            var oldAlign = EditorStyles.label.alignment;
+                            EditorStyles.label.alignment = TextAnchor.MiddleCenter;
+
+                            EditorGUI.LabelField(tooltipRect, tooltipStrings[i]);
+
+                            EditorStyles.label.alignment = oldAlign;
+                            break;
+                        }
+                    }
+                }
             }
             // 2. 툴팁 기능
             else if (ShowTooltip)

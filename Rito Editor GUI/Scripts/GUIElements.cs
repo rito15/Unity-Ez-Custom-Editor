@@ -25,8 +25,7 @@ using UnityEditor;
 namespace Rito.EditorUtilities
 {
     using REG = RitoEditorGUI;
-    using floatPixel = System.Single;
-    using floatRatio = System.Single;
+    using fRatio = System.Single;
 
     public struct None { public static readonly None Empty = new None(); }
 
@@ -76,13 +75,13 @@ namespace Rito.EditorUtilities
         }
 
         /// <summary> 하단 여백 지정 </summary>
-        public virtual R Space(floatPixel height)
+        public virtual R Space(float height)
         {
             REG.Space(height);
             return this as R;
         }
         /// <summary> rect 높이 + 지정 높이만큼 여백 지정 </summary>
-        public virtual R Margin(floatPixel margin = 0f)
+        public virtual R Margin(float margin = 0f)
         {
             if(!isLastLayout) margin += rect.height;
             REG.Space(margin);
@@ -91,13 +90,13 @@ namespace Rito.EditorUtilities
 
         // 레이아웃 요소가 아닌 컨트롤을 레이아웃 요소처럼 그리는 효과
         /// <summary> rect 높이 + 레이아웃 요소 기본 여백 + 추가 여백만큼 여백 지정 </summary>
-        public virtual R Layout(floatPixel margin = 0f)
+        public virtual R Layout(float margin = 0f)
         {
             return Margin(margin + REG.LayoutControlBottomMargin);
         }
 
         /// <summary> Rect 위치 가시화하여 보여주기 </summary>
-        protected void DebugRect(Color color = default, in floatPixel border = 1f)
+        protected void DebugRect(Color color = default, in float border = 1f)
         {
             if(!REG.RectDebugActivated) return;
             if(rect == default) return;
@@ -133,12 +132,7 @@ namespace Rito.EditorUtilities
         {
             if (REG.TooltipDebugActivated)
             {
-                string debugInfo = 
-                    $"xMin : {rect.x}, xMax : {rect.x + rect.width}\n" +
-                    $"yMin : {rect.y}, yMax : {rect.y + rect.height}\n" +
-                    $"Width : {rect.width}\n" +
-                    $"Height : {rect.height}";
-                REG.DebugTooltipList.Add(new OverlayTooltip(rect, 200f, 60f, debugInfo));
+                REG.DebugTooltipList.Add(new OverlayTooltip(rect, 200f, 60f, ""));
             }
             else if (tooltipFlag)
             {
@@ -160,13 +154,13 @@ namespace Rito.EditorUtilities
 
         // xLeft, xRight : ViewWidth에 대한 Rect 좌우 지점의 비율(0 ~ 1)
         /// <summary> 그려질 지점의 Rect 설정 </summary>
-        protected void SetRect(in floatRatio xLeft, in floatRatio xRight, in floatPixel yOffset, in floatPixel height)
+        protected void SetRect(in fRatio xLeft, in fRatio xRight, in float yOffset, in float height)
         {
             rect = REG.GetRect(xLeft, xRight, yOffset, height);
         }
         /// <summary> 그려질 지점의 Rect 설정 </summary>
-        protected void SetRect(in floatRatio xLeft, in floatRatio xRight, in floatPixel yOffset, in floatPixel height,
-            in floatPixel xLeftOffset, in floatPixel xRightOffset)
+        protected void SetRect(in fRatio xLeft, in fRatio xRight, in float yOffset, in float height,
+            in float xLeftOffset, in float xRightOffset)
         {
             rect = REG.GetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
         }
@@ -175,17 +169,21 @@ namespace Rito.EditorUtilities
     {
         protected T value;
 
-        public abstract R Draw(in floatRatio xLeft, in floatRatio xRight, floatPixel yOffset, in floatPixel height,
-            in floatPixel xLeftOffset = 0f, in floatPixel xRightOffset = 0f);
+        public abstract R Draw(in fRatio xLeft, in fRatio xRight, float yOffset, in float height,
+            in float xLeftOffset = 0f, in float xRightOffset = 0f);
 
-        public virtual R Draw(in floatPixel height)
+        public virtual R Draw(in float height)
             => Draw(0f, 1f, 0f, height, 0f, 0f);
 
-        public virtual R Draw(in floatRatio xLeft, in floatRatio xRight)
+        public virtual R Draw(in fRatio xLeft, in fRatio xRight)
             => Draw(xLeft, xRight, 0f, REG.LayoutControlHeight, 0f, 0f);
 
-        public virtual R Draw(in floatRatio xLeft, in floatRatio xRight, in floatPixel height)
+        public virtual R Draw(in fRatio xLeft, in fRatio xRight, in float height)
             => Draw(xLeft, xRight, 0f, height, 0f, 0f);
+
+        // 레이아웃 요소?
+        // - 높이 자동 설정(기본 높이 : 18f)
+        // - 하단 여백(Space) 자동 지정(기본 높이 18f + 기본 여백 2f)
 
         /// <summary> 레이아웃 요소로 그리기 </summary>
         public virtual R DrawLayout()
@@ -196,19 +194,20 @@ namespace Rito.EditorUtilities
             isLastLayout = true;
             return this as R;
         }
-        /// <summary> 레이아웃 요소로 그리기 + 좌우 여백(픽셀) 설정 </summary>
-        public virtual R DrawLayout(floatPixel marginHorizontal)
+        /// <summary> 레이아웃 요소로 그리기 + 너비(비율) 설정 </summary>
+        public virtual R DrawLayout(in fRatio xLeft, in fRatio xRight)
         {
-            Draw(0f, 1f, 0f, REG.LayoutControlHeight, marginHorizontal, -marginHorizontal);
+            Draw(xLeft, xRight, 0f, REG.LayoutControlHeight, 0f, 0f);
             REG.Space(REG.LayoutControlHeight + REG.LayoutControlBottomMargin);
 
             isLastLayout = true;
             return this as R;
         }
-        /// <summary> 레이아웃 요소로 그리기 + 좌우 여백(픽셀) 설정 </summary>
-        public virtual R DrawLayout(floatPixel marginLeft, floatPixel marginRight)
+        /// <summary> 레이아웃 요소로 그리기 + 너비(비율, 픽셀) 설정 </summary>
+        public virtual R DrawLayout(in fRatio xLeft, in fRatio xRight,
+                                    in float xLeftOffset, in float xRightOffset)
         {
-            Draw(0f, 1f, 0f, REG.LayoutControlHeight, marginLeft, -marginRight);
+            Draw(xLeft, xRight, 0f, REG.LayoutControlHeight, xLeftOffset, xRightOffset);
             REG.Space(REG.LayoutControlHeight + REG.LayoutControlBottomMargin);
 
             isLastLayout = true;
@@ -1586,13 +1585,13 @@ namespace Rito.EditorUtilities
             return this as R;
         }
 
-        public abstract R Draw(in float xLeft, in float xRight, float yOffset,
+        public abstract R Draw(in fRatio xLeft, in fRatio xRight, float yOffset,
             in float headerHeight, in float contentHeight,
             in float xLeftOffset = 0f, in float xRightOffset = 0f);
 
         public R Draw(in float headerHeight, in float contentHeight)
             => Draw(0f, 1f, 0f, headerHeight, contentHeight, 0f, 0f);
-        public R Draw(in float xLeft, in float xRight, in float headerHeight, in float contentHeight)
+        public R Draw(in fRatio xLeft, in fRatio xRight, in float headerHeight, in float contentHeight)
             => Draw(xLeft, xRight, 0f, headerHeight, contentHeight, 0f, 0f);
 
         /// <summary>

@@ -82,15 +82,15 @@ namespace Rito.EditorUtilities.Demo
 
                 Vector3Field.White
                     .SetData("Vector3 Field", m.vector3)
-                    .DrawLayout(4f).Get(out m.vector3);
+                    .DrawLayout(0.01f, 0.99f).Get(out m.vector3);
 
                 BoolField.White
                     .SetData("Bool Field", m.bool2)
-                    .DrawLayout(4f).Get(out m.bool2);
+                    .DrawLayout(0.01f, 0.99f).Get(out m.bool2);
 
                 StringField.White
                     .SetData("String Field", m.string1, "Placeholder")
-                    .DrawLayout(4f).Get(out m.string1);
+                    .DrawLayout(0.01f, 0.99f).Get(out m.string1);
 
                 Button.White
                     .SetData("Button")
@@ -108,19 +108,19 @@ namespace Rito.EditorUtilities.Demo
 
                 ColorField.White
                     .SetData("Color Field", m.color1)
-                    .DrawLayout(4f).Get(out m.color1);
+                    .DrawLayout(0.01f, 0.99f).Get(out m.color1);
 
                 ObjectField<Material>.White
                     .SetData("Material Field", m.material1)
-                    .DrawLayout(4f).Get(out m.material1);
+                    .DrawLayout(0.01f, 0.99f).Get(out m.material1);
 
                 Dropdown<float>.White
                     .SetData("Float Dropdown", m.fList, m.fSelected)
-                    .DrawLayout(4f).Get(out m.fSelected);
+                    .DrawLayout(0.01f, 0.99f).Get(out m.fSelected);
 
                 HelpBox.White
                     .SetData("Help Box", MessageType.Warning)
-                    .DrawLayout(4f);
+                    .DrawLayout(0.01f, 0.99f);
 
                 RGUI.Space(8f);
 
