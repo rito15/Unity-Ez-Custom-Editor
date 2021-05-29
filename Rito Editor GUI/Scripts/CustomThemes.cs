@@ -49,7 +49,7 @@ namespace Rito.EditorUtilities
         {
             textColor = RColor.black,
             hoverTextColor = RColor.Gray.Dark,
-            buttonColor = RColor.white * 2.5f,
+            buttonColor = RColor.white * 2.8f,
         };
         public static Button Black { get; } = new Button
         {
@@ -62,10 +62,10 @@ namespace Rito.EditorUtilities
         {
             normalTextColor = RColor.black,
             hoverTextColor = RColor.Gray.Dark,
-            normalButtonColor = RColor.white * 2.5f,
+            normalButtonColor = RColor.white * 2.8f,
 
             pressedTextColor = RColor.black,
-            pressedButtonColor = RColor.white * 2.5f,
+            pressedButtonColor = RColor.white * 3f,
         };
         public static ToggleButton Black { get; } = new ToggleButton
         {
@@ -76,8 +76,24 @@ namespace Rito.EditorUtilities
         public static IntField Gray { get; } = new IntField { };
         public static IntField White { get; } = new IntField
         {
+            inputBackgroundColor = RColor.white * 10f,
+            inputTextColor = RColor.black,
+            inputTextFocusedColor = RColor.black,
         };
         public static IntField Black { get; } = new IntField
+        {
+        };
+    }
+    public partial class LongField
+    {
+        public static LongField Gray { get; } = new LongField { };
+        public static LongField White { get; } = new LongField
+        {
+            inputBackgroundColor = RColor.white * 10f,
+            inputTextColor = RColor.black,
+            inputTextFocusedColor = RColor.black,
+        };
+        public static LongField Black { get; } = new LongField
         {
         };
     }
@@ -86,6 +102,9 @@ namespace Rito.EditorUtilities
         public static FloatField Gray { get; } = new FloatField { };
         public static FloatField White { get; } = new FloatField
         {
+            inputBackgroundColor = RColor.white * 10f,
+            inputTextColor = RColor.black,
+            inputTextFocusedColor = RColor.black,
         };
         public static FloatField Black { get; } = new FloatField
         {
@@ -96,6 +115,9 @@ namespace Rito.EditorUtilities
         public static DoubleField Gray { get; } = new DoubleField { };
         public static DoubleField White { get; } = new DoubleField
         {
+            inputBackgroundColor = RColor.white * 10f,
+            inputTextColor = RColor.black,
+            inputTextFocusedColor = RColor.black,
         };
         public static DoubleField Black { get; } = new DoubleField
         {
@@ -108,8 +130,24 @@ namespace Rito.EditorUtilities
         };
         public static StringField White { get; } = new StringField
         {
+            inputBackgroundColor = RColor.white * 10f,
+            inputTextColor = RColor.black,
+            inputTextFocusedColor = RColor.black,
         };
         public static StringField Black { get; } = new StringField
+        {
+        };
+    }
+    public partial class TextArea
+    {
+        public static TextArea Gray { get; } = new TextArea { };
+        public static TextArea White { get; } = new TextArea
+        {
+            inputBackgroundColor = RColor.white * 10f,
+            inputTextColor = RColor.black,
+            inputTextFocusedColor = RColor.black,
+        };
+        public static TextArea Black { get; } = new TextArea
         {
         };
     }
@@ -120,6 +158,9 @@ namespace Rito.EditorUtilities
         };
         public static Vector2Field White { get; } = new Vector2Field
         {
+            inputBackgroundColor = RColor.white * 10f,
+            inputTextColor = RColor.black,
+            inputTextFocusedColor = RColor.black,
         };
         public static Vector2Field Black { get; } = new Vector2Field
         {
@@ -132,6 +173,9 @@ namespace Rito.EditorUtilities
         };
         public static Vector3Field White { get; } = new Vector3Field
         {
+            inputBackgroundColor = RColor.white * 10f,
+            inputTextColor = RColor.black,
+            inputTextFocusedColor = RColor.black,
         };
         public static Vector3Field Black { get; } = new Vector3Field
         {
@@ -144,6 +188,9 @@ namespace Rito.EditorUtilities
         };
         public static Vector4Field White { get; } = new Vector4Field
         {
+            inputBackgroundColor = RColor.white * 10f,
+            inputTextColor = RColor.black,
+            inputTextFocusedColor = RColor.black,
         };
         public static Vector4Field Black { get; } = new Vector4Field
         {
@@ -156,6 +203,9 @@ namespace Rito.EditorUtilities
         };
         public static Vector2IntField White { get; } = new Vector2IntField
         {
+            inputBackgroundColor = RColor.white * 10f,
+            inputTextColor = RColor.black,
+            inputTextFocusedColor = RColor.black,
         };
         public static Vector2IntField Black { get; } = new Vector2IntField
         {
@@ -168,6 +218,9 @@ namespace Rito.EditorUtilities
         };
         public static Vector3IntField White { get; } = new Vector3IntField
         {
+            inputBackgroundColor = RColor.white * 10f,
+            inputTextColor = RColor.black,
+            inputTextFocusedColor = RColor.black,
         };
         public static Vector3IntField Black { get; } = new Vector3IntField
         {
@@ -178,6 +231,9 @@ namespace Rito.EditorUtilities
         public static ObjectField<T> Gray { get; } = new ObjectField<T> { };
         public static ObjectField<T> White { get; } = new ObjectField<T>
         {
+            inputBackgroundColor = RColor.white * 10f,
+            inputTextColor = RColor.black,
+            inputTextFocusedColor = RColor.Gray.Darker
         };
         public static ObjectField<T> Black { get; } = new ObjectField<T>
         {
@@ -185,23 +241,16 @@ namespace Rito.EditorUtilities
     }
     public partial class Dropdown<T>
     {
-        public static Dropdown<T> White { get; } = new Dropdown<T>
-        {
-        };
         public static Dropdown<T> Gray { get; } = new Dropdown<T>
         {
         };
+        public static Dropdown<T> White { get; } = new Dropdown<T>
+        {
+            inputBackgroundColor = RColor.white * 10f,
+            inputTextColor = RColor.black,
+            inputTextFocusedColor = RColor.Gray.Darker
+        };
         public static Dropdown<T> Black { get; } = new Dropdown<T>
-        {
-        };
-    }
-    public partial class TextArea
-    {
-        public static TextArea Gray { get; } = new TextArea { };
-        public static TextArea White { get; } = new TextArea
-        {
-        };
-        public static TextArea Black { get; } = new TextArea
         {
         };
     }
@@ -210,6 +259,7 @@ namespace Rito.EditorUtilities
         public static BoolField Gray { get; } = new BoolField { };
         public static BoolField White { get; } = new BoolField
         {
+            toggleColor = RColor.white * 10f
         };
         public static BoolField Black { get; } = new BoolField
         {
@@ -220,6 +270,7 @@ namespace Rito.EditorUtilities
         public static Toggle Gray { get; } = new Toggle { };
         public static Toggle White { get; } = new Toggle
         {
+            color = RColor.white * 100f
         };
         public static Toggle Black { get; } = new Toggle
         {
@@ -230,6 +281,7 @@ namespace Rito.EditorUtilities
         public static ColorField Gray { get; } = new ColorField { };
         public static ColorField White { get; } = new ColorField
         {
+            colorPickerColor = RColor.white * 10f
         };
         public static ColorField Black { get; } = new ColorField
         {
@@ -240,6 +292,7 @@ namespace Rito.EditorUtilities
         public static ColorPicker Gray { get; } = new ColorPicker { };
         public static ColorPicker White { get; } = new ColorPicker
         {
+            colorPickerColor = RColor.white * 10f
         };
         public static ColorPicker Black { get; } = new ColorPicker
         {
@@ -250,6 +303,9 @@ namespace Rito.EditorUtilities
         public static IntSlider Gray { get; } = new IntSlider { };
         public static IntSlider White { get; } = new IntSlider
         {
+            sliderColor = RColor.white * 10f,
+            valueColor = RColor.black,
+            labelColor = RColor.white
         };
         public static IntSlider Black { get; } = new IntSlider
         {
@@ -257,11 +313,14 @@ namespace Rito.EditorUtilities
     }
     public partial class FloatSlider
     {
-        public static FloatSlider White { get; } = new FloatSlider
-        {
-        };
         public static FloatSlider Gray { get; } = new FloatSlider
         {
+        };
+        public static FloatSlider White { get; } = new FloatSlider
+        {
+            sliderColor = RColor.white * 10f,
+            valueColor = RColor.black,
+            labelColor = RColor.white
         };
         public static FloatSlider Black { get; } = new FloatSlider
         {
@@ -269,11 +328,14 @@ namespace Rito.EditorUtilities
     }
     public partial class DoubleSlider
     {
-        public static DoubleSlider White { get; } = new DoubleSlider
-        {
-        };
         public static DoubleSlider Gray { get; } = new DoubleSlider
         {
+        };
+        public static DoubleSlider White { get; } = new DoubleSlider
+        {
+            sliderColor = RColor.white * 10f,
+            valueColor = RColor.black,
+            labelColor = RColor.white
         };
         public static DoubleSlider Black { get; } = new DoubleSlider
         {
@@ -281,12 +343,12 @@ namespace Rito.EditorUtilities
     }
     public partial class Box
     {
-        public static Box White { get; } = new Box
-        {
-            color = RColor.Gray,
-        };
         public static Box Gray { get; } = new Box
         {
+        };
+        public static Box White { get; } = new Box
+        {
+            color = RColor.Gray.Darker,
         };
         public static Box Black { get; } = new Box
         {
@@ -294,15 +356,15 @@ namespace Rito.EditorUtilities
     }
     public partial class HeaderBox
     {
+        public static HeaderBox Gray { get; } = new HeaderBox
+        {
+        };
         public static HeaderBox White { get; } = new HeaderBox
         {
             headerTextColor = RColor.black,
             headerColor = RColor.white,
-            contentColor = RColor.Gray,
+            contentColor = RColor.Gray.Darker,
             outlineColor = RColor.black
-        };
-        public static HeaderBox Gray { get; } = new HeaderBox
-        {
         };
         public static HeaderBox Black { get; } = new HeaderBox
         {
@@ -310,11 +372,15 @@ namespace Rito.EditorUtilities
     }
     public partial class FoldoutHeaderBox
     {
-        public static FoldoutHeaderBox White { get; } = new FoldoutHeaderBox
-        {
-        };
         public static FoldoutHeaderBox Gray { get; } = new FoldoutHeaderBox
         {
+        };
+        public static FoldoutHeaderBox White { get; } = new FoldoutHeaderBox
+        {
+            headerTextColor = RColor.black,
+            headerColor = RColor.white,
+            contentColor = RColor.Gray.Darker,
+            outlineColor = RColor.black,
         };
         public static FoldoutHeaderBox Black { get; } = new FoldoutHeaderBox
         {
@@ -322,11 +388,13 @@ namespace Rito.EditorUtilities
     }
     public partial class HelpBox
     {
-        public static HelpBox White { get; } = new HelpBox
-        {
-        };
         public static HelpBox Gray { get; } = new HelpBox
         {
+        };
+        public static HelpBox White { get; } = new HelpBox
+        {
+            textColor = RColor.Black,
+            backgroundColor = RColor.White * 10f
         };
         public static HelpBox Black { get; } = new HelpBox
         {

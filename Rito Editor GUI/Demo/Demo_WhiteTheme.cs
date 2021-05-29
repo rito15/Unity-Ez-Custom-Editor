@@ -12,21 +12,8 @@ namespace Rito.EditorUtilities.Demo
 {
     using RGUI = RitoEditorGUI;
 
-    public class Demo_WhiteTheme : MonoBehaviour
+    public class Demo_WhiteTheme : Demo_ThemeBase
     {
-        public int int1, int2, int3;
-        public float float1, float2;
-        public bool bool1, bool2, bool3;
-        public string string1, string2;
-        public Material material1;
-        public Transform transform1;
-        public Color color1, color2;
-        public Vector3 vector3;
-        public Vector4 vector4;
-
-        public List<float> fList = new List<float> { 0.123f, 456.789f, 12345f, 67890f };
-        public int fSelected;
-
         [CustomEditor(typeof(Demo_WhiteTheme))]
         private class CE : UnityEditor.Editor
         {
@@ -131,7 +118,46 @@ namespace Rito.EditorUtilities.Demo
 
                 SelectableLabel.White
                     .SetData("Selectable Label")
-                    .Draw(0.4f, 0.99f).Layout();
+                    .Draw(0.4f, 1.0f).Layout();
+
+                FloatField.White
+                    .SetData("Float Field", m.float1)
+                    .DrawLayout().Get(out m.float1);
+
+                Vector4Field.White
+                    .SetData("Vector4 Field", m.vector4)
+                    .DrawLayout().Get(out m.vector4);
+
+                FloatSlider.White
+                    .SetData("Float Slider", m.float2, 0f, 1f)
+                    .DrawLayout().Get(out m.float2);
+
+                TextArea.White
+                    .SetData(m.string2, "Text Area")
+                    .DrawLayout().Get(out m.string2);
+
+                ColorPicker.White
+                    .SetData(m.color2)
+                    .DrawLayout().Get(out m.color2);
+
+                HelpBox.White
+                    .SetData("Help Box", MessageType.Error)
+                    .DrawLayout();
+
+                Dropdown<string>.White
+                    .SetData("String Dropdown", m.sArray, m.sSelected)
+                    .DrawLayout().Get(out m.sSelected);
+
+                Toggle.White
+                    .SetData(m.bool4)
+                    .DrawLayout().Get(out m.bool4);
+
+                Button.White
+                    .SetData("Button")
+                    .Draw(0f, 0.49f);
+                ToggleButton.White
+                    .SetData("Toggle Button", m.bool5)
+                    .Draw(0.5f, 1.0f).Layout().Get(out m.bool5);
 
                 RGUI.Finalize(this);
             }

@@ -31,6 +31,7 @@ namespace Rito.EditorUtilities.Demo
             private Vector3Int vector3IntValue;
             private Color colorValue1 = Color.white;
             private Color colorValue2 = Color.white;
+            private long longValue1;
 
             private Material materialValue;
             private GameObject gameObjectValue;
@@ -90,6 +91,12 @@ namespace Rito.EditorUtilities.Demo
                     IntField.Default
                     .SetData("Int Field", intValues[i++])
                     .SetTooltip("Int Field")
+                    .DrawLayout().Get();
+
+                longValue1 = 
+                    LongField.Default
+                    .SetData("Long Field", longValue1)
+                    .SetTooltip("Long Field")
                     .DrawLayout().Get();
 
                 floatValues[f] = 

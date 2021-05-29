@@ -305,6 +305,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 897337928}
+  - component: {fileID: 897337929}
   m_Layer: 0
   m_Name: Black
   m_TagString: Untagged
@@ -326,6 +327,47 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &897337929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897337927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 702601a8fcd17534888c08db8c327a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  int1: 0
+  int2: 0
+  int3: 0
+  float1: 1.62
+  float2: 0
+  bool1: 0
+  bool2: 0
+  bool3: 0
+  bool4: 0
+  bool5: 0
+  string1: 
+  string2: 
+  material1: {fileID: 0}
+  transform1: {fileID: 0}
+  color1: {r: 0, g: 0, b: 0, a: 0}
+  color2: {r: 0, g: 0, b: 0, a: 0}
+  vector3: {x: 0, y: 0, z: 0}
+  vector4: {x: 0, y: 0, z: 0, w: 0}
+  fList:
+  - 0.123
+  - 456.789
+  - 12345
+  - 67890
+  fSelected: 0
+  sArray:
+  - String 0
+  - String 1
+  - String 2
+  sSelected: 0
 --- !u!1 &1825174258
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,10 +397,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f354c4d714d82b41bd722f9f6efb3fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boolValues: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  int1: 0
+  int2: 0
+  int3: 0
+  float1: 0
+  float2: 0
+  bool1: 1
+  bool2: 0
+  bool3: 0
+  bool4: 0
+  bool5: 0
+  string1: adwd
+  string2: 
+  material1: {fileID: 0}
+  transform1: {fileID: 0}
+  color1: {r: 0, g: 0, b: 0, a: 0}
+  color2: {r: 0, g: 0, b: 0, a: 0}
+  vector3: {x: 0, y: 213, z: 0}
+  vector4: {x: 0, y: 0, z: 0, w: 0}
   fList:
   - 1
   - 2
+  fSelected: 0
+  sArray:
+  - String 0
+  - String 1
+  - String 2
+  sSelected: 0
 --- !u!4 &1825174260
 Transform:
   m_ObjectHideFlags: 0

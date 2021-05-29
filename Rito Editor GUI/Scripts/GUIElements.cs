@@ -5,11 +5,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
+using System.Reflection;
 
 /*
     [TODO]
 
+    - EnumDropdown
     - Int, Float, Double Field 레이블 영역 좌우 드래그하면 value 값 감소/증가
 
     - CustomizedEditorGUIThemes : White, Gray, Black, Red, Blue, Green, Yellow, Cyan, Purple, Pink
@@ -25,6 +26,7 @@ using UnityEditor;
 namespace Rito.EditorUtilities
 {
     using REG = RitoEditorGUI;
+    using fPixel = System.Single;
     using fRatio = System.Single;
 
     public struct None { public static readonly None Empty = new None(); }
@@ -537,6 +539,7 @@ namespace Rito.EditorUtilities
 
         // Styles - Input Field
         public Color inputTextColor = Color.white;
+        public Color inputTextFocusedColor = Color.white;
         public Color inputBackgroundColor = Color.white;
         public int inputFontSize = 12;
         public FontStyle inputFontStyle = FontStyle.Normal;
@@ -616,11 +619,16 @@ namespace Rito.EditorUtilities
             GUI.backgroundColor = inputBackgroundColor;
 
             labelStyle.normal.textColor = labelColor;
+            labelStyle.hover.textColor = labelColor.AddRGB(0.25f);
+            labelStyle.focused.textColor = labelColor.AddRGB(0.25f);
+            labelStyle.onActive.textColor = labelColor.AddRGB(0.25f);
             labelStyle.fontSize = labelFontSize;
             labelStyle.fontStyle = labelFontStyle;
             labelStyle.alignment = labelAlignment;
 
             inputStyle.normal.textColor = inputTextColor;
+            inputStyle.hover.textColor = inputTextColor.AddRGB(0.25f);
+            inputStyle.focused.textColor = inputTextFocusedColor;
             inputStyle.fontSize = inputFontSize;
             inputStyle.fontStyle = inputFontStyle;
             inputStyle.alignment = inputTextAlignment;
@@ -634,7 +642,7 @@ namespace Rito.EditorUtilities
         }
 
         protected virtual void InitInputStyle() 
-            => inputStyle = new GUIStyle(GUI.skin.textField);
+            => inputStyle = new GUIStyle(EditorStyles.numberField);
 
         protected abstract void DrawFields(in Rect labelRect, in Rect inputRect);
     }
@@ -656,8 +664,17 @@ namespace Rito.EditorUtilities
         public static IntField Default { get; } = new IntField();
         protected override void DrawFields(in Rect labelRect, in Rect inputRect)
         {
-            EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
-            value = EditorGUI.IntField(inputRect, value, inputStyle);
+            value =
+                ReflectionGUI.IntField(labelRect, inputRect, labelContent, value, labelStyle, inputStyle);
+        }
+    }
+    public partial class LongField : ValueFieldWithSetter<long, LongField>
+    {
+        public static LongField Default { get; } = new LongField();
+        protected override void DrawFields(in Rect labelRect, in Rect inputRect)
+        {
+            value =
+                ReflectionGUI.LongField(labelRect, inputRect, labelContent, value, labelStyle, inputStyle);
         }
     }
     public partial class FloatField : ValueFieldWithSetter<float, FloatField>
@@ -666,8 +683,8 @@ namespace Rito.EditorUtilities
 
         protected override void DrawFields(in Rect labelRect, in Rect inputRect)
         {
-            EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
-            value = EditorGUI.FloatField(inputRect, value, inputStyle);
+            value = 
+                ReflectionGUI.FloatField(labelRect, inputRect, labelContent, value, labelStyle, inputStyle);
         }
     }
     public partial class DoubleField : ValueFieldWithSetter<double, DoubleField>
@@ -676,8 +693,8 @@ namespace Rito.EditorUtilities
 
         protected override void DrawFields(in Rect labelRect, in Rect inputRect)
         {
-            EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
-            value = EditorGUI.DoubleField(inputRect, value, inputStyle);
+            value =
+                ReflectionGUI.DoubleField(labelRect, inputRect, labelContent, value, labelStyle, inputStyle);
         }
     }
     public partial class StringField : ValueFieldWithSetter<string, StringField>
@@ -761,14 +778,24 @@ namespace Rito.EditorUtilities
         }
         protected override void DrawFields(in Rect labelRect, in Rect inputRect)
         {
-            EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
+            EditorGUI.LabelField(labelRect, labelContent, labelStyle);
 
             var oldLabelColor = EditorStyles.label.normal.textColor;
+            var oldLabelHoverColor = EditorStyles.label.normal.textColor;
+            var oldLabelFocusedColor = EditorStyles.label.focused.textColor;
+            var oldFieldFocusedColor = EditorStyles.numberField.focused.textColor;
+
             EditorStyles.label.normal.textColor = labelColor;
+            EditorStyles.label.hover.textColor = labelColor.AddRGB(0.25f);
+            EditorStyles.label.focused.textColor = labelColor.AddRGB(0.25f);
+            EditorStyles.numberField.focused.textColor = inputTextColor.AddRGB(0.25f);
 
             DrawVectorField(inputRect);
 
             EditorStyles.label.normal.textColor = oldLabelColor;
+            EditorStyles.label.hover.textColor = oldLabelHoverColor;
+            EditorStyles.label.focused.textColor = oldLabelFocusedColor;
+            EditorStyles.numberField.focused.textColor = oldFieldFocusedColor;
         }
         protected abstract void DrawVectorField(in Rect inputRect);
     }
@@ -858,6 +885,7 @@ namespace Rito.EditorUtilities
             GUI.backgroundColor = inputBackgroundColor;
             EditorStyles.objectField.normal.textColor = inputTextColor;
             EditorStyles.objectField.hover.textColor = inputTextColor.AddRGB(0.5f);
+            EditorStyles.objectField.focused.textColor = inputTextFocusedColor;
             EditorStyles.objectField.fontSize = inputFontSize;
             EditorStyles.objectField.fontStyle = inputFontStyle;
             EditorStyles.objectField.alignment = inputTextAlignment;
@@ -930,11 +958,12 @@ namespace Rito.EditorUtilities
         protected string placeholder = "";
 
         // Styles - Input Field
-        public Color textColor = Color.white;
-        public Color backgroundColor = Color.white;
-        public int fontSize = 12;
-        public FontStyle fontStyle = FontStyle.Normal;
-        public TextAnchor textAlignment = TextAnchor.MiddleLeft;
+        public Color inputTextColor = Color.white;
+        public Color inputTextFocusedColor = Color.white;
+        public Color inputBackgroundColor = Color.white;
+        public int inputFontSize = 12;
+        public FontStyle inputFontStyle = FontStyle.Normal;
+        public TextAnchor inputTextAlignment = TextAnchor.MiddleLeft;
 
         /***********************************************************************
         *                               Style Setters
@@ -943,27 +972,27 @@ namespace Rito.EditorUtilities
 
         public TextArea SetTextColor(Color color)
         {
-            this.textColor = color;
+            this.inputTextColor = color;
             return this;
         }
         public TextArea SetBackgroundColor(Color color)
         {
-            this.backgroundColor = color;
+            this.inputBackgroundColor = color;
             return this;
         }
         public TextArea SetFontSize(int fontSize)
         {
-            this.fontSize = fontSize;
+            this.inputFontSize = fontSize;
             return this;
         }
         public TextArea SetFontStyle(FontStyle fontStyle)
         {
-            this.fontStyle = fontStyle;
+            this.inputFontStyle = fontStyle;
             return this;
         }
         public TextArea SetTextAlignment(TextAnchor allignment)
         {
-            this.textAlignment = allignment;
+            this.inputTextAlignment = allignment;
             return this;
         }
 
@@ -986,18 +1015,20 @@ namespace Rito.EditorUtilities
                 inputStyle = new GUIStyle(GUI.skin.textField);
 
             var oldBackgroundColor = GUI.backgroundColor;
-            GUI.backgroundColor = backgroundColor;
+            GUI.backgroundColor = inputBackgroundColor;
 
-            inputStyle.normal.textColor = textColor;
-            inputStyle.fontSize = fontSize;
-            inputStyle.fontStyle = fontStyle;
-            inputStyle.alignment = textAlignment;
+            inputStyle.normal.textColor = inputTextColor;
+            inputStyle.hover.textColor = inputTextColor.AddRGB(0.25f);
+            inputStyle.focused.textColor = inputTextFocusedColor;
+            inputStyle.fontSize = inputFontSize;
+            inputStyle.fontStyle = inputFontStyle;
+            inputStyle.alignment = inputTextAlignment;
 
             GUI.SetNextControlName("TextField");
             value = EditorGUI.TextArea(rect, value, inputStyle);
 
             // Placeholder
-            inputStyle.normal.textColor = textColor.SetA(0.5f);
+            inputStyle.normal.textColor = inputTextColor.SetA(0.5f);
             if (string.IsNullOrWhiteSpace(value) && !string.IsNullOrWhiteSpace(placeholder) &&
                 !(GUI.GetNameOfFocusedControl() == "TextField"))
                 EditorGUI.LabelField(rect, placeholder, inputStyle);
@@ -1119,7 +1150,6 @@ namespace Rito.EditorUtilities
     public partial class Toggle : DrawingElement<bool, Toggle>
     {
         public static Toggle Default { get; } = new Toggle();
-        protected GUIStyle style;
 
         // Style
         public Color color = Color.white;
@@ -1148,15 +1178,14 @@ namespace Rito.EditorUtilities
             if (CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
-            if (style == null)
-                style = new GUIStyle(GUI.skin.toggle);
+            // NOTE : backgroundColor, contentColor 적용 안됨
 
-            var oldBackgroundColor = GUI.color;
+            var oldColor = GUI.color;
             GUI.color = color;
 
             value = EditorGUI.Toggle(rect, "", value);
 
-            GUI.color = oldBackgroundColor;
+            GUI.color = oldColor;
 
             EndDraw();
             return this;
@@ -1248,12 +1277,12 @@ namespace Rito.EditorUtilities
             EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
 
             // 2. Field
-            var oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = colorPickerColor;
+            var oldColor = GUI.color;
+            GUI.color = colorPickerColor;
 
             value = EditorGUI.ColorField(inputRect, "", value);
 
-            GUI.backgroundColor = oldColor;
+            GUI.color = oldColor;
 
             EndDraw();
             return this;
@@ -1280,12 +1309,12 @@ namespace Rito.EditorUtilities
             if (CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
-            var oldColor = GUI.backgroundColor;
-            GUI.backgroundColor = colorPickerColor;
+            var oldColor = GUI.color;
+            GUI.color = colorPickerColor;
 
             value = EditorGUI.ColorField(rect, "", value);
 
-            GUI.backgroundColor = oldColor;
+            GUI.color = oldColor;
 
             EndDraw();
             return this;
@@ -1372,41 +1401,48 @@ namespace Rito.EditorUtilities
             if (labelStyle == null)
                 labelStyle = new GUIStyle(GUI.skin.label);
             if (sliderStyle == null)
-                sliderStyle = new GUIStyle(GUI.skin.textField);
+                sliderStyle = new GUIStyle(GUI.skin.horizontalSlider);
 
             ref float t = ref widthThreshold;
             float omt = 1f - t;
             Rect labelRect = new Rect(rect.x, rect.y, rect.width * t, rect.height);
             Rect sliderRect = new Rect(rect.x + rect.width * t, rect.y, rect.width * omt, rect.height);
 
+            // 1. Label
+            labelStyle.normal.textColor = labelColor;
+            labelStyle.fontSize = labelFontSize;
+            labelStyle.fontStyle = labelFontStyle;
+            labelStyle.alignment = labelAlignment;
+
+            //var oldLabelColor = GUI.skin.label.normal.textColor;
+            //GUI.skin.label.normal.textColor = labelColor;
+            EditorGUI.LabelField(labelRect, labelContent, labelStyle);
+            //GUI.skin.label.normal.textColor = oldLabelColor;
+
+            // 2. Slider
             var oldContentColor = GUI.contentColor;
             var oldBackgroundColor = GUI.backgroundColor;
 
             GUI.contentColor = valueColor;
             GUI.backgroundColor = sliderColor;
 
-            labelStyle.normal.textColor = labelColor;
-            labelStyle.fontSize = labelFontSize;
-            labelStyle.fontStyle = labelFontStyle;
-            labelStyle.alignment = labelAlignment;
+            DrawSlider(sliderRect);
 
-            DrawGUI(labelRect, sliderRect);
-
-            GUI.backgroundColor = oldBackgroundColor;
             GUI.contentColor = oldContentColor;
+            GUI.backgroundColor = oldBackgroundColor;
 
+            // -
             EndDraw();
             return this as R;
         }
-        protected abstract void DrawGUI(in Rect labelRect, in Rect sliderRect);
+        protected abstract void DrawSlider(in Rect sliderRect);
     }
     public partial class IntSlider : ValueSlider<int, IntSlider>
     {
         public static IntSlider Default { get; } = new IntSlider();
 
-        protected override void DrawGUI(in Rect labelRect, in Rect sliderRect)
+        protected override void DrawSlider(in Rect sliderRect)
         {
-            EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
             value = EditorGUI.IntSlider(sliderRect, value, minValue, maxValue);
         }
     }
@@ -1414,9 +1450,8 @@ namespace Rito.EditorUtilities
     {
         public static FloatSlider Default { get; } = new FloatSlider();
 
-        protected override void DrawGUI(in Rect labelRect, in Rect sliderRect)
+        protected override void DrawSlider(in Rect sliderRect)
         {
-            EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
             value = EditorGUI.Slider(sliderRect, value, minValue, maxValue);
         }
     }
@@ -1424,9 +1459,8 @@ namespace Rito.EditorUtilities
     {
         public static DoubleSlider Default { get; } = new DoubleSlider();
 
-        protected override void DrawGUI(in Rect labelRect, in Rect sliderRect)
+        protected override void DrawSlider(in Rect sliderRect)
         {
-            EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
             value = EditorGUI.Slider(sliderRect, (float)value, (float)minValue, (float)maxValue);
         }
     }
