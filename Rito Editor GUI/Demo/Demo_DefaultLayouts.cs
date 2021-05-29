@@ -41,13 +41,9 @@ namespace Rito.EditorUtilities.Demo
 
             public override void OnInspectorGUI()
             {
-                REG.Options 
-                    .SetMarginLeft(12f)
-                    .SetMarginRight(24f)
-                    .SetMarginTop(8f)
-                    .SetMarginBottom(4f)
-                    .DebugOn(true)
-                    .DebugAll(true)
+                REG.Options
+                    .SetMargins(top: 8f, left: 12f, right: 24f, bottom: 4f)
+                    .ActivateRectDebugger(true)
                     .AllowTooltip(true)
                     .SetDebugRectColor(Color.cyan)
                     .Init();

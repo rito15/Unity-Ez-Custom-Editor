@@ -40,8 +40,8 @@ namespace Rito.EditorUtilities.Demo
             {
                 RGUI.Options
                     .SetMargins(top: 12f, left: 12f, right: 20f, bottom: 16f)
-                    .DebugOn(true)
-                    .DebugAll(true)
+                    .ActivateRectDebugger(true)
+                    .AcrivateTooltipDebugger(true)
                     .Init();
 
                 // ------------------------------------------------------

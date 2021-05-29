@@ -97,11 +97,11 @@ namespace Rito.EditorUtilities
         }
 
         /// <summary> Rect 위치 가시화하여 보여주기 </summary>
-        public void DebugRect(Color color = default, in floatPixel border = 1f)
+        protected void DebugRect(Color color = default, in floatPixel border = 1f)
         {
-            if(!REG.DebugActivated) return;
+            if(!REG.RectDebugActivated) return;
             if(rect == default) return;
-            if(color == default) color = REG.DebugColor;
+            if(color == default) color = REG.RectDebugColor;
 
             float x = rect.x;
             float y = rect.y;
@@ -119,20 +119,28 @@ namespace Rito.EditorUtilities
             EditorGUI.DrawRect(right, color);
         }
 
+        protected bool CheckDrawErrors()
+        {
+            return REG.ErrorOccured;
+        }
+
         /// <summary> 툴팁 등록 여부 확인 및 요청 </summary>
         protected void CheckTooltip()
         {
-            if (tooltipFlag)
-            {
-                tooltipFlag = false;
-
-                if (REG.ShowTooltip)
-                    REG.TooltipList.Add(new OverlayTooltip(rect, tooltipWidth, tooltipHeight, tooltipText));
-            }
+            CheckTooltip(this.rect);
         }
         protected void CheckTooltip(in Rect rect)
         {
-            if (tooltipFlag)
+            if (REG.TooltipDebugActivated)
+            {
+                string debugInfo = 
+                    $"xMin : {rect.x}, xMax : {rect.x + rect.width}\n" +
+                    $"yMin : {rect.y}, yMax : {rect.y + rect.height}\n" +
+                    $"Width : {rect.width}\n" +
+                    $"Height : {rect.height}";
+                REG.DebugTooltipList.Add(new OverlayTooltip(rect, 200f, 60f, debugInfo));
+            }
+            else if (tooltipFlag)
             {
                 tooltipFlag = false;
 
@@ -145,7 +153,7 @@ namespace Rito.EditorUtilities
         protected void EndDraw()
         {
             CheckTooltip();
-            if (REG.DebugAllRect)
+            if (REG.RectDebugActivated)
                 DebugRect();
             isLastLayout = false;
         }
@@ -263,6 +271,7 @@ namespace Rito.EditorUtilities
         public override Label Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if(CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
             if (style == null)
@@ -287,6 +296,7 @@ namespace Rito.EditorUtilities
         public override Label Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if (CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
             if (style == null)
@@ -362,6 +372,7 @@ namespace Rito.EditorUtilities
         public override Button Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if (CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
             if (style == null)
@@ -485,6 +496,7 @@ namespace Rito.EditorUtilities
         public override ToggleButton Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if (CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
             if (style == null)
@@ -587,6 +599,7 @@ namespace Rito.EditorUtilities
         public override R Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if (CheckDrawErrors()) return this as R;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
             if (labelStyle == null)
@@ -705,6 +718,7 @@ namespace Rito.EditorUtilities
         public override R Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if (CheckDrawErrors()) return this as R;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
             if (labelStyle == null)
@@ -824,6 +838,7 @@ namespace Rito.EditorUtilities
         public override ObjectField<T> Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if (CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
             if (labelStyle == null)
@@ -965,6 +980,7 @@ namespace Rito.EditorUtilities
         public override TextArea Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if (CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
             if (inputStyle == null)
@@ -1070,6 +1086,7 @@ namespace Rito.EditorUtilities
         public override BoolField Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if (CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
             if (labelStyle == null)
@@ -1129,6 +1146,7 @@ namespace Rito.EditorUtilities
         public override Toggle Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if (CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
             if (style == null)
@@ -1209,6 +1227,7 @@ namespace Rito.EditorUtilities
         public override ColorField Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if (CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
             // Styles
@@ -1259,6 +1278,7 @@ namespace Rito.EditorUtilities
         public override ColorPicker Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if (CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
             var oldColor = GUI.backgroundColor;
@@ -1347,6 +1367,7 @@ namespace Rito.EditorUtilities
         public override R Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if (CheckDrawErrors()) return this as R;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
             if (labelStyle == null)
@@ -1449,6 +1470,7 @@ namespace Rito.EditorUtilities
         public Box Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if (CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
             if (outlineWidth > 0f)
@@ -1687,6 +1709,7 @@ namespace Rito.EditorUtilities
             in float headerHeight, in float contentHeight,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if (CheckDrawErrors()) return this;
             this.headerHeight = headerHeight + outlineWidth;
             SetRect(xLeft, xRight, yOffset, headerHeight + contentHeight + outlineWidth, xLeftOffset, xRightOffset);
 
@@ -1795,6 +1818,7 @@ namespace Rito.EditorUtilities
             in float headerHeight, in float contentHeight,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if (CheckDrawErrors()) return this;
             this.headerHeight = headerHeight + outlineWidth;
             SetRect(xLeft, xRight, yOffset, headerHeight + contentHeight + outlineWidth, xLeftOffset, xRightOffset);
 
@@ -1862,7 +1886,7 @@ namespace Rito.EditorUtilities
             }
 
             CheckTooltip(foldout ? rect : headerRect);
-            if (REG.DebugAllRect)
+            if (REG.RectDebugActivated)
             {
                 if(!foldout)
                     rect = headerRect;
@@ -1934,6 +1958,7 @@ namespace Rito.EditorUtilities
         public override HelpBox Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
+            if (CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
 
             var oldBackgroundColor = GUI.backgroundColor;
