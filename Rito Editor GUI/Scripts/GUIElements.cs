@@ -1334,7 +1334,7 @@ namespace Rito.EditorUtilities
 
         // Styles - Slider
         public Color sliderColor = Color.white;
-        public Color valueColor = Color.white;
+        public Color inputTextColor = Color.white;
 
         /***********************************************************************
         *                               Style Setters
@@ -1367,9 +1367,9 @@ namespace Rito.EditorUtilities
             this.sliderColor = color;
             return this as R;
         }
-        public R SetValueColor(Color color)
+        public R SetInputTextColor(Color color)
         {
-            this.valueColor = color;
+            this.inputTextColor = color;
             return this as R;
         }
 
@@ -1417,7 +1417,7 @@ namespace Rito.EditorUtilities
             var oldContentColor = GUI.contentColor;
             var oldBackgroundColor = GUI.backgroundColor;
 
-            GUI.contentColor = valueColor;
+            GUI.contentColor = inputTextColor;
             GUI.backgroundColor = sliderColor * 2f;
 
             DrawSlider(sliderRect);

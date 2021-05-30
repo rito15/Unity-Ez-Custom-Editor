@@ -14,7 +14,7 @@ namespace Rito.EditorUtilities.Demo
         [CustomEditor(typeof(Demo_RedTheme))]
         private class CE : Demo_ThemeCustomEditorBase
         {
-            protected override bool SetEditorBakgroundColor { get; } = true;
+            protected override bool SetEditorBakgroundColor { get; } = false;
 
             protected override Color EditorBackgroundColor { get; } = RColor.Gray1;
 
