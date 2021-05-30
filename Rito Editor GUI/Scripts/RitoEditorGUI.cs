@@ -495,6 +495,9 @@ namespace Rito.EditorUtilities
 
                 Vector2 mPos = Event.current.mousePosition;
 
+                var oldGUIColor = GUI.color;
+                GUI.color = Color.white;
+
                 // 툴팁 영역이 겹칠 경우, 더 나중에 그려진 컨트롤의 툴팁 표시
                 for (int i = TooltipList.Count - 1; i >= 0; i--)
                 {
@@ -506,6 +509,7 @@ namespace Rito.EditorUtilities
                         break;
                     }
                 }
+                GUI.color = oldGUIColor;
 
                 TooltipList.Clear();
             }

@@ -1966,16 +1966,12 @@ namespace Rito.EditorUtilities
             var oldFontSize = helpBoxStyle.fontSize;
             var oldFontStyle = helpBoxStyle.fontStyle;
             var oldAlignment = helpBoxStyle.alignment;
-            var oldBackgroundTex = EditorStyles.helpBox.normal.background;
 
-            GUI.backgroundColor = backgroundColor;
+            GUI.backgroundColor = backgroundColor.SetA(100f);
             helpBoxStyle.normal.textColor = textColor;
             helpBoxStyle.fontSize = fontSize;
             helpBoxStyle.fontStyle = fontStyle;
             helpBoxStyle.alignment = textAlignment;
-
-            if(backgroundColor != Color.white)
-                EditorStyles.helpBox.normal.background = backgroundColor.ToTexture();
 
             EditorGUI.HelpBox(rect, text, messageType);
 
@@ -1984,7 +1980,6 @@ namespace Rito.EditorUtilities
             helpBoxStyle.fontSize = oldFontSize;
             helpBoxStyle.fontStyle = oldFontStyle;
             helpBoxStyle.alignment = oldAlignment;
-            EditorStyles.helpBox.normal.background = oldBackgroundTex;
 
             EndDraw();
             return this;
