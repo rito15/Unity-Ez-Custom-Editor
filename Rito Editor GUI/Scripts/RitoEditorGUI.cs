@@ -22,7 +22,16 @@ namespace Rito.EditorUtilities
         #region .
         public class OptionBuilder
         {
-            public static OptionBuilder Instance { get; } = new OptionBuilder();
+            public static OptionBuilder Instance 
+            {
+                get
+                {
+                    ChangeEditorBackgroundColor = false;
+                    return instance;
+                }
+            }
+            private static OptionBuilder instance = new OptionBuilder();
+
             private OptionBuilder() { }
 
             public OptionBuilder SetMargins(float left = 0f, float right = 0f, float top = 0f, float bottom = 0f)
@@ -48,7 +57,7 @@ namespace Rito.EditorUtilities
             }
 
             /// <summary> 툴팁 디버거 토글 생성 </summary>
-            public OptionBuilder AcrivateTooltipDebugger(bool value)
+            public OptionBuilder ActivateTooltipDebugger(bool value)
             {
                 REG.ShowTooltipDebugToggle = value;
                 return this;
@@ -76,6 +85,13 @@ namespace Rito.EditorUtilities
                 REG.ShowTooltip = value;
                 return this;
             }
+            /// <summary> 에디터의 배경 색상 지정 </summary>
+            public OptionBuilder SetEditorBackgroundColor(in Color color)
+            {
+                ChangeEditorBackgroundColor = true;
+                EditorBackgroundColor = color;
+                return this;
+            }
 
             public void Init()
             {
@@ -93,6 +109,13 @@ namespace Rito.EditorUtilities
                     errorType = ErrorType.NeverFinalized;
                     ShowErrorHelpbox();
                     return;
+                }
+
+                // 에디터 배경색 직접 지정
+                if (ChangeEditorBackgroundColor)
+                {
+                    Rect editorFullRect = new Rect(0f, 0f, EditorGUIUtility.currentViewWidth, EditorTotalHeight);
+                    EditorGUI.DrawRect(editorFullRect, EditorBackgroundColor);
                 }
 
                 // 인스펙터 상단부에 디버그 On/Off 토글 생성
@@ -147,6 +170,46 @@ namespace Rito.EditorUtilities
                 }
             }
         }
+
+        #endregion
+        /***********************************************************************
+        *                               Fields, Properties
+        ***********************************************************************/
+        #region .
+        private static float marginTop;
+        private static float marginLeft;
+        private static float marginRight;
+        private static float marginBottom;
+
+        /// <summary> OnInspectorGUI 최상단에서 .Init()까지 호출 </summary>
+        public static OptionBuilder Options => OptionBuilder.Instance;
+        public static float CurrentY { get; private set; }
+        public static float ViewWidth { get; private set; }
+
+        /// <summary> 레이아웃 요소의 기본 높이 </summary>
+        public static float LayoutControlHeight { get; private set; } = 18f;
+        /// <summary> 레이아웃 요소의 기본 하단 여백 </summary>
+        public static float LayoutControlBottomMargin { get; private set; } = 2f;
+
+        /// <summary> 툴팁을 표시할 수 있는지 여부 </summary>
+        public static bool ShowTooltip { get; private set; } = true;
+
+        public static List<OverlayTooltip> TooltipList { get; } = new List<OverlayTooltip>();
+        public static List<OverlayTooltip> DebugTooltipList { get; } = new List<OverlayTooltip>();
+
+
+        /// <summary> 에디터 배경색을 직접 지정할지 여부 </summary>
+        private static bool ChangeEditorBackgroundColor { get; set; } = false;
+
+        /// <summary> 에디터 배경색상 </summary>
+        private static Color EditorBackgroundColor { get; set; } = RColor.Gray;
+
+        /// <summary> 에디터 전체 영역 높이 </summary>
+        private static float EditorTotalHeight { get; set; }
+
+
+        /// <summary> 윈도우의 기본 하단 여백 </summary>
+        const float EditorDefaultMarginBottom = 10f;
 
         #endregion
         /***********************************************************************
@@ -213,32 +276,6 @@ namespace Rito.EditorUtilities
             { ErrorType.NeverInitalized, "OnInspectorGUI() 상단에서 RItoEditorGUI.Options.Init()을 호출하세요." },
             { ErrorType.NeverFinalized,  "OnInspectorGUI() 하단에서 RitoEditorGUI.Finalize(this)를 호출하세요." },
         };
-
-        #endregion
-        /***********************************************************************
-        *                               Fields, Properties
-        ***********************************************************************/
-        #region .
-        private static float marginTop;
-        private static float marginLeft;
-        private static float marginRight;
-        private static float marginBottom;
-
-        /// <summary> OnInspectorGUI 최상단에서 .Init()까지 호출 </summary>
-        public static OptionBuilder Options => OptionBuilder.Instance;
-        public static float CurrentY { get; private set; }
-        public static float ViewWidth { get; private set; }
-
-        /// <summary> 레이아웃 요소의 기본 높이 </summary>
-        public static float LayoutControlHeight { get; private set; } = 18f;
-        /// <summary> 레이아웃 요소의 기본 하단 여백 </summary>
-        public static float LayoutControlBottomMargin { get; private set; } = 2f;
-
-        /// <summary> 툴팁을 표시할 수 있는지 여부 </summary>
-        public static bool ShowTooltip { get; private set; } = true;
-
-        public static List<OverlayTooltip> TooltipList { get; } = new List<OverlayTooltip>();
-        public static List<OverlayTooltip> DebugTooltipList { get; } = new List<OverlayTooltip>();
 
         #endregion
         /***********************************************************************
@@ -311,9 +348,14 @@ namespace Rito.EditorUtilities
                 EditorGUI.FocusTextInControl("");
             }
 
-
             // 툴팁 디버거, 툴팁 기능 동작
             ShowTooltips(editor);
+
+            // 에디터 전체 높이 계산
+            if (ChangeEditorBackgroundColor)
+            {
+                EditorTotalHeight = CurrentY + EditorDefaultMarginBottom;
+            }
         }
 
         private static void ShowTooltips(Editor editor)
@@ -395,10 +437,6 @@ namespace Rito.EditorUtilities
                     float fullWidth = ViewWidth + marginLeft + marginRight;
                     float fullHeight = CurrentY - yMin;
 
-                    // 윈도우 최하단의 기본 여백 영역
-                    const float DefaultMarginBottom = 10f;
-
-
                     Rect[] marginRects = new Rect[]
                     {
                         // Top
@@ -412,7 +450,7 @@ namespace Rito.EditorUtilities
                         new Rect(marginLeft + ViewWidth, yMin, marginRight, fullHeight),
 
                         // Bottom : Inspector Default Margin
-                        new Rect(0f, CurrentY, fullWidth, DefaultMarginBottom),
+                        new Rect(0f, CurrentY, fullWidth, EditorDefaultMarginBottom),
                     };
 
                     string[] tooltipStrings = new string[]
@@ -423,7 +461,7 @@ namespace Rito.EditorUtilities
                         $"Margin Left : {marginLeft} ({0f} ~ {marginLeft})",
                         $"Margin Right : {marginRight} ({fullWidth - marginRight} ~ {fullWidth})",
 
-                        $"Default Margin : {DefaultMarginBottom} ({CurrentY - yMin} ~ {CurrentY + DefaultMarginBottom - yMin})",
+                        $"Default Margin : {EditorDefaultMarginBottom} ({CurrentY - yMin} ~ {CurrentY + EditorDefaultMarginBottom - yMin})",
                     };
 
                     for (int i = 0; i < marginRects.Length; i++)

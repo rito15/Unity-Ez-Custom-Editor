@@ -67,6 +67,15 @@ namespace Rito.EditorUtilities
         public static MintColor Mint { get; } = new MintColor();
         public static CyanColor Cyan { get; } = new CyanColor();
 
+        public static Color Gray1 { get; } = new Color(0.10f, 0.10f, 0.10f, 1.00f);
+        public static Color Gray2 { get; } = new Color(0.20f, 0.20f, 0.20f, 1.00f);
+        public static Color Gray3 { get; } = new Color(0.30f, 0.30f, 0.30f, 1.00f);
+        public static Color Gray4 { get; } = new Color(0.40f, 0.40f, 0.40f, 1.00f);
+        public static Color Gray5 { get; } = new Color(0.50f, 0.50f, 0.50f, 1.00f);
+        public static Color Gray6 { get; } = new Color(0.60f, 0.60f, 0.60f, 1.00f);
+        public static Color Gray7 { get; } = new Color(0.70f, 0.70f, 0.70f, 1.00f);
+        public static Color Gray8 { get; } = new Color(0.80f, 0.80f, 0.80f, 1.00f);
+        public static Color Gray9 { get; } = new Color(0.90f, 0.90f, 0.90f, 1.00f);
         #endregion
         /***********************************************************************
         *                               Color Definitions

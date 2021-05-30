@@ -45,7 +45,7 @@ namespace Rito.EditorUtilities.Demo
                 REG.Options
                     .SetMargins(top: 8f, left: 12f, right: 24f, bottom: 4f)
                     .ActivateRectDebugger(true)
-                    .AcrivateTooltipDebugger(true)
+                    .ActivateTooltipDebugger(true)
                     .SetDebugRectColor(Color.cyan)
                     .SetDebugTooltipColor(Color.cyan.SetA(0.5f))
                     .Init();

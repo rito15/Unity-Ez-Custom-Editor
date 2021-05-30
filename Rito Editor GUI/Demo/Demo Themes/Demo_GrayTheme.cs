@@ -3,24 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using UnityEditorInternal;
 
-// 날짜 : 2021-05-27 AM 2:31:20
+// 날짜 : 2021-05-30 PM 3:18:00
 // 작성자 : Rito
 
 namespace Rito.EditorUtilities.Demo
 {
     using RGUI = RitoEditorGUI;
 
-    public class Demo_WhiteTheme : Demo_ThemeBase
+    public class Demo_GrayTheme : Demo_ThemeBase
     {
-        [CustomEditor(typeof(Demo_WhiteTheme))]
+        [CustomEditor(typeof(Demo_GrayTheme))]
         private class CE : UnityEditor.Editor
         {
-            private Demo_WhiteTheme m;
+            private Demo_GrayTheme m;
+
             private void OnEnable()
             {
-                m = target as Demo_WhiteTheme;
+                m = target as Demo_GrayTheme;
             }
 
             public override void OnInspectorGUI()
@@ -28,11 +28,10 @@ namespace Rito.EditorUtilities.Demo
                 RGUI.Options
                     .SetMargins(top: 12f, left: 12f, right: 20f, bottom: 16f)
                     .ActivateRectDebugger(true)
-                    .AcrivateTooltipDebugger(true)
+                    .ActivateTooltipDebugger(true)
                     .Init();
-
                 // ------------------------------------------------------
-                FoldoutHeaderBox.White
+                FoldoutHeaderBox.Gray
                     .SetData(m.bool1, "Foldout Header Box", 2f, 2f)
                     .Draw(20f, 62f)
                     .HeaderSpace()
@@ -40,19 +39,19 @@ namespace Rito.EditorUtilities.Demo
 
                 if (m.bool1)
                 {
-                    Label.White
+                    Label.Gray
                         .SetData("Label 012345")
                         .Draw(0.01f, 0.4f);
-                    SelectableLabel.White
+                    SelectableLabel.Gray
                         .SetData("Selectable Label")
                         .Draw(0.4f, 0.99f).Layout();
 
-                    IntField.White
+                    IntField.Gray
                         .SetData("Int Field", m.int1)
                         .Draw(0.01f, 0.99f).Layout()
                         .Get(out m.int1);
 
-                    IntSlider.White
+                    IntSlider.Gray
                         .SetData("Int Slider", m.int2, 0, 10)
                         .Draw(0.01f, 0.99f).Layout()
                         .Get(out m.int2);
@@ -63,102 +62,103 @@ namespace Rito.EditorUtilities.Demo
                 RGUI.Space(8f);
 
                 // ------------------------------------------------------
-                HeaderBox.White
+                HeaderBox.Gray
                     .SetData("Header Box", 2f, 2f)
                     .DrawLayout(4);
 
-                Vector3Field.White
+                Vector3Field.Gray
                     .SetData("Vector3 Field", m.vector3)
                     .DrawLayout(0.01f, 0.99f).Get(out m.vector3);
 
-                BoolField.White
+                BoolField.Gray
                     .SetData("Bool Field", m.bool2)
                     .DrawLayout(0.01f, 0.99f).Get(out m.bool2);
 
-                StringField.White
+                StringField.Gray
                     .SetData("String Field", m.string1, "Placeholder")
                     .DrawLayout(0.01f, 0.99f).Get(out m.string1);
 
-                Button.White
+                Button.Gray
                     .SetData("Button")
                     .Draw(0.01f, 0.49f);
-                ToggleButton.White
+                ToggleButton.Gray
                     .SetData("Toggle Button", m.bool3)
                     .Draw(0.5f, 0.99f).Layout(2f).Get(out m.bool3);
 
                 RGUI.Space(12f);
 
                 // ------------------------------------------------------
-                Box.White
+                Box.Gray
                     .SetData(2f)
                     .DrawLayout(4, 2f, 0f);
 
-                ColorField.White
+                ColorField.Gray
                     .SetData("Color Field", m.color1)
                     .DrawLayout(0.01f, 0.99f).Get(out m.color1);
 
-                ObjectField<Material>.White
+                ObjectField<Material>.Gray
                     .SetData("Material Field", m.material1)
                     .DrawLayout(0.01f, 0.99f).Get(out m.material1);
 
-                Dropdown<float>.White
+                Dropdown<float>.Gray
                     .SetData("Float Dropdown", m.fList, m.fSelected)
                     .DrawLayout(0.01f, 0.99f).Get(out m.fSelected);
 
-                HelpBox.White
+                HelpBox.Gray
                     .SetData("Help Box", MessageType.Warning)
                     .DrawLayout(0.01f, 0.99f);
 
                 RGUI.Space(8f);
 
                 // ------------------------------------------------------
-                Label.White
+                Label.Gray
                     .SetData("Label ABCD abcd")
                     .Draw(0f, 0.4f);
 
-                SelectableLabel.White
+                SelectableLabel.Gray
                     .SetData("Selectable Label")
                     .Draw(0.4f, 1.0f).Layout();
 
-                FloatField.White
+                FloatField.Gray
                     .SetData("Float Field", m.float1)
                     .DrawLayout().Get(out m.float1);
 
-                Vector4Field.White
+                Vector4Field.Gray
                     .SetData("Vector4 Field", m.vector4)
                     .DrawLayout().Get(out m.vector4);
 
-                FloatSlider.White
+                FloatSlider.Gray
                     .SetData("Float Slider", m.float2, 0f, 1f)
                     .DrawLayout().Get(out m.float2);
 
-                TextArea.White
+                TextArea.Gray
                     .SetData(m.string2, "Text Area")
                     .DrawLayout().Get(out m.string2);
 
-                ColorPicker.White
+                ColorPicker.Gray
                     .SetData(m.color2)
                     .DrawLayout().Get(out m.color2);
 
-                HelpBox.White
+                HelpBox.Gray
                     .SetData("Help Box", MessageType.Error)
                     .DrawLayout();
 
-                Dropdown<string>.White
+                Dropdown<string>.Gray
                     .SetData("String Dropdown", m.sArray, m.sSelected)
                     .DrawLayout().Get(out m.sSelected);
 
-                Toggle.White
+                Toggle.Gray
                     .SetData(m.bool4)
                     .DrawLayout().Get(out m.bool4);
 
-                Button.White
+                Button.Gray
                     .SetData("Button")
                     .Draw(0f, 0.49f);
-                ToggleButton.White
+                ToggleButton.Gray
                     .SetData("Toggle Button", m.bool5)
                     .Draw(0.5f, 1.0f).Layout().Get(out m.bool5);
 
+                // ------------------------------------------------------
                 RGUI.Finalize(this);
             }
         }

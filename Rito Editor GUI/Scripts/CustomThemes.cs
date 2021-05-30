@@ -9,133 +9,58 @@ using UnityEditor;
 
 namespace Rito.EditorUtilities
 {
-    public partial class Label
+    public abstract partial class LabelBase<R>
     {
-        public static Label Gray { get; } = new Label
+        public static R Gray { get; } = new R
         {
             textColor = RColor.Gray.Bright
         };
-        public static Label White { get; } = new Label
+        public static R White { get; } = new R
         {
             textColor = RColor.white
         };
-        public static Label Black { get; } = new Label
+        public static R Black { get; } = new R
         {
             textColor = RColor.black
         };
-    }
-    public partial class SelectableLabel
-    {
-        public static new SelectableLabel Gray { get; } = new SelectableLabel
+        public static R Red { get; } = new R
         {
-            textColor = RColor.Gray.Bright
+            textColor = RColor.Red
         };
-        public static new SelectableLabel White { get; } = new SelectableLabel
+        public static R Green { get; } = new R
         {
-            textColor = RColor.white
-        };
-        public static new SelectableLabel Black { get; } = new SelectableLabel
-        {
-            textColor = RColor.black
+            textColor = RColor.Green
         };
     }
-    public partial class Button
+    public abstract partial class ValueFieldBase<T, R>
     {
-        public static Button Gray { get; } = new Button
+        public static R Gray = new R() { };
+        public static R White { get; } = new R
         {
-            textColor = RColor.Gray.Bright
-        };
-        public static Button White { get; } = new Button
-        {
-            textColor = RColor.black,
-            hoverTextColor = RColor.Gray.Dark,
-            buttonColor = RColor.white * 2.8f,
-        };
-        public static Button Black { get; } = new Button
-        {
-        };
-    }
-    public partial class ToggleButton
-    {
-        public static ToggleButton Gray { get; } = new ToggleButton { };
-        public static ToggleButton White { get; } = new ToggleButton
-        {
-            normalTextColor = RColor.black,
-            hoverTextColor = RColor.Gray.Dark,
-            normalButtonColor = RColor.white * 2.8f,
-
-            pressedTextColor = RColor.black,
-            pressedButtonColor = RColor.white * 3f,
-        };
-        public static ToggleButton Black { get; } = new ToggleButton
-        {
-        };
-    }
-    public partial class IntField
-    {
-        public static IntField Gray { get; } = new IntField { };
-        public static IntField White { get; } = new IntField
-        {
-            inputBackgroundColor = RColor.white * 10f,
+            inputBackgroundColor = RColor.white * 5f,
             inputTextColor = RColor.black,
             inputTextFocusedColor = RColor.black,
         };
-        public static IntField Black { get; } = new IntField
+        public static R Black { get; } = new R
         {
+            labelColor = RColor.black,
+            inputBackgroundColor = RColor.black,
+            inputTextColor = RColor.white,
+            inputTextFocusedColor = RColor.Gray.Bright
         };
-    }
-    public partial class LongField
-    {
-        public static LongField Gray { get; } = new LongField { };
-        public static LongField White { get; } = new LongField
+        public static R Red { get; } = new R
         {
-            inputBackgroundColor = RColor.white * 10f,
-            inputTextColor = RColor.black,
-            inputTextFocusedColor = RColor.black,
+            labelColor = RColor.Red,
+            inputBackgroundColor = RColor.Red.Normal,
+            inputTextColor = RColor.White,
+            inputTextFocusedColor = RColor.Red.Bright
         };
-        public static LongField Black { get; } = new LongField
+        public static R Green { get; } = new R
         {
-        };
-    }
-    public partial class FloatField
-    {
-        public static FloatField Gray { get; } = new FloatField { };
-        public static FloatField White { get; } = new FloatField
-        {
-            inputBackgroundColor = RColor.white * 10f,
-            inputTextColor = RColor.black,
-            inputTextFocusedColor = RColor.black,
-        };
-        public static FloatField Black { get; } = new FloatField
-        {
-        };
-    }
-    public partial class DoubleField
-    {
-        public static DoubleField Gray { get; } = new DoubleField { };
-        public static DoubleField White { get; } = new DoubleField
-        {
-            inputBackgroundColor = RColor.white * 10f,
-            inputTextColor = RColor.black,
-            inputTextFocusedColor = RColor.black,
-        };
-        public static DoubleField Black { get; } = new DoubleField
-        {
-        };
-    }
-    public partial class StringField
-    {
-        public static StringField Gray { get; } = new StringField 
-        { 
-        };
-        public static StringField White { get; } = new StringField
-        {
-            inputBackgroundColor = RColor.white * 10f,
-            inputTextColor = RColor.black,
-            inputTextFocusedColor = RColor.black,
-        };
-        public static StringField Black { get; } = new StringField
-        {
+            labelColor = RColor.Green,
+            inputBackgroundColor = RColor.Green.Dark,
+            inputTextColor = RColor.White,
+            inputTextFocusedColor = RColor.Green.Bright
         };
     }
     public partial class TextArea
@@ -145,124 +70,68 @@ namespace Rito.EditorUtilities
         {
             inputBackgroundColor = RColor.white * 10f,
             inputTextColor = RColor.black,
-            inputTextFocusedColor = RColor.black,
         };
         public static TextArea Black { get; } = new TextArea
         {
+            inputBackgroundColor = RColor.black,
+            inputTextColor = RColor.white,
         };
-    }
-    public partial class Vector2Field
-    {
-        public static Vector2Field Gray { get; } = new Vector2Field
+        public static TextArea Red { get; } = new TextArea
         {
+            inputBackgroundColor = RColor.Red.Normal,
+            inputTextColor = RColor.White,
         };
-        public static Vector2Field White { get; } = new Vector2Field
+        public static TextArea Green { get; } = new TextArea
         {
-            inputBackgroundColor = RColor.white * 10f,
-            inputTextColor = RColor.black,
-            inputTextFocusedColor = RColor.black,
-        };
-        public static Vector2Field Black { get; } = new Vector2Field
-        {
-        };
-    }
-    public partial class Vector3Field
-    {
-        public static Vector3Field Gray { get; } = new Vector3Field
-        {
-        };
-        public static Vector3Field White { get; } = new Vector3Field
-        {
-            inputBackgroundColor = RColor.white * 10f,
-            inputTextColor = RColor.black,
-            inputTextFocusedColor = RColor.black,
-        };
-        public static Vector3Field Black { get; } = new Vector3Field
-        {
-        };
-    }
-    public partial class Vector4Field
-    {
-        public static Vector4Field Gray { get; } = new Vector4Field
-        {
-        };
-        public static Vector4Field White { get; } = new Vector4Field
-        {
-            inputBackgroundColor = RColor.white * 10f,
-            inputTextColor = RColor.black,
-            inputTextFocusedColor = RColor.black,
-        };
-        public static Vector4Field Black { get; } = new Vector4Field
-        {
-        };
-    }
-    public partial class Vector2IntField
-    {
-        public static Vector2IntField Gray { get; } = new Vector2IntField
-        {
-        };
-        public static Vector2IntField White { get; } = new Vector2IntField
-        {
-            inputBackgroundColor = RColor.white * 10f,
-            inputTextColor = RColor.black,
-            inputTextFocusedColor = RColor.black,
-        };
-        public static Vector2IntField Black { get; } = new Vector2IntField
-        {
-        };
-    }
-    public partial class Vector3IntField
-    {
-        public static Vector3IntField Gray { get; } = new Vector3IntField
-        {
-        };
-        public static Vector3IntField White { get; } = new Vector3IntField
-        {
-            inputBackgroundColor = RColor.white * 10f,
-            inputTextColor = RColor.black,
-            inputTextFocusedColor = RColor.black,
-        };
-        public static Vector3IntField Black { get; } = new Vector3IntField
-        {
-        };
-    }
-    public partial class ObjectField<T>
-    {
-        public static ObjectField<T> Gray { get; } = new ObjectField<T> { };
-        public static ObjectField<T> White { get; } = new ObjectField<T>
-        {
-            inputBackgroundColor = RColor.white * 10f,
-            inputTextColor = RColor.black,
-            inputTextFocusedColor = RColor.Gray.Darker
-        };
-        public static ObjectField<T> Black { get; } = new ObjectField<T>
-        {
-        };
-    }
-    public partial class Dropdown<T>
-    {
-        public static Dropdown<T> Gray { get; } = new Dropdown<T>
-        {
-        };
-        public static Dropdown<T> White { get; } = new Dropdown<T>
-        {
-            inputBackgroundColor = RColor.white * 10f,
-            inputTextColor = RColor.black,
-            inputTextFocusedColor = RColor.Gray.Darker
-        };
-        public static Dropdown<T> Black { get; } = new Dropdown<T>
-        {
+            inputBackgroundColor = RColor.Green.Dark,
+            inputTextColor = RColor.White,
         };
     }
     public partial class BoolField
     {
         public static BoolField Gray { get; } = new BoolField { };
-        public static BoolField White { get; } = new BoolField
-        {
-            toggleColor = RColor.white * 10f
-        };
+        public static BoolField White { get; } = new BoolField { };
         public static BoolField Black { get; } = new BoolField
         {
+            labelColor = RColor.black,
+        };
+        public static BoolField Red { get; } = new BoolField
+        {
+            labelColor = RColor.Red,
+            toggleColor = RColor.Red.Soft
+        };
+        public static BoolField Green { get; } = new BoolField
+        {
+            labelColor = RColor.Green,
+            toggleColor = RColor.Green.Soft
+        };
+    }
+    public abstract partial class ValueSliderBase<T, R>
+    {
+        public static R Gray { get; } = new R { };
+        public static R White { get; } = new R
+        {
+            labelColor = RColor.white,
+            sliderColor = RColor.white * 10f,
+            valueColor = RColor.black,
+        };
+        public static R Black { get; } = new R
+        {
+            labelColor = RColor.black,
+            sliderColor = RColor.black,
+            valueColor = RColor.white,
+        };
+        public static R Red { get; } = new R
+        {
+            labelColor = RColor.Red,
+            sliderColor = RColor.Red.Normal,
+            valueColor = RColor.White,
+        };
+        public static R Green { get; } = new R
+        {
+            labelColor = RColor.Green,
+            sliderColor = RColor.Green.Dark,
+            valueColor = RColor.White,
         };
     }
     public partial class Toggle
@@ -272,8 +141,14 @@ namespace Rito.EditorUtilities
         {
             color = RColor.white * 100f
         };
-        public static Toggle Black { get; } = new Toggle
+        public static Toggle Black { get; } = new Toggle { };
+        public static Toggle Red { get; } = new Toggle
         {
+            color = RColor.Red.Soft
+        };
+        public static Toggle Green { get; } = new Toggle
+        {
+            color = RColor.Green.Soft
         };
     }
     public partial class ColorField
@@ -285,6 +160,18 @@ namespace Rito.EditorUtilities
         };
         public static ColorField Black { get; } = new ColorField
         {
+            labelColor = RColor.black,
+            colorPickerColor = RColor.black
+        };
+        public static ColorField Red { get; } = new ColorField
+        {
+            labelColor = RColor.Red,
+            colorPickerColor = RColor.Red.Normal * 5f
+        };
+        public static ColorField Green { get; } = new ColorField
+        {
+            labelColor = RColor.Green,
+            colorPickerColor = RColor.Green.Normal * 5f
         };
     }
     public partial class ColorPicker
@@ -296,49 +183,82 @@ namespace Rito.EditorUtilities
         };
         public static ColorPicker Black { get; } = new ColorPicker
         {
+            colorPickerColor = RColor.black
+        };
+        public static ColorPicker Red { get; } = new ColorPicker
+        {
+            colorPickerColor = RColor.Red.Normal * 5f
+        };
+        public static ColorPicker Green { get; } = new ColorPicker
+        {
+            colorPickerColor = RColor.Green.Normal * 5f
         };
     }
-    public partial class IntSlider
+    public partial class Button
     {
-        public static IntSlider Gray { get; } = new IntSlider { };
-        public static IntSlider White { get; } = new IntSlider
+        public static Button Gray { get; } = new Button
         {
-            sliderColor = RColor.white * 10f,
-            valueColor = RColor.black,
-            labelColor = RColor.white
+            textColor = RColor.Gray.Bright
         };
-        public static IntSlider Black { get; } = new IntSlider
+        public static Button White { get; } = new Button
         {
+            textColor = RColor.black,
+            pressedTextColor = RColor.Gray,
+            buttonColor = RColor.white * 2.8f,
+        };
+        public static Button Black { get; } = new Button
+        {
+            textColor = RColor.white,
+            pressedTextColor = RColor.Gray,
+            buttonColor = RColor.black
+        };
+        public static Button Red { get; } = new Button
+        {
+            textColor = RColor.white,
+            pressedTextColor = RColor.Red.Bright,
+            buttonColor = RColor.red * 1.5f
+        };
+        public static Button Green { get; } = new Button
+        {
+            textColor = RColor.white,
+            pressedTextColor = RColor.Green.Bright,
+            buttonColor = RColor.Green.Normal * 1.5f
         };
     }
-    public partial class FloatSlider
+    public partial class ToggleButton
     {
-        public static FloatSlider Gray { get; } = new FloatSlider
+        public static ToggleButton Gray { get; } = new ToggleButton { };
+        public static ToggleButton White { get; } = new ToggleButton
         {
+            normalTextColor = RColor.black,
+            normalButtonColor = RColor.white * 2.8f,
+
+            pressedTextColor = RColor.black,
+            pressedButtonColor = RColor.white * 2f,
         };
-        public static FloatSlider White { get; } = new FloatSlider
+        public static ToggleButton Black { get; } = new ToggleButton
         {
-            sliderColor = RColor.white * 10f,
-            valueColor = RColor.black,
-            labelColor = RColor.white
+            normalTextColor = RColor.white,
+            normalButtonColor = RColor.black,
+
+            pressedTextColor = RColor.Gray.Bright,
+            pressedButtonColor = RColor.Gray,
         };
-        public static FloatSlider Black { get; } = new FloatSlider
+        public static ToggleButton Red { get; } = new ToggleButton
         {
+            normalTextColor = RColor.white,
+            normalButtonColor = RColor.Red.Normal * 1.5f,
+
+            pressedTextColor = RColor.white,
+            pressedButtonColor = RColor.Red.Normal * 2f
         };
-    }
-    public partial class DoubleSlider
-    {
-        public static DoubleSlider Gray { get; } = new DoubleSlider
+        public static ToggleButton Green { get; } = new ToggleButton
         {
-        };
-        public static DoubleSlider White { get; } = new DoubleSlider
-        {
-            sliderColor = RColor.white * 10f,
-            valueColor = RColor.black,
-            labelColor = RColor.white
-        };
-        public static DoubleSlider Black { get; } = new DoubleSlider
-        {
+            normalTextColor = RColor.white,
+            normalButtonColor = RColor.Green.Normal * 1.5f,
+
+            pressedTextColor = RColor.white,
+            pressedButtonColor = RColor.Green.Normal * 2f
         };
     }
     public partial class Box
@@ -348,49 +268,91 @@ namespace Rito.EditorUtilities
         };
         public static Box White { get; } = new Box
         {
-            color = RColor.Gray.Darker,
+            color = RColor.Gray.Darker
         };
         public static Box Black { get; } = new Box
         {
+            color = RColor.white
+        };
+        public static Box Red { get; } = new Box
+        {
+            color = RColor.Red.Bright
+        };
+        public static Box Green { get; } = new Box
+        {
+            color = RColor.black.SetG(0.1f)
         };
     }
-    public partial class HeaderBox
+    public abstract partial class HeaderBoxBase<R>
     {
-        public static HeaderBox Gray { get; } = new HeaderBox
-        {
-        };
-        public static HeaderBox White { get; } = new HeaderBox
+        public static R Gray { get; } = new R { };
+        public static R White { get; } = new R
         {
             headerTextColor = RColor.black,
             headerColor = RColor.white,
             contentColor = RColor.Gray.Darker,
             outlineColor = RColor.black
         };
-        public static HeaderBox Black { get; } = new HeaderBox
+        public static R Black { get; } = new R
         {
+            headerTextColor = RColor.white,
+            headerColor = RColor.black,
+            contentColor = RColor.Gray.Bright,
+            outlineColor = RColor.Gray.Darker
+        };
+        public static R Red { get; } = new R
+        {
+            headerTextColor = RColor.white,
+            headerColor = RColor.Red.Dark,
+            contentColor = RColor.Red.Bright,
+            outlineColor = RColor.Red.Darker
+        };
+        public static R Green { get; } = new R
+        {
+            headerTextColor = RColor.Black,
+            headerColor = RColor.Green.Light,
+            contentColor = RColor.black.SetG(0.1f),
+            outlineColor = RColor.Green.Darker
         };
     }
     public partial class FoldoutHeaderBox
     {
-        public static FoldoutHeaderBox Gray { get; } = new FoldoutHeaderBox
-        {
-        };
-        public static FoldoutHeaderBox White { get; } = new FoldoutHeaderBox
+        public static new FoldoutHeaderBox White { get; } = new FoldoutHeaderBox
         {
             headerTextColor = RColor.black,
             headerColor = RColor.white,
+            headerHoverColor = RColor.Gray7,
             contentColor = RColor.Gray.Darker,
-            outlineColor = RColor.black,
+            outlineColor = RColor.black
         };
-        public static FoldoutHeaderBox Black { get; } = new FoldoutHeaderBox
+        public static new FoldoutHeaderBox Black { get; } = new FoldoutHeaderBox
         {
+            headerTextColor = RColor.white,
+            headerColor = RColor.black,
+            headerHoverColor = RColor.Gray3,
+            contentColor = RColor.Gray.Bright,
+            outlineColor = RColor.Gray.Darker
+        };
+        public static new FoldoutHeaderBox Red { get; } = new FoldoutHeaderBox
+        {
+            headerTextColor = RColor.white,
+            headerColor = RColor.Red.Dark,
+            headerHoverColor = RColor.Red,
+            contentColor = RColor.Red.Bright,
+            outlineColor = RColor.Red.Darker
+        };
+        public static new FoldoutHeaderBox Green { get; } = new FoldoutHeaderBox
+        {
+            headerTextColor = RColor.Black,
+            headerColor = RColor.Green.Light,
+            headerHoverColor = RColor.Green.Bright,
+            contentColor = RColor.black.SetG(0.1f),
+            outlineColor = RColor.Green.Darker
         };
     }
     public partial class HelpBox
     {
-        public static HelpBox Gray { get; } = new HelpBox
-        {
-        };
+        public static HelpBox Gray { get; } = new HelpBox { };
         public static HelpBox White { get; } = new HelpBox
         {
             textColor = RColor.Black,
@@ -398,6 +360,15 @@ namespace Rito.EditorUtilities
         };
         public static HelpBox Black { get; } = new HelpBox
         {
+            backgroundColor = RColor.black
+        };
+        public static HelpBox Red { get; } = new HelpBox
+        {
+            backgroundColor = RColor.Red.Darker
+        };
+        public static HelpBox Green { get; } = new HelpBox
+        {
+            backgroundColor = RColor.black.SetG(0.55f)
         };
     }
 }

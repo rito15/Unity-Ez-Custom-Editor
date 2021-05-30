@@ -121,6 +121,78 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &225679974
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 225679975}
+  - component: {fileID: 225679976}
+  m_Layer: 0
+  m_Name: Green
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &225679975
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 225679974}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &225679976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 225679974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abd598174b0f1474ba7fd5251c465f26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  int1: 0
+  int2: 0
+  int3: 0
+  float1: 0
+  float2: 0
+  bool1: 0
+  bool2: 0
+  bool3: 0
+  bool4: 0
+  bool5: 0
+  string1: 
+  string2: 
+  material1: {fileID: 0}
+  transform1: {fileID: 0}
+  color1: {r: 0, g: 0, b: 0, a: 0}
+  color2: {r: 0, g: 0, b: 0, a: 0}
+  vector3: {x: 0, y: 0, z: 0}
+  vector4: {x: 0, y: 0, z: 0, w: 0}
+  fList:
+  - 0.123
+  - 456.789
+  - 12345
+  - 67890
+  fSelected: 0
+  sArray:
+  - String 0
+  - String 1
+  - String 2
+  sSelected: 0
 --- !u!1 &444354896
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,24 +411,126 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 702601a8fcd17534888c08db8c327a26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  int1: 0
-  int2: 0
+  int1: 50
+  int2: 7
   int3: 0
   float1: 1.62
-  float2: 0
-  bool1: 0
-  bool2: 0
+  float2: 0.352
+  bool1: 1
+  bool2: 1
   bool3: 0
-  bool4: 0
-  bool5: 0
-  string1: 
-  string2: 
+  bool4: 1
+  bool5: 1
+  string1: 2323
+  string2: a213
   material1: {fileID: 0}
   transform1: {fileID: 0}
   color1: {r: 0, g: 0, b: 0, a: 0}
   color2: {r: 0, g: 0, b: 0, a: 0}
-  vector3: {x: 0, y: 0, z: 0}
+  vector3: {x: 0.38, y: 0, z: 0}
   vector4: {x: 0, y: 0, z: 0, w: 0}
+  fList:
+  - 0.123
+  - 456.789
+  - 12345
+  - 67890
+  fSelected: 0
+  sArray:
+  - String 0
+  - String 1
+  - String 2
+  sSelected: 1
+--- !u!1 &1250684392
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1250684393}
+  m_Layer: 0
+  m_Name: Blue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1250684393
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250684392}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1522119037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1522119038}
+  - component: {fileID: 1522119039}
+  m_Layer: 0
+  m_Name: Red
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1522119038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522119037}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1522119039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522119037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34d7df550b8720848b6200bef275723c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  int1: 2323
+  int2: 4
+  int3: 0
+  float1: 2323
+  float2: 0.417
+  bool1: 1
+  bool2: 0
+  bool3: 0
+  bool4: 0
+  bool5: 0
+  string1: 2323
+  string2: 123123
+  material1: {fileID: 0}
+  transform1: {fileID: 0}
+  color1: {r: 0, g: 0, b: 0, a: 0}
+  color2: {r: 1, g: 0.116780184, b: 0, a: 0}
+  vector3: {x: 0, y: 0, z: 0}
+  vector4: {x: 232323, y: 0, z: 0, w: 0}
   fList:
   - 0.123
   - 456.789
@@ -408,7 +582,7 @@ MonoBehaviour:
   bool4: 0
   bool5: 0
   string1: adwd
-  string2: 
+  string2: 2323
   material1: {fileID: 0}
   transform1: {fileID: 0}
   color1: {r: 0, g: 0, b: 0, a: 0}
@@ -447,6 +621,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1828600869}
+  - component: {fileID: 1828600870}
   m_Layer: 0
   m_Name: Gray
   m_TagString: Untagged
@@ -468,6 +643,47 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1828600870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828600868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b97f6b8c7e260f4f9a446785231223c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  int1: 0
+  int2: 0
+  int3: 0
+  float1: 0
+  float2: 0
+  bool1: 1
+  bool2: 0
+  bool3: 0
+  bool4: 0
+  bool5: 1
+  string1: 
+  string2: 
+  material1: {fileID: 0}
+  transform1: {fileID: 0}
+  color1: {r: 0, g: 0, b: 0, a: 0}
+  color2: {r: 0, g: 0, b: 0, a: 0}
+  vector3: {x: 0, y: 0, z: 0}
+  vector4: {x: 0, y: 0, z: 0, w: 0}
+  fList:
+  - 0.123
+  - 456.789
+  - 12345
+  - 67890
+  fSelected: 0
+  sArray:
+  - String 0
+  - String 1
+  - String 2
+  sSelected: 0
 --- !u!1 &2128918163
 GameObject:
   m_ObjectHideFlags: 0
