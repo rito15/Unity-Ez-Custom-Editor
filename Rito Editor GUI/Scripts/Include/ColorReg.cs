@@ -51,7 +51,7 @@ namespace Rito.EditorUtilities
             public static readonly Color Button = RColor.Black;
             public static readonly Color ButtonPressed = RColor.Gray;
             public static readonly Color ButtonText = RColor.White;
-            public static readonly Color ButtonTextPressed = RColor.Gray.Bright;
+            public static readonly Color ButtonTextPressed = RColor.White;
 
             public static readonly Color HelpBox = RColor.Black;
             public static readonly Color HelpBoxText = RColor.White;
@@ -74,7 +74,7 @@ namespace Rito.EditorUtilities
             public static readonly Color Button = RColor.Red.Normal * 2f;
             public static readonly Color ButtonPressed = RColor.Red.Normal * 2.8f;
             public static readonly Color ButtonText = RColor.White;
-            public static readonly Color ButtonTextPressed = RColor.Red.Bright;
+            public static readonly Color ButtonTextPressed = RColor.White;
 
             public static readonly Color HelpBox = RColor.Red.Normal * 1.5f;
             public static readonly Color HelpBoxText = RColor.White;
@@ -95,9 +95,9 @@ namespace Rito.EditorUtilities
             public static readonly Color BoxOutline = RColor.Green.Dark;
 
             public static readonly Color Button = RColor.Green.Normal * 1.5f;
-            public static readonly Color ButtonPressed = RColor.Green.Normal * 2f;
+            public static readonly Color ButtonPressed = RColor.Green.Normal * 2.2f;
             public static readonly Color ButtonText = RColor.White;
-            public static readonly Color ButtonTextPressed = RColor.Green.Bright;
+            public static readonly Color ButtonTextPressed = RColor.White;
 
             public static readonly Color HelpBox = RColor.Green.Soft;
             public static readonly Color HelpBoxText = RColor.White;
@@ -118,9 +118,9 @@ namespace Rito.EditorUtilities
             public static readonly Color BoxOutline = RColor.Blue.Normal;
 
             public static readonly Color Button = RColor.Blue.Normal * 1.5f;
-            public static readonly Color ButtonPressed = RColor.Blue.Normal * 2f;
+            public static readonly Color ButtonPressed = RColor.Blue.Normal * 3f;
             public static readonly Color ButtonText = RColor.White;
-            public static readonly Color ButtonTextPressed = RColor.Blue.Bright;
+            public static readonly Color ButtonTextPressed = RColor.White;
 
             public static readonly Color HelpBox = RColor.Blue.Soft * 1.5f;
             public static readonly Color HelpBoxText = RColor.White;
@@ -141,9 +141,9 @@ namespace Rito.EditorUtilities
             public static readonly Color BoxOutline = RColor.Pink.Dark;
 
             public static readonly Color Button = RColor.Pink.Soft * 2f;
-            public static readonly Color ButtonPressed = RColor.Pink.Soft * 3f;
+            public static readonly Color ButtonPressed = RColor.Pink.Soft * 3.5f;
             public static readonly Color ButtonText = RColor.White;
-            public static readonly Color ButtonTextPressed = RColor.Pink.Bright;
+            public static readonly Color ButtonTextPressed = RColor.White;
 
             public static readonly Color HelpBox = RColor.Pink.Soft * 2f;
             public static readonly Color HelpBoxText = RColor.White;
@@ -164,9 +164,9 @@ namespace Rito.EditorUtilities
             public static readonly Color BoxOutline = RColor.Magenta.Dark;
 
             public static readonly Color Button = RColor.Magenta.Soft * 2f;
-            public static readonly Color ButtonPressed = RColor.Magenta.Soft * 3f;
+            public static readonly Color ButtonPressed = RColor.Magenta.Soft * 3.5f;
             public static readonly Color ButtonText = RColor.White;
-            public static readonly Color ButtonTextPressed = RColor.Magenta.Bright;
+            public static readonly Color ButtonTextPressed = RColor.White;
 
             public static readonly Color HelpBox = RColor.Magenta.Soft * 2f;
             public static readonly Color HelpBoxText = RColor.White;
@@ -187,9 +187,9 @@ namespace Rito.EditorUtilities
             public static readonly Color BoxOutline = RColor.Violet.Dark;
 
             public static readonly Color Button = RColor.Violet.Soft * 2f;
-            public static readonly Color ButtonPressed = RColor.Violet.Soft * 3f;
+            public static readonly Color ButtonPressed = RColor.Violet.Soft * 3.5f;
             public static readonly Color ButtonText = RColor.White;
-            public static readonly Color ButtonTextPressed = RColor.Violet.Bright;
+            public static readonly Color ButtonTextPressed = RColor.White;
 
             public static readonly Color HelpBox = RColor.Violet.Soft * 2f;
             public static readonly Color HelpBoxText = RColor.White;
@@ -210,9 +210,9 @@ namespace Rito.EditorUtilities
             public static readonly Color BoxOutline = RColor.Purple.Dark;
 
             public static readonly Color Button = RColor.Purple.Soft * 2f;
-            public static readonly Color ButtonPressed = RColor.Purple.Soft * 3f;
+            public static readonly Color ButtonPressed = RColor.Purple.Soft * 3.5f;
             public static readonly Color ButtonText = RColor.White;
-            public static readonly Color ButtonTextPressed = RColor.Purple.Bright;
+            public static readonly Color ButtonTextPressed = RColor.White;
 
             public static readonly Color HelpBox = RColor.Purple.Soft * 2f;
             public static readonly Color HelpBoxText = RColor.White;
@@ -233,9 +233,9 @@ namespace Rito.EditorUtilities
             public static readonly Color BoxOutline = RColor.Brown.Dark;
 
             public static readonly Color Button = RColor.Brown.Soft * 2f;
-            public static readonly Color ButtonPressed = RColor.Brown.Soft * 3f;
+            public static readonly Color ButtonPressed = RColor.Brown.Soft * 3.5f;
             public static readonly Color ButtonText = RColor.White;
-            public static readonly Color ButtonTextPressed = RColor.Brown.Bright;
+            public static readonly Color ButtonTextPressed = RColor.White;
 
             public static readonly Color HelpBox = RColor.Brown.Soft * 2f;
             public static readonly Color HelpBoxText = RColor.White;
@@ -258,7 +258,7 @@ namespace Rito.EditorUtilities
             public static readonly Color Button = RColor.Gold.Soft * 2f;
             public static readonly Color ButtonPressed = RColor.Gold.Soft * 3f;
             public static readonly Color ButtonText = RColor.Black;
-            public static readonly Color ButtonTextPressed = RColor.Gold.Darker;
+            public static readonly Color ButtonTextPressed = RColor.Black;
 
             public static readonly Color HelpBox = RColor.Gold.Soft * 2f;
             public static readonly Color HelpBoxText = RColor.Black;
@@ -266,9 +266,9 @@ namespace Rito.EditorUtilities
         public static class Orange
         {
             public static readonly Color Label = RColor.Orange.Bright;
-            public static readonly Color InputBG = RColor.Orange.Soft.MultiplyRGB(2f);
-            public static readonly Color InputText = RColor.white;
-            public static readonly Color InputTextFocused = RColor.Orange.Bright;
+            public static readonly Color InputBG = RColor.Orange.Soft * 3f;
+            public static readonly Color InputText = RColor.Black;
+            public static readonly Color InputTextFocused = RColor.Black;
             public static readonly Color ColorPicker = RColor.Orange.Normal * 5f;
             public static readonly Color Toggle = RColor.Orange.Soft * 2f;
 
@@ -278,13 +278,13 @@ namespace Rito.EditorUtilities
             public static readonly Color BoxHeaderText = RColor.Black;
             public static readonly Color BoxOutline = RColor.Orange.Dark;
 
-            public static readonly Color Button = RColor.Orange.Soft * 2f;
-            public static readonly Color ButtonPressed = RColor.Orange.Soft * 3f;
-            public static readonly Color ButtonText = RColor.White;
-            public static readonly Color ButtonTextPressed = RColor.Orange.Bright;
+            public static readonly Color Button = RColor.Orange.Soft * 2.5f;
+            public static readonly Color ButtonPressed = RColor.Orange.Soft * 3.5f;
+            public static readonly Color ButtonText = RColor.Black;
+            public static readonly Color ButtonTextPressed = RColor.Black;
 
-            public static readonly Color HelpBox = RColor.Orange.Soft * 2f;
-            public static readonly Color HelpBoxText = RColor.White;
+            public static readonly Color HelpBox = RColor.Orange.Soft * 2.5f;
+            public static readonly Color HelpBoxText = RColor.Black;
         }
         public static class Yellow
         {
@@ -301,10 +301,10 @@ namespace Rito.EditorUtilities
             public static readonly Color BoxHeaderText = RColor.Black;
             public static readonly Color BoxOutline = RColor.Yellow.Dark;
 
-            public static readonly Color Button = RColor.Yellow.Soft * 3f;
-            public static readonly Color ButtonPressed = RColor.Yellow.Soft * 3f;
+            public static readonly Color Button = RColor.Yellow.Soft * 2.5f;
+            public static readonly Color ButtonPressed = RColor.Yellow.Soft * 4f;
             public static readonly Color ButtonText = RColor.Black;
-            public static readonly Color ButtonTextPressed = RColor.Yellow.Darker;
+            public static readonly Color ButtonTextPressed = RColor.Black;
 
             public static readonly Color HelpBox = RColor.Yellow.Soft * 2.5f;
             public static readonly Color HelpBoxText = RColor.Black;
@@ -324,10 +324,10 @@ namespace Rito.EditorUtilities
             public static readonly Color BoxHeaderText = RColor.Black;
             public static readonly Color BoxOutline = RColor.Lime.Dark;
 
-            public static readonly Color Button = RColor.Lime.Soft * 3f;
-            public static readonly Color ButtonPressed = RColor.Lime.Soft * 3f;
+            public static readonly Color Button = RColor.Lime.Soft * 2.5f;
+            public static readonly Color ButtonPressed = RColor.Lime.Soft * 4f;
             public static readonly Color ButtonText = RColor.Black;
-            public static readonly Color ButtonTextPressed = RColor.Lime.Darker;
+            public static readonly Color ButtonTextPressed = RColor.Black;
 
             public static readonly Color HelpBox = RColor.Lime.Soft * 2.5f;
             public static readonly Color HelpBoxText = RColor.Black;
@@ -347,10 +347,10 @@ namespace Rito.EditorUtilities
             public static readonly Color BoxHeaderText = RColor.Black;
             public static readonly Color BoxOutline = RColor.Mint.Dark;
 
-            public static readonly Color Button = RColor.Mint.Soft * 3f;
-            public static readonly Color ButtonPressed = RColor.Mint.Soft * 3f;
+            public static readonly Color Button = RColor.Mint.Soft * 2.5f;
+            public static readonly Color ButtonPressed = RColor.Mint.Soft * 4f;
             public static readonly Color ButtonText = RColor.Black;
-            public static readonly Color ButtonTextPressed = RColor.Mint.Darker;
+            public static readonly Color ButtonTextPressed = RColor.Black;
 
             public static readonly Color HelpBox = RColor.Mint.Soft * 2.5f;
             public static readonly Color HelpBoxText = RColor.Black;
@@ -370,10 +370,10 @@ namespace Rito.EditorUtilities
             public static readonly Color BoxHeaderText = RColor.Black;
             public static readonly Color BoxOutline = RColor.Cyan.Dark;
 
-            public static readonly Color Button = RColor.Cyan.Soft * 3f;
-            public static readonly Color ButtonPressed = RColor.Cyan.Soft * 3f;
+            public static readonly Color Button = RColor.Cyan.Soft * 2.5f;
+            public static readonly Color ButtonPressed = RColor.Cyan.Soft * 5f;
             public static readonly Color ButtonText = RColor.Black;
-            public static readonly Color ButtonTextPressed = RColor.Cyan.Darker;
+            public static readonly Color ButtonTextPressed = RColor.Black;
 
             public static readonly Color HelpBox = RColor.Cyan.Soft * 2.5f;
             public static readonly Color HelpBoxText = RColor.Black;
