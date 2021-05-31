@@ -7,20 +7,20 @@ using UnityEditor;
 // 날짜 : 2021-05-30 PM 3:18:00
 // 작성자 : Rito
 
-namespace Rito.EditorUtilities.Demo
+namespace Rito.EditorUtilities.Samples
 {
     using RGUI = RitoEditorGUI;
 
-    public class Demo_GrayTheme : Demo_ThemeBase
+    public class Sample_GrayTheme : Sample_ThemeBase
     {
-        [CustomEditor(typeof(Demo_GrayTheme))]
+        [CustomEditor(typeof(Sample_GrayTheme))]
         private class CE : UnityEditor.Editor
         {
-            private Demo_GrayTheme m;
+            private Sample_GrayTheme m;
 
             private void OnEnable()
             {
-                m = target as Demo_GrayTheme;
+                m = target as Sample_GrayTheme;
             }
 
             public override void OnInspectorGUI()

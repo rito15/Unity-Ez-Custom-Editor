@@ -7,11 +7,11 @@ using UnityEditor;
 // 날짜 : 2021-05-30 AM 2:20:07
 // 작성자 : Rito
 
-namespace Rito.EditorUtilities.Demo
+namespace Rito.EditorUtilities.Samples
 {
     using RGUI = RitoEditorGUI;
 
-    public abstract class Demo_ThemeBase : MonoBehaviour
+    public abstract class Sample_ThemeBase : MonoBehaviour
     {
         public int int1, int2, int3;
         public float float1, float2;
@@ -30,9 +30,9 @@ namespace Rito.EditorUtilities.Demo
         public int sSelected;
 
     }
-    public abstract class Demo_ThemeCustomEditorBase: UnityEditor.Editor
+    public abstract class Sample_ThemeCustomEditorBase: UnityEditor.Editor
     {
-        private Demo_ThemeBase m;
+        private Sample_ThemeBase m;
 
         protected abstract FoldoutHeaderBox fhBox { get; }
         protected abstract HeaderBox hBox { get; }
@@ -66,28 +66,22 @@ namespace Rito.EditorUtilities.Demo
 
         protected virtual void OnEnable()
         {
-            m = target as Demo_ThemeBase;
+            m = target as Sample_ThemeBase;
         }
 
         public override void OnInspectorGUI()
         {
-            RGUI.Options
-                .SetMargins(top: 12f, left: 12f, right: 20f, bottom: 16f)
-                .ActivateRectDebugger(true)
-                .ActivateTooltipDebugger(true);
-
             if (SetEditorBakgroundColor)
             {
                 RGUI.Options
-                    .SetEditorBackgroundColor(EditorBackgroundColor)
-                    .Init();
-            }
-            else
-            {
-                RGUI.Options
-                    .Init();
+                    .SetEditorBackgroundColor(EditorBackgroundColor);
             }
 
+            RGUI.Options
+                .SetMargins(top: 12f, left: 12f, right: 20f, bottom: 16f)
+                .ActivateRectDebugger(true)
+                .ActivateTooltipDebugger(true)
+                .Init();
 
             // ------------------------------------------------------
             fhBox

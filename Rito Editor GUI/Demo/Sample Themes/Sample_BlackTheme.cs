@@ -7,12 +7,12 @@ using UnityEditor;
 // 날짜 : 2021-05-30 PM 9:24:48
 // 작성자 : Rito
 
-namespace Rito.EditorUtilities.Demo
+namespace Rito.EditorUtilities.Samples
 {
-    public class Demo_BlackTheme : Demo_ThemeBase
+    public class Sample_BlackTheme : Sample_ThemeBase
     {
-        [CustomEditor(typeof(Demo_BlackTheme))]
-        private class CE : Demo_ThemeCustomEditorBase
+        [CustomEditor(typeof(Sample_BlackTheme))]
+        private class CE : Sample_ThemeCustomEditorBase
         {
             protected override bool SetEditorBakgroundColor { get; } = true;
 

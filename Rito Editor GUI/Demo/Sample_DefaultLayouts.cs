@@ -11,11 +11,11 @@ using UnityEditor;
 
 using REG = Rito.EditorUtilities.RitoEditorGUI;
 
-namespace Rito.EditorUtilities.Demo
+namespace Rito.EditorUtilities.Samples
 {
-    public class Demo_DefaultLayouts : MonoBehaviour
+    public class Sample_DefaultLayouts : MonoBehaviour
     {
-        [CustomEditor(typeof(Demo_DefaultLayouts))]
+        [CustomEditor(typeof(Sample_DefaultLayouts))]
         private class CE : UnityEditor.Editor
         {
             const int MaxLength = 50;

@@ -22,14 +22,7 @@ namespace Rito.EditorUtilities
         #region .
         public class OptionBuilder
         {
-            public static OptionBuilder Instance 
-            {
-                get
-                {
-                    ChangeEditorBackgroundColor = false;
-                    return instance;
-                }
-            }
+            public static OptionBuilder Instance => instance;
             private static OptionBuilder instance = new OptionBuilder();
 
             private OptionBuilder() { }
@@ -88,8 +81,8 @@ namespace Rito.EditorUtilities
             /// <summary> 에디터의 배경 색상 지정 </summary>
             public OptionBuilder SetEditorBackgroundColor(in Color color)
             {
-                ChangeEditorBackgroundColor = true;
-                EditorBackgroundColor = color;
+                Rect editorFullRect = new Rect(0f, 0f, EditorGUIUtility.currentViewWidth, EditorTotalHeight);
+                EditorGUI.DrawRect(editorFullRect, color);
                 return this;
             }
 
@@ -109,13 +102,6 @@ namespace Rito.EditorUtilities
                     errorType = ErrorType.NeverFinalized;
                     ShowErrorHelpbox();
                     return;
-                }
-
-                // 에디터 배경색 직접 지정
-                if (ChangeEditorBackgroundColor)
-                {
-                    Rect editorFullRect = new Rect(0f, 0f, EditorGUIUtility.currentViewWidth, EditorTotalHeight);
-                    EditorGUI.DrawRect(editorFullRect, EditorBackgroundColor);
                 }
 
                 // 인스펙터 상단부에 디버그 On/Off 토글 생성
@@ -196,13 +182,6 @@ namespace Rito.EditorUtilities
 
         public static List<OverlayTooltip> TooltipList { get; } = new List<OverlayTooltip>();
         public static List<OverlayTooltip> DebugTooltipList { get; } = new List<OverlayTooltip>();
-
-
-        /// <summary> 에디터 배경색을 직접 지정할지 여부 </summary>
-        private static bool ChangeEditorBackgroundColor { get; set; } = false;
-
-        /// <summary> 에디터 배경색상 </summary>
-        private static Color EditorBackgroundColor { get; set; } = RColor.Gray;
 
         /// <summary> 에디터 전체 영역 높이 </summary>
         private static float EditorTotalHeight { get; set; }
@@ -352,10 +331,7 @@ namespace Rito.EditorUtilities
             ShowTooltips(editor);
 
             // 에디터 전체 높이 계산
-            if (ChangeEditorBackgroundColor)
-            {
-                EditorTotalHeight = CurrentY + EditorDefaultMarginBottom;
-            }
+            EditorTotalHeight = CurrentY + EditorDefaultMarginBottom;
         }
 
         private static void ShowTooltips(Editor editor)
