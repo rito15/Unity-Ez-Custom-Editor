@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Rito.EditorUtilities
 {
-    public static class ExtensionHelper
+    public static class ColorExtensions
     {
         public static Color AddRGB(this Color color, float rgb)
         {
@@ -38,12 +38,13 @@ namespace Rito.EditorUtilities
         {
             return new Color(color.r, color.g, color.b, a);
         }
+        /*
         public static Texture2D ToTexture(this Color color)
         {
             Texture2D tex = new Texture2D(1,1);
             tex.SetPixel(0,0, color);
             tex.Apply();
             return tex;
-        }
+        }*/
     }
 }
