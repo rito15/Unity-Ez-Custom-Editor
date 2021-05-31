@@ -170,7 +170,7 @@ namespace Rito.EditorUtilities
             value = (double)mi_DoDoubleField.Invoke(null,
                 new[] {
                     s_recycledEditor, fieldRect, labelRect, controlID, value,
-                    kFloatFieldFormatString, FieldStyle, true
+                    kDoubleFieldFormatString, FieldStyle, true
                 }
             );
 

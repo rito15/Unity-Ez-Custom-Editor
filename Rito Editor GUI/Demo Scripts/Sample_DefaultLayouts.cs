@@ -11,7 +11,7 @@ using UnityEditor;
 
 using REG = Rito.EditorUtilities.RitoEditorGUI;
 
-namespace Rito.EditorUtilities.Samples
+namespace Rito.EditorUtilities.Demo
 {
     public class Sample_DefaultLayouts : MonoBehaviour
     {
@@ -32,6 +32,7 @@ namespace Rito.EditorUtilities.Samples
             private Color colorValue1 = Color.white;
             private Color colorValue2 = Color.white;
             private long longValue1;
+            private CursorLockMode cursorLockMode;
 
             private Material materialValue;
             private GameObject gameObjectValue;
@@ -42,7 +43,7 @@ namespace Rito.EditorUtilities.Samples
 
             public override void OnInspectorGUI()
             {
-                REG.Options
+                REG.Settings
                     .SetMargins(top: 8f, left: 12f, right: 24f, bottom: 4f)
                     .ActivateRectDebugger(true)
                     .ActivateTooltipDebugger(true)
@@ -383,11 +384,25 @@ namespace Rito.EditorUtilities.Samples
                     .SetTooltip("Float Dropdown", 120f)
                     .DrawLayout().Get();
 
+                EditorGUI.BeginChangeCheck();
+
                 intValues[i] = 
                 Dropdown<string>.Default
                     .SetData("String Dropdown", stringDropdownList, intValues[i++])
                     .SetTooltip("String Dropdown", 120f)
-                    .DrawLayout().Get();
+                    .DrawLayout().GetSelectedValue(out var selected).Get();
+
+                if(EditorGUI.EndChangeCheck())
+                    Debug.Log(selected);
+
+                EnumDropdown<CursorLockMode>.Default
+                    .SetData("Enum Dropdown", cursorLockMode)
+                    .DrawLayout().Get(out cursorLockMode);
+
+                EnumDropdown.Default
+                    .SetData("Enum Dropdown", cursorLockMode)
+                    .DrawLayout().Get(out Enum clm);
+                cursorLockMode = (CursorLockMode)clm;
 
                 #endregion
 

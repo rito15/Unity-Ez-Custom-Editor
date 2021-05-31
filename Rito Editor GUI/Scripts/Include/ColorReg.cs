@@ -117,7 +117,7 @@ namespace Rito.EditorUtilities
             public static readonly Color BoxHeaderText = RColor.Black;
             public static readonly Color BoxOutline = RColor.Blue.Normal;
 
-            public static readonly Color Button = RColor.Blue.Normal * 1.5f;
+            public static readonly Color Button = RColor.Blue.Normal * 2f;
             public static readonly Color ButtonPressed = RColor.Blue.Normal * 3f;
             public static readonly Color ButtonText = RColor.White;
             public static readonly Color ButtonTextPressed = RColor.White;

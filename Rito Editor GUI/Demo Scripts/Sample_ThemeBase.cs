@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using UnityEditor;
 // 날짜 : 2021-05-30 AM 2:20:07
 // 작성자 : Rito
 
-namespace Rito.EditorUtilities.Samples
+namespace Rito.EditorUtilities.Demo
 {
     using RGUI = RitoEditorGUI;
 
@@ -73,11 +75,11 @@ namespace Rito.EditorUtilities.Samples
         {
             if (SetEditorBakgroundColor)
             {
-                RGUI.Options
+                RGUI.Settings
                     .SetEditorBackgroundColor(EditorBackgroundColor);
             }
 
-            RGUI.Options
+            RGUI.Settings
                 .SetMargins(top: 12f, left: 12f, right: 20f, bottom: 16f)
                 .ActivateRectDebugger(true)
                 .ActivateTooltipDebugger(true)
@@ -215,3 +217,4 @@ namespace Rito.EditorUtilities.Samples
         }
     }
 }
+#endif
