@@ -171,7 +171,7 @@ MonoBehaviour:
   float2: 0
   bool1: 1
   bool2: 0
-  bool3: 0
+  bool3: 1
   bool4: 0
   bool5: 0
   string1: 
@@ -492,6 +492,78 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &529227693
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 529227695}
+  - component: {fileID: 529227694}
+  m_Layer: 0
+  m_Name: Lime
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &529227694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529227693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 047c66e326f294b47beca2cb15553547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  int1: 0
+  int2: 0
+  int3: 0
+  float1: 0
+  float2: 0
+  bool1: 1
+  bool2: 0
+  bool3: 1
+  bool4: 0
+  bool5: 0
+  string1: 
+  string2: 
+  material1: {fileID: 0}
+  transform1: {fileID: 0}
+  color1: {r: 0, g: 0, b: 0, a: 0}
+  color2: {r: 0, g: 0, b: 0, a: 0}
+  vector3: {x: 0, y: 0, z: 0}
+  vector4: {x: 0, y: 0, z: 0, w: 0}
+  fList:
+  - 0.123
+  - 456.789
+  - 12345
+  - 67890
+  fSelected: 0
+  sArray:
+  - String 0
+  - String 1
+  - String 2
+  sSelected: 0
+--- !u!4 &529227695
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529227693}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &542034437
 GameObject:
   m_ObjectHideFlags: 0
@@ -542,7 +614,7 @@ MonoBehaviour:
   float2: 0
   bool1: 1
   bool2: 0
-  bool3: 0
+  bool3: 1
   bool4: 0
   bool5: 0
   string1: 
@@ -635,6 +707,78 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &780555381
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 780555383}
+  - component: {fileID: 780555382}
+  m_Layer: 0
+  m_Name: Cyan
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &780555382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780555381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3d4e98b4a1e4dd4fb1456aa4e3083a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  int1: 0
+  int2: 0
+  int3: 0
+  float1: 0
+  float2: 0
+  bool1: 1
+  bool2: 0
+  bool3: 1
+  bool4: 0
+  bool5: 0
+  string1: 
+  string2: 
+  material1: {fileID: 0}
+  transform1: {fileID: 0}
+  color1: {r: 0, g: 0, b: 0, a: 0}
+  color2: {r: 0, g: 0, b: 0, a: 0}
+  vector3: {x: 0, y: 0, z: 0}
+  vector4: {x: 0, y: 0, z: 0, w: 0}
+  fList:
+  - 0.123
+  - 456.789
+  - 12345
+  - 67890
+  fSelected: 0
+  sArray:
+  - String 0
+  - String 1
+  - String 2
+  sSelected: 0
+--- !u!4 &780555383
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780555381}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &897337927
 GameObject:
@@ -830,7 +974,7 @@ MonoBehaviour:
   float2: 0
   bool1: 1
   bool2: 0
-  bool3: 0
+  bool3: 1
   bool4: 0
   bool5: 0
   string1: 
@@ -1188,7 +1332,7 @@ MonoBehaviour:
   float2: 0
   bool1: 1
   bool2: 0
-  bool3: 0
+  bool3: 1
   bool4: 0
   bool5: 0
   string1: 123123
@@ -1210,6 +1354,78 @@ MonoBehaviour:
   - String 1
   - String 2
   sSelected: 0
+--- !u!1 &2027317448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2027317450}
+  - component: {fileID: 2027317449}
+  m_Layer: 0
+  m_Name: Mint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2027317449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027317448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c98a2357f00f93044aca9a252c70ede0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  int1: 0
+  int2: 0
+  int3: 0
+  float1: 0
+  float2: 0
+  bool1: 1
+  bool2: 0
+  bool3: 1
+  bool4: 0
+  bool5: 0
+  string1: 
+  string2: 
+  material1: {fileID: 0}
+  transform1: {fileID: 0}
+  color1: {r: 0, g: 0, b: 0, a: 0}
+  color2: {r: 0, g: 0, b: 0, a: 0}
+  vector3: {x: 0, y: 0, z: 0}
+  vector4: {x: 0, y: 0, z: 0, w: 0}
+  fList:
+  - 0.123
+  - 456.789
+  - 12345
+  - 67890
+  fSelected: 0
+  sArray:
+  - String 0
+  - String 1
+  - String 2
+  sSelected: 0
+--- !u!4 &2027317450
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027317448}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2128918163
 GameObject:
   m_ObjectHideFlags: 0

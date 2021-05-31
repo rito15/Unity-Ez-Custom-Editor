@@ -291,7 +291,7 @@ namespace Rito.EditorUtilities
             public static readonly Color Label = RColor.Yellow.Bright;
             public static readonly Color InputBG = RColor.Yellow.Soft * 3f;
             public static readonly Color InputText = RColor.Black;
-            public static readonly Color InputTextFocused = RColor.Yellow.Bright;
+            public static readonly Color InputTextFocused = RColor.Yellow.Darker;
             public static readonly Color ColorPicker = RColor.Yellow.Normal * 5f;
             public static readonly Color Toggle = RColor.Yellow.Soft * 2f;
 
@@ -307,6 +307,75 @@ namespace Rito.EditorUtilities
             public static readonly Color ButtonTextPressed = RColor.Yellow.Darker;
 
             public static readonly Color HelpBox = RColor.Yellow.Soft * 2.5f;
+            public static readonly Color HelpBoxText = RColor.Black;
+        }
+        public static class Lime
+        {
+            public static readonly Color Label = RColor.Lime.Bright;
+            public static readonly Color InputBG = RColor.Lime.Soft * 3f;
+            public static readonly Color InputText = RColor.Black;
+            public static readonly Color InputTextFocused = RColor.Lime.Darker;
+            public static readonly Color ColorPicker = RColor.Lime.Normal * 5f;
+            public static readonly Color Toggle = RColor.Lime.Soft * 2f;
+
+            public static readonly Color Box = RColor.Lime.Darker.MultiplyRGB(0.2f);
+            public static readonly Color BoxHeader = RColor.Lime.Light.AddRGB(0.1f);
+            public static readonly Color BoxHeaderHover = RColor.White;
+            public static readonly Color BoxHeaderText = RColor.Black;
+            public static readonly Color BoxOutline = RColor.Lime.Dark;
+
+            public static readonly Color Button = RColor.Lime.Soft * 3f;
+            public static readonly Color ButtonPressed = RColor.Lime.Soft * 3f;
+            public static readonly Color ButtonText = RColor.Black;
+            public static readonly Color ButtonTextPressed = RColor.Lime.Darker;
+
+            public static readonly Color HelpBox = RColor.Lime.Soft * 2.5f;
+            public static readonly Color HelpBoxText = RColor.Black;
+        }
+        public static class Mint
+        {
+            public static readonly Color Label = RColor.Mint.Bright;
+            public static readonly Color InputBG = RColor.Mint.Soft * 3f;
+            public static readonly Color InputText = RColor.Black;
+            public static readonly Color InputTextFocused = RColor.Mint.Darker;
+            public static readonly Color ColorPicker = RColor.Mint.Normal * 5f;
+            public static readonly Color Toggle = RColor.Mint.Soft * 2f;
+
+            public static readonly Color Box = RColor.Mint.Darker.MultiplyRGB(0.2f);
+            public static readonly Color BoxHeader = RColor.Mint.Light.AddRGB(0.1f);
+            public static readonly Color BoxHeaderHover = RColor.White;
+            public static readonly Color BoxHeaderText = RColor.Black;
+            public static readonly Color BoxOutline = RColor.Mint.Dark;
+
+            public static readonly Color Button = RColor.Mint.Soft * 3f;
+            public static readonly Color ButtonPressed = RColor.Mint.Soft * 3f;
+            public static readonly Color ButtonText = RColor.Black;
+            public static readonly Color ButtonTextPressed = RColor.Mint.Darker;
+
+            public static readonly Color HelpBox = RColor.Mint.Soft * 2.5f;
+            public static readonly Color HelpBoxText = RColor.Black;
+        }
+        public static class Cyan
+        {
+            public static readonly Color Label = RColor.Cyan.Bright;
+            public static readonly Color InputBG = RColor.Cyan.Soft * 3f;
+            public static readonly Color InputText = RColor.Black;
+            public static readonly Color InputTextFocused = RColor.Cyan.Darker;
+            public static readonly Color ColorPicker = RColor.Cyan.Normal * 5f;
+            public static readonly Color Toggle = RColor.Cyan.Soft * 2f;
+
+            public static readonly Color Box = RColor.Cyan.Darker.MultiplyRGB(0.2f);
+            public static readonly Color BoxHeader = RColor.Cyan.Light.AddRGB(0.1f);
+            public static readonly Color BoxHeaderHover = RColor.White;
+            public static readonly Color BoxHeaderText = RColor.Black;
+            public static readonly Color BoxOutline = RColor.Cyan.Dark;
+
+            public static readonly Color Button = RColor.Cyan.Soft * 3f;
+            public static readonly Color ButtonPressed = RColor.Cyan.Soft * 3f;
+            public static readonly Color ButtonText = RColor.Black;
+            public static readonly Color ButtonTextPressed = RColor.Cyan.Darker;
+
+            public static readonly Color HelpBox = RColor.Cyan.Soft * 2.5f;
             public static readonly Color HelpBoxText = RColor.Black;
         }
     }

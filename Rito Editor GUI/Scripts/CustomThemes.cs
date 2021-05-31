@@ -64,6 +64,18 @@ namespace Rito.EditorUtilities
         {
             textColor = ColorReg.Yellow.Label
         };
+        public static R Lime { get; } = new R
+        {
+            textColor = ColorReg.Lime.Label
+        };
+        public static R Mint { get; } = new R
+        {
+            textColor = ColorReg.Mint.Label
+        };
+        public static R Cyan { get; } = new R
+        {
+            textColor = ColorReg.Cyan.Label
+        };
     }
     public abstract partial class ValueFieldBase<T, R>
     {
@@ -158,6 +170,27 @@ namespace Rito.EditorUtilities
             inputTextColor = ColorReg.Yellow.InputText,
             inputTextFocusedColor = ColorReg.Yellow.InputTextFocused
         };
+        public static R Lime { get; } = new R
+        {
+            labelColor = ColorReg.Lime.Label,
+            inputBackgroundColor = ColorReg.Lime.InputBG,
+            inputTextColor = ColorReg.Lime.InputText,
+            inputTextFocusedColor = ColorReg.Lime.InputTextFocused
+        };
+        public static R Mint { get; } = new R
+        {
+            labelColor = ColorReg.Mint.Label,
+            inputBackgroundColor = ColorReg.Mint.InputBG,
+            inputTextColor = ColorReg.Mint.InputText,
+            inputTextFocusedColor = ColorReg.Mint.InputTextFocused
+        };
+        public static R Cyan { get; } = new R
+        {
+            labelColor = ColorReg.Cyan.Label,
+            inputBackgroundColor = ColorReg.Cyan.InputBG,
+            inputTextColor = ColorReg.Cyan.InputText,
+            inputTextFocusedColor = ColorReg.Cyan.InputTextFocused
+        };
     }
     public partial class TextArea
     {
@@ -227,6 +260,21 @@ namespace Rito.EditorUtilities
             inputBackgroundColor = ColorReg.Yellow.InputBG,
             inputTextColor = ColorReg.Yellow.InputText,
         };
+        public static TextArea Lime { get; } = new TextArea
+        {
+            inputBackgroundColor = ColorReg.Lime.InputBG,
+            inputTextColor = ColorReg.Lime.InputText,
+        };
+        public static TextArea Mint { get; } = new TextArea
+        {
+            inputBackgroundColor = ColorReg.Mint.InputBG,
+            inputTextColor = ColorReg.Mint.InputText,
+        };
+        public static TextArea Cyan { get; } = new TextArea
+        {
+            inputBackgroundColor = ColorReg.Cyan.InputBG,
+            inputTextColor = ColorReg.Cyan.InputText,
+        };
     }
     public partial class BoolField
     {
@@ -290,6 +338,21 @@ namespace Rito.EditorUtilities
         {
             labelColor = ColorReg.Yellow.Label,
             toggleColor = ColorReg.Yellow.Toggle
+        };
+        public static BoolField Lime { get; } = new BoolField
+        {
+            labelColor = ColorReg.Lime.Label,
+            toggleColor = ColorReg.Lime.Toggle
+        };
+        public static BoolField Mint { get; } = new BoolField
+        {
+            labelColor = ColorReg.Mint.Label,
+            toggleColor = ColorReg.Mint.Toggle
+        };
+        public static BoolField Cyan { get; } = new BoolField
+        {
+            labelColor = ColorReg.Cyan.Label,
+            toggleColor = ColorReg.Cyan.Toggle
         };
     }
     public abstract partial class ValueSliderBase<T, R>
@@ -372,6 +435,24 @@ namespace Rito.EditorUtilities
             sliderColor = ColorReg.Yellow.InputBG,
             inputTextColor = ColorReg.Yellow.InputText,
         };
+        public static R Lime { get; } = new R
+        {
+            labelColor = ColorReg.Lime.Label,
+            sliderColor = ColorReg.Lime.InputBG,
+            inputTextColor = ColorReg.Lime.InputText,
+        };
+        public static R Mint { get; } = new R
+        {
+            labelColor = ColorReg.Mint.Label,
+            sliderColor = ColorReg.Mint.InputBG,
+            inputTextColor = ColorReg.Mint.InputText,
+        };
+        public static R Cyan { get; } = new R
+        {
+            labelColor = ColorReg.Cyan.Label,
+            sliderColor = ColorReg.Cyan.InputBG,
+            inputTextColor = ColorReg.Cyan.InputText,
+        };
     }
     public partial class Toggle
     {
@@ -427,6 +508,18 @@ namespace Rito.EditorUtilities
         public static Toggle Yellow { get; } = new Toggle
         {
             color = ColorReg.Yellow.Toggle
+        };
+        public static Toggle Lime { get; } = new Toggle
+        {
+            color = ColorReg.Lime.Toggle
+        };
+        public static Toggle Mint { get; } = new Toggle
+        {
+            color = ColorReg.Mint.Toggle
+        };
+        public static Toggle Cyan { get; } = new Toggle
+        {
+            color = ColorReg.Cyan.Toggle
         };
     }
     public partial class ColorField
@@ -497,6 +590,21 @@ namespace Rito.EditorUtilities
             labelColor = ColorReg.Yellow.Label,
             colorPickerColor = ColorReg.Yellow.ColorPicker,
         };
+        public static ColorField Lime { get; } = new ColorField
+        {
+            labelColor = ColorReg.Lime.Label,
+            colorPickerColor = ColorReg.Lime.ColorPicker,
+        };
+        public static ColorField Mint { get; } = new ColorField
+        {
+            labelColor = ColorReg.Mint.Label,
+            colorPickerColor = ColorReg.Mint.ColorPicker,
+        };
+        public static ColorField Cyan { get; } = new ColorField
+        {
+            labelColor = ColorReg.Cyan.Label,
+            colorPickerColor = ColorReg.Cyan.ColorPicker,
+        };
     }
     public partial class ColorPicker
     {
@@ -552,6 +660,18 @@ namespace Rito.EditorUtilities
         public static ColorPicker Yellow { get; } = new ColorPicker
         {
             colorPickerColor = ColorReg.Yellow.ColorPicker,
+        };
+        public static ColorPicker Lime { get; } = new ColorPicker
+        {
+            colorPickerColor = ColorReg.Lime.ColorPicker,
+        };
+        public static ColorPicker Mint { get; } = new ColorPicker
+        {
+            colorPickerColor = ColorReg.Mint.ColorPicker,
+        };
+        public static ColorPicker Cyan { get; } = new ColorPicker
+        {
+            colorPickerColor = ColorReg.Cyan.ColorPicker,
         };
     }
     public partial class Button
@@ -637,6 +757,24 @@ namespace Rito.EditorUtilities
             textColor = ColorReg.Yellow.ButtonText,
             pressedTextColor = ColorReg.Yellow.ButtonTextPressed,
             buttonColor = ColorReg.Yellow.Button
+        };
+        public static Button Lime { get; } = new Button
+        {
+            textColor = ColorReg.Lime.ButtonText,
+            pressedTextColor = ColorReg.Lime.ButtonTextPressed,
+            buttonColor = ColorReg.Lime.Button
+        };
+        public static Button Mint { get; } = new Button
+        {
+            textColor = ColorReg.Mint.ButtonText,
+            pressedTextColor = ColorReg.Mint.ButtonTextPressed,
+            buttonColor = ColorReg.Mint.Button
+        };
+        public static Button Cyan { get; } = new Button
+        {
+            textColor = ColorReg.Cyan.ButtonText,
+            pressedTextColor = ColorReg.Cyan.ButtonTextPressed,
+            buttonColor = ColorReg.Cyan.Button
         };
     }
     public partial class ToggleButton
@@ -746,6 +884,30 @@ namespace Rito.EditorUtilities
             pressedTextColor = ColorReg.Yellow.ButtonTextPressed,
             pressedButtonColor = ColorReg.Yellow.ButtonPressed
         };
+        public static ToggleButton Lime { get; } = new ToggleButton
+        {
+            normalTextColor = ColorReg.Lime.ButtonText,
+            normalButtonColor = ColorReg.Lime.Button,
+
+            pressedTextColor = ColorReg.Lime.ButtonTextPressed,
+            pressedButtonColor = ColorReg.Lime.ButtonPressed
+        };
+        public static ToggleButton Mint { get; } = new ToggleButton
+        {
+            normalTextColor = ColorReg.Mint.ButtonText,
+            normalButtonColor = ColorReg.Mint.Button,
+
+            pressedTextColor = ColorReg.Mint.ButtonTextPressed,
+            pressedButtonColor = ColorReg.Mint.ButtonPressed
+        };
+        public static ToggleButton Cyan { get; } = new ToggleButton
+        {
+            normalTextColor = ColorReg.Cyan.ButtonText,
+            normalButtonColor = ColorReg.Cyan.Button,
+
+            pressedTextColor = ColorReg.Cyan.ButtonTextPressed,
+            pressedButtonColor = ColorReg.Cyan.ButtonPressed
+        };
     }
     public partial class Box
     {
@@ -814,6 +976,21 @@ namespace Rito.EditorUtilities
         {
             color = ColorReg.Yellow.Box,
             outlineColor = ColorReg.Yellow.BoxOutline
+        };
+        public static Box Lime { get; } = new Box
+        {
+            color = ColorReg.Lime.Box,
+            outlineColor = ColorReg.Lime.BoxOutline
+        };
+        public static Box Mint { get; } = new Box
+        {
+            color = ColorReg.Mint.Box,
+            outlineColor = ColorReg.Mint.BoxOutline
+        };
+        public static Box Cyan { get; } = new Box
+        {
+            color = ColorReg.Cyan.Box,
+            outlineColor = ColorReg.Cyan.BoxOutline
         };
     }
     public abstract partial class HeaderBoxBase<R>
@@ -909,6 +1086,27 @@ namespace Rito.EditorUtilities
             headerColor = ColorReg.Yellow.BoxHeader,
             headerTextColor = ColorReg.Yellow.BoxHeaderText,
             outlineColor = ColorReg.Yellow.BoxOutline
+        };
+        public static R Lime { get; } = new R
+        {
+            contentColor = ColorReg.Lime.Box,
+            headerColor = ColorReg.Lime.BoxHeader,
+            headerTextColor = ColorReg.Lime.BoxHeaderText,
+            outlineColor = ColorReg.Lime.BoxOutline
+        };
+        public static R Mint { get; } = new R
+        {
+            contentColor = ColorReg.Mint.Box,
+            headerColor = ColorReg.Mint.BoxHeader,
+            headerTextColor = ColorReg.Mint.BoxHeaderText,
+            outlineColor = ColorReg.Mint.BoxOutline
+        };
+        public static R Cyan { get; } = new R
+        {
+            contentColor = ColorReg.Cyan.Box,
+            headerColor = ColorReg.Cyan.BoxHeader,
+            headerTextColor = ColorReg.Cyan.BoxHeaderText,
+            outlineColor = ColorReg.Cyan.BoxOutline
         };
     }
     public partial class FoldoutHeaderBox
@@ -1017,6 +1215,30 @@ namespace Rito.EditorUtilities
             headerTextColor = ColorReg.Yellow.BoxHeaderText,
             outlineColor = ColorReg.Yellow.BoxOutline
         };
+        public static new FoldoutHeaderBox Lime { get; } = new FoldoutHeaderBox
+        {
+            contentColor = ColorReg.Lime.Box,
+            headerColor = ColorReg.Lime.BoxHeader,
+            headerHoverColor = ColorReg.Lime.BoxHeaderHover,
+            headerTextColor = ColorReg.Lime.BoxHeaderText,
+            outlineColor = ColorReg.Lime.BoxOutline
+        };
+        public static new FoldoutHeaderBox Mint { get; } = new FoldoutHeaderBox
+        {
+            contentColor = ColorReg.Mint.Box,
+            headerColor = ColorReg.Mint.BoxHeader,
+            headerHoverColor = ColorReg.Mint.BoxHeaderHover,
+            headerTextColor = ColorReg.Mint.BoxHeaderText,
+            outlineColor = ColorReg.Mint.BoxOutline
+        };
+        public static new FoldoutHeaderBox Cyan { get; } = new FoldoutHeaderBox
+        {
+            contentColor = ColorReg.Cyan.Box,
+            headerColor = ColorReg.Cyan.BoxHeader,
+            headerHoverColor = ColorReg.Cyan.BoxHeaderHover,
+            headerTextColor = ColorReg.Cyan.BoxHeaderText,
+            outlineColor = ColorReg.Cyan.BoxOutline
+        };
     }
     public partial class HelpBox
     {
@@ -1085,6 +1307,21 @@ namespace Rito.EditorUtilities
         {
             textColor = ColorReg.Yellow.HelpBoxText,
             backgroundColor = ColorReg.Yellow.HelpBox
+        };
+        public static HelpBox Lime { get; } = new HelpBox
+        {
+            textColor = ColorReg.Lime.HelpBoxText,
+            backgroundColor = ColorReg.Lime.HelpBox
+        };
+        public static HelpBox Mint { get; } = new HelpBox
+        {
+            textColor = ColorReg.Mint.HelpBoxText,
+            backgroundColor = ColorReg.Mint.HelpBox
+        };
+        public static HelpBox Cyan { get; } = new HelpBox
+        {
+            textColor = ColorReg.Cyan.HelpBoxText,
+            backgroundColor = ColorReg.Cyan.HelpBox
         };
     }
 }
