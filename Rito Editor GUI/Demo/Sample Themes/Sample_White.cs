@@ -9,10 +9,10 @@ using UnityEditor;
 
 namespace Rito.EditorUtilities.Samples
 {
-    public class Sample_WhiteTheme : Sample_ThemeBase
+    public class Sample_White : Sample_ThemeBase
     {
-        [CustomEditor(typeof(Sample_WhiteTheme))]
-        private class CE : Sample_ThemeCustomEditorBase
+        [CustomEditor(typeof(Sample_White))]
+        private class CE : SampleCustomEditorBase
         {
             protected override bool SetEditorBakgroundColor { get; } = false;
 

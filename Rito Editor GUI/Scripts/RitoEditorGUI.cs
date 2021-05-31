@@ -22,7 +22,17 @@ namespace Rito.EditorUtilities
         #region .
         public class OptionBuilder
         {
-            public static OptionBuilder Instance => instance;
+            public static OptionBuilder Instance
+            {
+                get
+                {
+                    // Init
+                    RectDebugColor = Color.red;
+                    TooltipDebugColor = Color.red.SetA(0.7f);
+
+                    return instance;
+                }
+            }
             private static OptionBuilder instance = new OptionBuilder();
 
             private OptionBuilder() { }

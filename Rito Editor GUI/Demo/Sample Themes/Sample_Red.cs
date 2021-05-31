@@ -9,12 +9,12 @@ using UnityEditor;
 
 namespace Rito.EditorUtilities.Samples
 {
-    public class Sample_RedTheme : Sample_ThemeBase
+    public class Sample_Red : Sample_ThemeBase
     {
-        [CustomEditor(typeof(Sample_RedTheme))]
-        private class CE : Sample_ThemeCustomEditorBase
+        [CustomEditor(typeof(Sample_Red))]
+        private class CE : SampleCustomEditorBase
         {
-            protected override bool SetEditorBakgroundColor { get; } = true;
+            protected override bool SetEditorBakgroundColor { get; } = false;
 
             protected override Color EditorBackgroundColor { get; } = RColor.Gray1;
 

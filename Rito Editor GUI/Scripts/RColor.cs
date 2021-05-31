@@ -218,12 +218,12 @@ namespace Rito.EditorUtilities
         }
         public class YellowColor : SixGradedColor
         {
-            public override Color Darker { get; } = new Color(0.50f, 0.50f, 0.00f, 1.00f);
-            public override Color Dark { get; } = new Color(0.75f, 0.75f, 0.00f, 1.00f);
-            public override Color Normal { get; } = new Color(1.00f, 1.00f, 0.00f, 1.00f);
-            public override Color Soft { get; } = new Color(1.00f, 1.00f, 0.25f, 1.00f);
-            public override Color Light { get; } = new Color(1.00f, 1.00f, 0.50f, 1.00f);
-            public override Color Bright { get; } = new Color(1.00f, 1.00f, 0.75f, 1.00f);
+            public override Color Darker { get; } = new Color(0.50f, 0.40f, 0.00f, 1.00f);
+            public override Color Dark { get; }   = new Color(0.75f, 0.65f, 0.00f, 1.00f);
+            public override Color Normal { get; } = new Color(1.00f, 0.90f, 0.00f, 1.00f);
+            public override Color Soft { get; }   = new Color(1.00f, 0.90f, 0.25f, 1.00f);
+            public override Color Light { get; }  = new Color(1.00f, 0.90f, 0.50f, 1.00f);
+            public override Color Bright { get; } = new Color(1.00f, 0.90f, 0.75f, 1.00f);
 
             public static implicit operator Color(YellowColor _) => Yellow.Normal;
         }

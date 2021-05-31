@@ -30,7 +30,7 @@ namespace Rito.EditorUtilities.Samples
         public int sSelected;
 
     }
-    public abstract class Sample_ThemeCustomEditorBase: UnityEditor.Editor
+    public abstract class SampleCustomEditorBase: UnityEditor.Editor
     {
         private Sample_ThemeBase m;
 
