@@ -10,13 +10,39 @@ using System.Reflection;
 /*
     [TODO]
 
-    - EnumDropdown
+    - 
+*/
 
-    - CustomizedEditorGUIThemes : White, Gray, Black, Red, Blue, Green, Yellow, Cyan, Purple, Pink
-        - 따로 클래스파일 만들고, 각각 컨트롤마다 Partial로 프로퍼티들 작성
-        - Demo_CustomizedEditorGUI_색상들 : 데모 테스트
+/*
+    [Memo]
 
-    - 깃헙용 : 예전 코드 vs 현재 코드 - Foldout 포함
+    - Draw() : 현재 CurrentY 값 기준으로 컨트롤 그리기. Space() 하지 않음
+    - DrawLayout() : 높이 고정, 하단 여백 고정, 내부적으로 Space(높이 + 하단 여백)
+
+    - Space(f) : CurrentY 이동 및 하단 여백 지정
+
+    - 일반 컨트롤의 경우
+        - Margin(f) : 컨트롤 높이 + 지정한 높이만큼 Space()
+        - Layout()  : 레이아웃 요소의 높이 + 여백만큼 고정값 Space()
+
+    - Box
+        - Margin(f) : Space()와 동일
+        - Layout()  : 레이아웃 요소의 여백만큼 고정값 Space()
+
+    - HeaderBox
+        - Margin(f) : 헤더 높이 + 아웃라인 두께 + 지정한 높이만큼 Space()
+        - Layout()  : 헤더 높이 + 아웃라인 두께 + 레이아웃 요소 여백만큼 Space()
+
+    - FoldoutHeaderBox
+        - Margin(), Layout()이 펼쳐진 경우의 컨텐츠박스 상단 여백에만 영향을 미침
+
+        - 펼친 경우 -> HeaderBox와 동일
+            - Margin(f) : 헤더 높이 + 아웃라인 두께 + 지정한 높이만큼 Space()
+            - Layout()  : 헤더 높이 + 아웃라인 두께 + 레이아웃 요소 여백만큼 Space()
+
+        - 접힌 경우
+            - Margin(f) : 헤더 높이만큼 Space()
+            - Layout()  : 헤더 높이만큼 Space()
 */
 
 // 날짜 : 2021-05-24 AM 1:32:18
@@ -37,13 +63,18 @@ namespace Rito.EditorUtilities
         public float width;  // 툴팁의 너비
         public float height; // 툴팁의 높이
         public string text;
+        public Color textColor;
+        public Color bgColor;
 
-        public OverlayTooltip(in Rect rect, in float width, in float height, in string text)
+        public OverlayTooltip(in Rect rect, in float width, in float height, in string text,
+            in Color textColor = default, in Color bgColor = default)
         {
             this.rect = rect;
             this.width = width;
             this.height = height;
             this.text = text;
+            this.textColor = textColor;
+            this.bgColor = bgColor;
         }
     }
 
@@ -57,6 +88,8 @@ namespace Rito.EditorUtilities
         protected float tooltipWidth;
         protected float tooltipHeight;
         protected string tooltipText;
+        protected Color tooltiptextColor;
+        protected Color tooltipBgColor;
 
         protected bool tooltipDebugAllowed = true; // 디버그 허용 여부
 
@@ -66,13 +99,25 @@ namespace Rito.EditorUtilities
             return rect;
         }
 
-        /// <summary> 컨트롤에 마우스가 올라갈 경우 툴팁 상자 표시하도록 설정 </summary>
-        public virtual R SetTooltip(string text, float width = 100f, float height = 20f)
+        /// <summary> 컨트롤에 마우스가 위치할 경우 툴팁 상자를 표시하도록 설정 </summary>
+        public R SetTooltip(string text, float width = 100f, float height = 20f)
+        {
+            return SetTooltip(text, REG.DefaultTooltipTextColor, REG.DefaultTooltipBgColor, width, height);
+        }
+        /// <summary> 컨트롤에 마우스가 위치할 경우 툴팁 상자를 표시하도록 설정 </summary>
+        public virtual R SetTooltip(string text, float width, float height, in Color textColor, in Color backgroundColor)
+        {
+            return SetTooltip(text, textColor, backgroundColor, width, height);
+        }
+        /// <summary> 컨트롤에 마우스가 위치할 경우 툴팁 상자를 표시하도록 설정 </summary>
+        public R SetTooltip(string text, in Color textColor, in Color backgroundColor, float width = 100f, float height = 20f)
         {
             tooltipFlag = true;
             tooltipText = text;
             tooltipWidth = width;
             tooltipHeight = height;
+            tooltiptextColor = textColor;
+            tooltipBgColor = backgroundColor;
             return this as R;
         }
 
@@ -91,10 +136,10 @@ namespace Rito.EditorUtilities
         }
 
         // 레이아웃 요소가 아닌 컨트롤을 레이아웃 요소처럼 그리는 효과
-        /// <summary> rect 높이 + 레이아웃 요소 기본 여백 + 추가 여백만큼 여백 지정 </summary>
-        public virtual R Layout(float margin = 0f)
+        /// <summary> rect 높이 + 레이아웃 요소 기본 여백 지정 </summary>
+        public virtual R Layout()
         {
-            return Margin(margin + REG.LayoutControlBottomMargin);
+            return Margin(REG.LayoutControlBottomMargin);
         }
 
         /// <summary> 툴팁 디버그에서 제외하기 </summary>
@@ -153,7 +198,9 @@ namespace Rito.EditorUtilities
                 tooltipFlag = false;
 
                 if (REG.ShowTooltip)
-                    REG.TooltipList.Add(new OverlayTooltip(rect, tooltipWidth, tooltipHeight, tooltipText));
+                    REG.TooltipList.Add(
+                        new OverlayTooltip(rect, tooltipWidth, tooltipHeight, tooltipText, tooltiptextColor, tooltipBgColor)
+                    );
             }
 
             tooltipDebugAllowed = true;
@@ -189,7 +236,7 @@ namespace Rito.EditorUtilities
             in float xLeftOffset = 0f, in float xRightOffset = 0f);
 
         public virtual R Draw(in float height)
-            => Draw(REG.LayoutXLeft, REG.LayoutXRight, 0f, height, 0f, 0f);
+            => Draw(0f, 1f, 0f, height, 0f, 0f);
 
         public virtual R Draw(in fRatio xLeft, in fRatio xRight)
             => Draw(xLeft, xRight, 0f, REG.LayoutControlHeight, 0f, 0f);
@@ -231,8 +278,8 @@ namespace Rito.EditorUtilities
             return this as R;
         }
 
-        public virtual T Get() => value;
-        public virtual R Get(out T variable)
+        public virtual T GetValue() => value;
+        public virtual R GetValue(out T variable)
         {
             variable = this.value;
             return this as R;
@@ -312,18 +359,18 @@ namespace Rito.EditorUtilities
             return this as R;
         }
 
-        public abstract void DrawLabel(in Rect rect, in string text, GUIStyle style);
+        protected abstract void DrawLabel(in Rect rect, in string text, GUIStyle style);
     }
     public class Label : LabelBase<Label>
     {
-        public override void DrawLabel(in Rect rect, in string text, GUIStyle style)
+        protected override void DrawLabel(in Rect rect, in string text, GUIStyle style)
         {
             EditorGUI.LabelField(rect, text, style);
         }
     }
     public class SelectableLabel : LabelBase<SelectableLabel>
     {
-        public override void DrawLabel(in Rect rect, in string text, GUIStyle style)
+        protected override void DrawLabel(in Rect rect, in string text, GUIStyle style)
         {
             EditorGUI.SelectableLabel(rect, text, style);
         }
@@ -1582,7 +1629,7 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        /// <summary> 박스 상단 내부 여백 지정 </summary>
+        /// <summary> 박스 상단 내부 여백 지정 (Space()와 동일) </summary>
         public override Box Margin(float margin = 0f)
         {
             REG.Space(margin);
@@ -1669,13 +1716,13 @@ namespace Rito.EditorUtilities
             float lcMargin = REG.LayoutControlBottomMargin;
 
             // 모든 레이아웃 요소의 높이 합
-            float AllControlsHeight = (lcHeight + lcMargin) * contentCount;
+            float AllControlHeight = (lcHeight + lcMargin) * contentCount;
 
             Draw
             (
                 xLeft:0f, xRight:1f, 
                 yOffset: -paddingTop, 
-                height:  paddingTop + lcMargin + AllControlsHeight + paddingBottom,
+                height:  paddingTop + lcMargin + AllControlHeight + paddingBottom,
                 xLeftOffset: -paddingLeft,
                 xRightOffset: paddingRight
             );
@@ -1814,14 +1861,14 @@ namespace Rito.EditorUtilities
             float OneHeight = lcHeight + lcMargin;
 
             // 모든 레이아웃 요소의 높이 합
-            float AllControlsHeight = OneHeight * contentCount;
+            float AllControlHeight = OneHeight * contentCount;
 
             Draw
             (
                 xLeft: 0f, xRight: 1f,
                 yOffset: -paddingTop,
                 headerHeight: OneHeight,
-                contentHeight: paddingTop + lcMargin + AllControlsHeight + paddingBottom,
+                contentHeight: paddingTop + lcMargin + AllControlHeight + paddingBottom,
                 xLeftOffset: -paddingLeft,
                 xRightOffset: paddingRight
             );
@@ -1947,9 +1994,9 @@ namespace Rito.EditorUtilities
             return this;
         }
         /// <summary> rect 높이 + 레이아웃 요소 기본 여백 + 추가 여백만큼 여백 지정 </summary>
-        public override FoldoutHeaderBox Layout(float margin = 0f)
+        public override FoldoutHeaderBox Layout()
         {
-            return Margin(margin + REG.LayoutControlBottomMargin);
+            return Margin(REG.LayoutControlBottomMargin);
         }
 
         public override FoldoutHeaderBox Draw(in float xLeft, in float xRight, float yOffset, 
@@ -2040,8 +2087,8 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public virtual bool Get() => foldout;
-        public virtual void Get(out bool value) => value = this.foldout;
+        public virtual bool GetValue() => foldout;
+        public virtual void GetValue(out bool value) => value = this.foldout;
         public override FoldoutHeaderBox DrawLayout(int contentCount, float paddingTop, float paddingBottom, float paddingLeft, float paddingRight)
         {
             if (contentCount < 0) contentCount = 0;
@@ -2051,14 +2098,14 @@ namespace Rito.EditorUtilities
             float OneHeight = lcHeight + lcMargin;
 
             // 모든 레이아웃 요소의 높이 합
-            float AllControlsHeight = OneHeight * contentCount;
+            float AllControlHeight = OneHeight * contentCount;
 
             Draw
             (
                 xLeft: 0f, xRight: 1f,
                 yOffset: -paddingTop,
                 headerHeight: OneHeight,
-                contentHeight: paddingTop + lcMargin + AllControlsHeight + paddingBottom,
+                contentHeight: paddingTop + lcMargin + AllControlHeight + paddingBottom,
                 xLeftOffset: -paddingLeft,
                 xRightOffset: paddingRight
             );

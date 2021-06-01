@@ -81,8 +81,8 @@ namespace Rito.EditorUtilities.Demo
 
             RGUI.Settings
                 .SetMargins(top: 12f, left: 12f, right: 20f, bottom: 16f)
-                .ActivateRectDebugger(true)
-                .ActivateTooltipDebugger(true)
+                .ActivateRectDebugger()
+                .ActivateTooltipDebugger()
                 .Init();
 
             // ------------------------------------------------------
@@ -90,7 +90,7 @@ namespace Rito.EditorUtilities.Demo
                 .SetData(m.bool1, "Foldout Header Box", 2f, 2f)
                 .Draw(20f, 62f)
                 .Layout()
-                .Get(out m.bool1);
+                .GetValue(out m.bool1);
 
             if (m.bool1)
             {
@@ -104,12 +104,12 @@ namespace Rito.EditorUtilities.Demo
                 intField
                     .SetData("Int Field", m.int1)
                     .Draw(0.01f, 0.99f).Layout()
-                    .Get(out m.int1);
+                    .GetValue(out m.int1);
 
                 intSlider
                     .SetData("Int Slider", m.int2, 0, 10)
                     .Draw(0.01f, 0.99f).Layout()
-                    .Get(out m.int2);
+                    .GetValue(out m.int2);
             }
 
             RGUI.Space(10f);
@@ -122,22 +122,22 @@ namespace Rito.EditorUtilities.Demo
 
             v3Field
                 .SetData("Vector3 Field", m.vector3)
-                .DrawLayout(0.01f, 0.99f).Get(out m.vector3);
+                .DrawLayout(0.01f, 0.99f).GetValue(out m.vector3);
 
             boolField
                 .SetData("Bool Field", m.bool2)
-                .DrawLayout(0.01f, 0.99f).Get(out m.bool2);
+                .DrawLayout(0.01f, 0.99f).GetValue(out m.bool2);
 
             stringField
                 .SetData("String Field", m.string1, "Placeholder")
-                .DrawLayout(0.01f, 0.99f).Get(out m.string1);
+                .DrawLayout(0.01f, 0.99f).GetValue(out m.string1);
 
             button
                 .SetData("Button")
                 .Draw(0.01f, 0.49f);
             toggleButton
                 .SetData("Toggle Button", m.bool3)
-                .Draw(0.5f, 0.99f).Layout().Get(out m.bool3);
+                .Draw(0.5f, 0.99f).Layout().GetValue(out m.bool3);
 
             RGUI.Space(12f);
 
@@ -148,15 +148,15 @@ namespace Rito.EditorUtilities.Demo
 
             colorField
                 .SetData("Color Field", m.color1)
-                .DrawLayout(0.01f, 0.99f).Get(out m.color1);
+                .DrawLayout(0.01f, 0.99f).GetValue(out m.color1);
 
             materialField
                 .SetData("Material Field", m.material1)
-                .DrawLayout(0.01f, 0.99f).Get(out m.material1);
+                .DrawLayout(0.01f, 0.99f).GetValue(out m.material1);
 
             floatDropdown
                 .SetData("Float Dropdown", m.fList, m.fSelected)
-                .DrawLayout(0.01f, 0.99f).Get(out m.fSelected);
+                .DrawLayout(0.01f, 0.99f).GetValue(out m.fSelected);
 
             helpBox
                 .SetData("Help Box", MessageType.Warning)
@@ -175,23 +175,23 @@ namespace Rito.EditorUtilities.Demo
 
             floatField
                 .SetData("Float Field", m.float1)
-                .DrawLayout().Get(out m.float1);
+                .DrawLayout().GetValue(out m.float1);
 
             v4Field
                 .SetData("Vector4 Field", m.vector4)
-                .DrawLayout().Get(out m.vector4);
+                .DrawLayout().GetValue(out m.vector4);
 
             floatSlider
                 .SetData("Float Slider", m.float2, 0f, 1f)
-                .DrawLayout().Get(out m.float2);
+                .DrawLayout().GetValue(out m.float2);
 
             textArea
                 .SetData(m.string2, "Text Area")
-                .DrawLayout().Get(out m.string2);
+                .DrawLayout().GetValue(out m.string2);
 
             colorPicker
                 .SetData(m.color2)
-                .DrawLayout().Get(out m.color2);
+                .DrawLayout().GetValue(out m.color2);
 
             helpBox
                 .SetData("Help Box", MessageType.Error)
@@ -199,18 +199,18 @@ namespace Rito.EditorUtilities.Demo
 
             stringDropdown
                 .SetData("String Dropdown", m.sArray, m.sSelected)
-                .DrawLayout().Get(out m.sSelected);
+                .DrawLayout().GetValue(out m.sSelected);
 
             toggle
                 .SetData(m.bool4)
-                .DrawLayout().Get(out m.bool4);
+                .DrawLayout().GetValue(out m.bool4);
 
             button
                 .SetData("Button")
                 .Draw(0f, 0.49f);
             toggleButton
                 .SetData("Toggle Button", m.bool5)
-                .Draw(0.5f, 1.0f).Layout().Get(out m.bool5);
+                .Draw(0.5f, 1.0f).Layout().GetValue(out m.bool5);
 
             RGUI.Finalize(this);
         }

@@ -22,6 +22,20 @@ namespace Rito.EditorUtilities.Demo
         [CustomEditor(typeof(Demo_New))]
         private class CE : UnityEditor.Editor
         {
+            private Label boldRedLabel = new Label()
+            {
+                fontStyle = FontStyle.Bold,
+                textColor = Color.red,
+                textAlignment = TextAnchor.MiddleCenter
+            };
+
+            private FloatField blueFloat = new FloatField()
+            {
+                labelColor = Color.blue,
+                inputTextColor = Color.blue,
+                inputBackgroundColor = Color.white
+            };
+
             private Demo_New m;
             private void OnEnable() => m = target as Demo_New;
 
@@ -38,19 +52,19 @@ namespace Rito.EditorUtilities.Demo
 
                 FoldoutHeaderBox.Blue
                     .SetData("Header Box", m.foldoutValue, boxOutlineWidth, 4f)
-                    .DrawLayout(3, 2f)
-                    //.Draw(20f, 64f).Layout()
-                    .Get(out m.foldoutValue);
+                    //.DrawLayout(3, 2f)
+                    .Draw(20f, 64f).Margin(2f)//.Layout()
+                    .GetValue(out m.foldoutValue);
 
                 if (m.foldoutValue)
                 {
                     StringField.Violet
                         .SetData("String Field", m.stringValue, "Placeholder")
-                        .DrawLayout().Get(out m.stringValue);
+                        .DrawLayout().GetValue(out m.stringValue);
 
                     Dropdown<float>.Purple
                         .SetData("Float Dropdown", m.floatArray, m.floatSelected)
-                        .DrawLayout().Get(out m.floatSelected);
+                        .DrawLayout().GetValue(out m.floatSelected);
 
                     // Button & ToggleButton
                     const float buttonRatio = 0.7f;
@@ -62,10 +76,25 @@ namespace Rito.EditorUtilities.Demo
                     ToggleButton.Blue
                         .SetData("Toggle Button", m.toggleButtonValue)
                         .Draw(buttonRatio + 0.01f, 0.985f, 20f).Layout()
-                        .Get(out m.toggleButtonValue);
+                        .GetValue(out m.toggleButtonValue);
                 }
 
                 RitoEditorGUI.Space(boxOutlineWidth);
+
+                RitoEditorGUI.Space(4f);
+
+                Box.Blue
+                    .SetData(2f)
+                    .Draw(40f)
+                    .Margin(4f)
+                    .SetTooltip("Tooltip", Color.blue, Color.red.SetA(0.8f));
+
+                Button.Red
+                    .SetData("Button")
+                    .Draw(32f)
+                    .Margin()
+                    .SetTooltip("Tooltip");
+
 
                 RitoEditorGUI.Finalize(this);
             }

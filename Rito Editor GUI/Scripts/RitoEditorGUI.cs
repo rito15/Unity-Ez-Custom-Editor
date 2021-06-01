@@ -237,10 +237,43 @@ namespace Rito.EditorUtilities
 
         /// <summary> OnInspectorGUI 최상단에서 .Init()까지 호출 </summary>
         public static _SettingBuilder Settings => _SettingBuilder.Instance;
+
+        /// <summary> 현재 커서(Y 좌표) 위치 </summary>
         public static float CurrentY { get; private set; }
+        public static float Cursor => CurrentY;
+
         /// <summary> CurrentViewWidth에서 MarginLeft, MarginRight를 뺀 너비 </summary>
         public static float ViewWidth { get; private set; }
 
+
+        /// <summary> 툴팁을 표시할 수 있는지 여부 </summary>
+        public static bool ShowTooltip { get; private set; } = true;
+
+        public static readonly Color DefaultTooltipTextColor = Color.white * 10f;
+        public static readonly Color DefaultTooltipBgColor = Color.black.SetA(0.5f);
+
+        public static List<OverlayTooltip> TooltipList { get; } = new List<OverlayTooltip>();
+        public static List<OverlayTooltip> DebugTooltipList { get; } = new List<OverlayTooltip>();
+
+        //--
+
+        /// <summary> 에디터 전체 영역 높이 </summary>
+        private static float EditorTotalHeight { get; set; }
+
+        /// <summary> 이미 Init() 메소드가 호출되었는지 여부 </summary>
+        private static bool AlreadyInitiated { get; set; }
+
+        /// <summary> 이미 Finalize() 메소드가 호출되었는지 여부 </summary>
+        private static bool AlreadyFinalized { get; set; }
+
+        /// <summary> 윈도우의 기본 하단 여백 </summary>
+        const float EditorDefaultMarginBottom = 10f;
+
+        #endregion
+        /***********************************************************************
+        *                               Layout Fields
+        ***********************************************************************/
+        #region .
 
         /// <summary> 레이아웃 요소의 기본 높이 </summary>
         public static float LayoutControlHeight { get; private set; } = DefaultLayoutControlHeight;
@@ -263,30 +296,9 @@ namespace Rito.EditorUtilities
         /// <summary> 레이아웃 요소의 X 우측 위치 조정값(픽셀) </summary>
         public static float LayoutXRightOffset { get; private set; } = 0f;
 
-
-        /// <summary> 툴팁을 표시할 수 있는지 여부 </summary>
-        public static bool ShowTooltip { get; private set; } = true;
-
-        public static List<OverlayTooltip> TooltipList { get; } = new List<OverlayTooltip>();
-        public static List<OverlayTooltip> DebugTooltipList { get; } = new List<OverlayTooltip>();
-
-        //--
-
-        /// <summary> 에디터 전체 영역 높이 </summary>
-        private static float EditorTotalHeight { get; set; }
-
-        /// <summary> 이미 Init() 메소드가 호출되었는지 여부 </summary>
-        private static bool AlreadyInitiated { get; set; }
-
-        /// <summary> 이미 Finalize() 메소드가 호출되었는지 여부 </summary>
-        private static bool AlreadyFinalized { get; set; }
-
-        /// <summary> 윈도우의 기본 하단 여백 </summary>
-        const float EditorDefaultMarginBottom = 10f;
-
         #endregion
         /***********************************************************************
-        *                               Debug
+        *                               Debug Fields
         ***********************************************************************/
         #region .
 
@@ -470,24 +482,46 @@ namespace Rito.EditorUtilities
                         EditorGUI.DrawRect(curRect, TooltipDebugColor);
 
                         // [2] Tooltip Rect
-                        float tooltipRectWidth = 180f;
+                        float tooltipRectWidth = 260f;
                         float tooltipRectHeight = 60f;
                         Rect tooltipRect = Local_GetTooltipRect(tooltipRectWidth, tooltipRectHeight, mPos);
                         EditorGUI.DrawRect(tooltipRect, Color.black.SetA(0.8f));
 
                         // [2] Tooltip Rect : Label
                         float debugY = curRect.y;
-                        if (ShowRectDebugToggle) debugY -= DebugToggleHeight;
-                        if (ShowTooltipDebugToggle) debugY -= DebugToggleHeight;
+                        float viewHeight = EditorTotalHeight - marginTop - marginBottom - EditorDefaultMarginBottom;
+                        if (ShowRectDebugToggle)
+                        {
+                            debugY -= DebugToggleHeight;
+                            viewHeight -= DebugToggleHeight;
+                        }
+                        if (ShowTooltipDebugToggle)
+                        {
+                            debugY -= DebugToggleHeight;
+                            viewHeight -= DebugToggleHeight;
+                        }
+
+                        float xLeft = (curRect.x - marginLeft) / ViewWidth;
+                        float xRight = (curRect.xMax - marginLeft) / ViewWidth;
+                        float yTop = (debugY - marginTop) / viewHeight;
+                        float yBottom = (debugY + curRect.height - marginTop) / viewHeight;
 
                         string debugInfoLeft =
-                            $"xMin : {curRect.x}\n" +
-                            $"xMax : {curRect.x + curRect.width}\n" +
-                            $"Width : {curRect.width}";
+                            $"xMin : {curRect.x} ({xLeft:F3})\n" +
+                            $"xMax : {curRect.x + curRect.width} ({xRight:F3})\n" +
+                            $"Width : {curRect.width} ({(xRight - xLeft):F3})";
                         string debugInfoRight =
-                            $"yMin : {debugY}\n" +
-                            $"yMax : {debugY + curRect.height}\n" +
-                            $"Height : {curRect.height}";
+                            $"yMin : {debugY} ({yTop:F3})\n" +
+                            $"yMax : {debugY + curRect.height} ({yBottom:F3})\n" +
+                            $"Height : {curRect.height} ({(yBottom - yTop):F3})";
+                        //string debugInfoLeft =
+                        //    $"xMin : {curRect.x}\n" +
+                        //    $"xMax : {curRect.x + curRect.width}\n" +
+                        //    $"Width : {curRect.width}";
+                        //string debugInfoRight =
+                        //    $"yMin : {debugY}\n" +
+                        //    $"yMax : {debugY + curRect.height}\n" +
+                        //    $"Height : {curRect.height}";
 
                         tooltipRect.x += 10f;
                         Rect leftRect = new Rect(tooltipRect);
@@ -572,21 +606,26 @@ namespace Rito.EditorUtilities
 
                 Vector2 mPos = Event.current.mousePosition;
 
-                var oldGUIColor = GUI.color;
-                GUI.color = Color.white;
+                var oldTextColor = EditorStyles.label.normal.textColor;
+                var oldAlign = EditorStyles.label.alignment;
+                EditorStyles.label.alignment = TextAnchor.MiddleCenter;
 
                 // 툴팁 영역이 겹칠 경우, 더 나중에 그려진 컨트롤의 툴팁 표시
                 for (int i = TooltipList.Count - 1; i >= 0; i--)
                 {
                     OverlayTooltip tooltip = TooltipList[i];
+                    Rect rect = new Rect(mPos.x + 10f, mPos.y, tooltip.width, tooltip.height);
 
                     if (tooltip.rect.Contains(mPos))
                     {
-                        GUI.Box(new Rect(mPos.x + 10f, mPos.y, tooltip.width, tooltip.height), tooltip.text);
+                        EditorStyles.label.normal.textColor = tooltip.textColor;
+                        EditorGUI.DrawRect(rect, tooltip.bgColor);
+                        EditorGUI.LabelField(rect, tooltip.text);
                         break;
                     }
                 }
-                GUI.color = oldGUIColor;
+                EditorStyles.label.normal.textColor = oldTextColor;
+                EditorStyles.label.alignment = oldAlign;
             }
 
             DebugTooltipList.Clear();
