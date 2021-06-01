@@ -1582,6 +1582,13 @@ namespace Rito.EditorUtilities
             return this;
         }
 
+        /// <summary> 박스 상단 내부 여백 지정 </summary>
+        public override Box Margin(float margin = 0f)
+        {
+            REG.Space(margin);
+            return this;
+        }
+
         public Box Draw(in float xLeft, in float xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
@@ -1690,7 +1697,7 @@ namespace Rito.EditorUtilities
         protected string headerText = "Header";
         protected float headerTextLeftPadding = 0f;
 
-        protected float headerHeight; // 헤더박스 높이 + 아웃라인 두께
+        protected float headerHeight; // 헤더박스 높이
 
         // Styles - Header Text
         public Color headerTextColor = Color.black;
@@ -1747,10 +1754,10 @@ namespace Rito.EditorUtilities
 
         #endregion
 
-        /// <summary> (헤더 높이 + 아웃라인 두께) + 추가 여백 만큼 간격 이동 </summary>
-        public R HeaderSpace(float contentPaddingTop = 0f)
+        /// <summary> 헤더 높이만큼 Space + 컨텐츠 박스 상단 내부 여백 지정 </summary>
+        public override R Margin(float margin = 0f)
         {
-            REG.Space(headerHeight + contentPaddingTop);
+            REG.Space(headerHeight + outlineWidth + margin);
             return this as R;
         }
 
@@ -1844,7 +1851,7 @@ namespace Rito.EditorUtilities
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             if (CheckDrawErrors()) return this;
-            this.headerHeight = headerHeight + outlineWidth;
+            this.headerHeight = headerHeight;
             SetRect(xLeft, xRight, yOffset, headerHeight + contentHeight + outlineWidth, xLeftOffset, xRightOffset);
 
             if(headerStyle == null)
@@ -1885,8 +1892,7 @@ namespace Rito.EditorUtilities
             EditorGUI.DrawRect(contentRect, contentColor);
             EditorGUI.LabelField(headerTextRect, headerText, headerStyle);
 
-            //EndDraw();
-
+            // Debug
             CheckTooltip(rect);
             CheckTooltip(headerRect);
             CheckTooltip(contentRect);
@@ -1934,12 +1940,24 @@ namespace Rito.EditorUtilities
             return SetData(foldout, headerText, outlineWidth, headerTextLeftPadding);
         }
 
+        /// <summary> 헤더 높이만큼 Space + 컨텐츠 박스 상단 내부 여백 지정 </summary>
+        public override FoldoutHeaderBox Margin(float margin = 0f)
+        {
+            REG.Space(headerHeight + (foldout ? outlineWidth + margin : 0f));
+            return this;
+        }
+        /// <summary> rect 높이 + 레이아웃 요소 기본 여백 + 추가 여백만큼 여백 지정 </summary>
+        public override FoldoutHeaderBox Layout(float margin = 0f)
+        {
+            return Margin(margin + REG.LayoutControlBottomMargin);
+        }
+
         public override FoldoutHeaderBox Draw(in float xLeft, in float xRight, float yOffset, 
             in float headerHeight, in float contentHeight,
             in float xLeftOffset = 0f, in float xRightOffset = 0f)
         {
             if (CheckDrawErrors()) return this;
-            this.headerHeight = headerHeight + outlineWidth;
+            this.headerHeight = headerHeight;
             SetRect(xLeft, xRight, yOffset, headerHeight + contentHeight + outlineWidth, xLeftOffset, xRightOffset);
 
             if (headerStyle == null)

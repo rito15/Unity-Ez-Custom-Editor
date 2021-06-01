@@ -89,7 +89,7 @@ namespace Rito.EditorUtilities.Demo
             fhBox
                 .SetData(m.bool1, "Foldout Header Box", 2f, 2f)
                 .Draw(20f, 62f)
-                .HeaderSpace()
+                .Layout()
                 .Get(out m.bool1);
 
             if (m.bool1)
@@ -110,16 +110,15 @@ namespace Rito.EditorUtilities.Demo
                     .SetData("Int Slider", m.int2, 0, 10)
                     .Draw(0.01f, 0.99f).Layout()
                     .Get(out m.int2);
-
-                RGUI.Space(4f);
             }
 
-            RGUI.Space(8f);
+            RGUI.Space(10f);
 
             // ------------------------------------------------------
             hBox
                 .SetData("Header Box", 2f, 2f)
-                .DrawLayout(4);
+                .Draw(20f, 82f).Layout();
+                //.DrawLayout(4);
 
             v3Field
                 .SetData("Vector3 Field", m.vector3)

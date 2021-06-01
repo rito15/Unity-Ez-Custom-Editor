@@ -39,6 +39,7 @@ namespace Rito.EditorUtilities.Demo
                 FoldoutHeaderBox.Blue
                     .SetData("Header Box", m.foldoutValue, boxOutlineWidth, 4f)
                     .DrawLayout(3, 2f)
+                    //.Draw(20f, 64f).Layout()
                     .Get(out m.foldoutValue);
 
                 if (m.foldoutValue)
@@ -47,14 +48,13 @@ namespace Rito.EditorUtilities.Demo
                         .SetData("String Field", m.stringValue, "Placeholder")
                         .DrawLayout().Get(out m.stringValue);
 
-                    // float Dropdown
                     Dropdown<float>.Purple
                         .SetData("Float Dropdown", m.floatArray, m.floatSelected)
                         .DrawLayout().Get(out m.floatSelected);
 
+                    // Button & ToggleButton
                     const float buttonRatio = 0.7f;
 
-                    // Button & ToggleButton -> Width 8:2
                     Button.Blue
                         .SetData("Button")
                         .Draw(0.01f, buttonRatio, 20f);
