@@ -138,7 +138,7 @@ namespace Rito.EditorUtilities.Demo
                 .Draw(0.01f, 0.49f);
             toggleButton
                 .SetData("Toggle Button", m.bool3)
-                .Draw(0.5f, 0.99f).Layout(2f).Get(out m.bool3);
+                .Draw(0.5f, 0.99f).Layout().Get(out m.bool3);
 
             RGUI.Space(12f);
 

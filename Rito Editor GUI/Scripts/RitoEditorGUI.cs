@@ -238,6 +238,7 @@ namespace Rito.EditorUtilities
         /// <summary> OnInspectorGUI 최상단에서 .Init()까지 호출 </summary>
         public static _SettingBuilder Settings => _SettingBuilder.Instance;
         public static float CurrentY { get; private set; }
+        /// <summary> CurrentViewWidth에서 MarginLeft, MarginRight를 뺀 너비 </summary>
         public static float ViewWidth { get; private set; }
 
 
@@ -356,16 +357,16 @@ namespace Rito.EditorUtilities
         *                               Tiny Methods
         ***********************************************************************/
         #region .
+        public static void Space(float height, float space)
+        {
+            Space(height + space);
+        }
         public static void Space(float height = 8f)
         {
             if(ErrorOccured) return;
 
             CurrentY += height;
             EditorGUILayout.Space(height);
-        }
-        public static void Space(float height, float space)
-        {
-            Space(height + space);
         }
 
         // xLeft : Rect 좌측 끝의 위치 비율(0 ~ 1)

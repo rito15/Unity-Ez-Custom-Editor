@@ -1628,6 +1628,15 @@ namespace Rito.EditorUtilities
             return DrawLayout(contentCount, 0f, 0f, 0f, 0f);
         }
         /// <summary>
+        /// 레이아웃 요소들을 감싸는 헤더박스 그리기 + 추가 높이 지정
+        /// </summary>
+        /// <param name="contentCount">레이아웃 요소 개수</param>
+        /// <param name="bonusHeight">추가 높이(paddingBottom) </param>
+        public Box DrawLayout(int contentCount, float bonusHeight)
+        {
+            return DrawLayout(contentCount, 0f, bonusHeight, 0f, 0f);
+        }
+        /// <summary>
         /// 레이아웃 요소들을 감싸는 헤더박스 그리기
         /// </summary>
         /// <param name="contentCount">레이아웃 요소 개수</param>
@@ -1763,6 +1772,15 @@ namespace Rito.EditorUtilities
             return DrawLayout(contentCount, 0f, 0f, 0f, 0f);
         }
         /// <summary>
+        /// 레이아웃 요소들을 감싸는 헤더박스 그리기 + 추가 높이 지정
+        /// </summary>
+        /// <param name="contentCount">레이아웃 요소 개수</param>
+        /// <param name="bonusContentHeight">추가 높이(PaddingBottom)</param>
+        public R DrawLayout(int contentCount, float bonusContentHeight)
+        {
+            return DrawLayout(contentCount, 0f, bonusContentHeight, 0f, 0f);
+        }
+        /// <summary>
         /// 레이아웃 요소들을 감싸는 헤더박스 그리기
         /// </summary>
         /// <param name="contentCount">레이아웃 요소 개수</param>
@@ -1780,7 +1798,7 @@ namespace Rito.EditorUtilities
         /// <param name="paddingBottom">하단 내부 여백</param>
         /// <param name="paddingLeft">좌측 내부 여백</param>
         /// <param name="paddingRight">우측 내부 여백</param>
-        public R DrawLayout(int contentCount, float paddingTop, float paddingBottom, float paddingLeft, float paddingRight)
+        public virtual R DrawLayout(int contentCount, float paddingTop, float paddingBottom, float paddingLeft, float paddingRight)
         {
             if (contentCount < 0) contentCount = 0;
 
@@ -1796,13 +1814,14 @@ namespace Rito.EditorUtilities
                 xLeft: 0f, xRight: 1f,
                 yOffset: -paddingTop,
                 headerHeight: OneHeight,
-                contentHeight: outlineWidth + paddingTop + lcMargin + AllControlsHeight + paddingBottom,
+                contentHeight: paddingTop + lcMargin + AllControlsHeight + paddingBottom,
                 xLeftOffset: -paddingLeft,
                 xRightOffset: paddingRight
             );
 
-            // 박스 상단 패딩
-            REG.Space(lcMargin + OneHeight + outlineWidth);
+            // 박스 상단 <-> 첫 컨트롤 상단 사이 간격
+            // = 헤더 높이 + 헤더와 컨텐츠 사이 아웃라인 높이 + 레이아웃 요소 여백
+            REG.Space(OneHeight + outlineWidth + lcMargin);
 
             isLastLayout = true;
             return this as R;
@@ -1812,7 +1831,7 @@ namespace Rito.EditorUtilities
     {
         public static HeaderBox Default { get; } = new HeaderBox();
 
-        public HeaderBox SetData(string headerText, float outlineWidth = 0f, float headerTextLeftPadding = 0f)
+        public HeaderBox SetData(string headerText, float outlineWidth = 0f, float headerTextLeftPadding = 2f)
         {
             this.headerTextLeftPadding = headerTextLeftPadding;
             this.headerText = headerText;
@@ -1902,7 +1921,7 @@ namespace Rito.EditorUtilities
 
         #endregion
 
-        public FoldoutHeaderBox SetData(bool foldout, string headerText, float outlineWidth = 0f, float headerTextLeftPadding = 0f)
+        public FoldoutHeaderBox SetData(bool foldout, string headerText, float outlineWidth = 0f, float headerTextLeftPadding = 2f)
         {
             this.foldout = foldout;
             this.headerText = headerText;
@@ -1910,7 +1929,7 @@ namespace Rito.EditorUtilities
             this.headerTextLeftPadding = headerTextLeftPadding;
             return this;
         }
-        public FoldoutHeaderBox SetData(string headerText, bool foldout, float outlineWidth = 0f, float headerTextLeftPadding = 0f)
+        public FoldoutHeaderBox SetData(string headerText, bool foldout, float outlineWidth = 0f, float headerTextLeftPadding = 2f)
         {
             return SetData(foldout, headerText, outlineWidth, headerTextLeftPadding);
         }
@@ -1980,14 +1999,13 @@ namespace Rito.EditorUtilities
             EditorGUI.LabelField(headerTextRect, headerText, headerStyle);
 
 
-            CheckTooltip(rect);
-
-            // Content Box
             if (foldout)
             {
+                // Content Box
                 Rect contentRect = new Rect(x, y + hh + o, w, ch);
                 EditorGUI.DrawRect(contentRect, contentColor);
 
+                CheckTooltip(rect);
                 CheckTooltip(contentRect);
             }
 
@@ -2006,6 +2024,44 @@ namespace Rito.EditorUtilities
 
         public virtual bool Get() => foldout;
         public virtual void Get(out bool value) => value = this.foldout;
+        public override FoldoutHeaderBox DrawLayout(int contentCount, float paddingTop, float paddingBottom, float paddingLeft, float paddingRight)
+        {
+            if (contentCount < 0) contentCount = 0;
+
+            float lcHeight = REG.LayoutControlHeight;
+            float lcMargin = REG.LayoutControlBottomMargin;
+            float OneHeight = lcHeight + lcMargin;
+
+            // 모든 레이아웃 요소의 높이 합
+            float AllControlsHeight = OneHeight * contentCount;
+
+            Draw
+            (
+                xLeft: 0f, xRight: 1f,
+                yOffset: -paddingTop,
+                headerHeight: OneHeight,
+                contentHeight: paddingTop + lcMargin + AllControlsHeight + paddingBottom,
+                xLeftOffset: -paddingLeft,
+                xRightOffset: paddingRight
+            );
+
+            // 펼쳐진 경우 : 박스 상단 <-> 첫 컨트롤 상단 사이 여백
+            //             = 헤더 높이 + 헤더와 컨텐츠 사이 아웃라인 너비 + 레이아웃 요소 하단 여백
+            if (foldout)
+            {
+                REG.Space(OneHeight + outlineWidth + lcMargin);
+            }
+            // 접힌 경우 : 헤더 높이만큼만 Y 전진
+            // -> 펼쳐진 경우와 여백을 동일하게 맞추기 위해 하단 아웃라인 두께는 고려하지 않음
+            //    (필요하면 그리는 코드에서 수동으로 Space(아웃라인 두께))
+            else
+            {
+                REG.Space(OneHeight);
+            }
+
+            isLastLayout = true;
+            return this;
+        }
     }
 
     public partial class HelpBox : DrawingElement<None, HelpBox>

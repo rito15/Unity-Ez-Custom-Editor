@@ -28,15 +28,17 @@ namespace Rito.EditorUtilities.Demo
             public override void OnInspectorGUI()
             {
                 RitoEditorGUI.Settings
-                    .SetMargins(top : 8f, bottom : 2f)
+                    .SetMargins(top : 8f, bottom : 6f)
                     .SetLayoutControlXPositions(0.01f, 0.985f)
                     .ActivateRectDebugger()
                     .ActivateTooltipDebugger()
                     .Init();
 
+                const float boxOutlineWidth = 2f;
+
                 FoldoutHeaderBox.Blue
-                    .SetData("Header Box", m.foldoutValue, 2f, 4f)
-                    .DrawLayout(3, 0f, 8f, 0f, 0f).Margin(2f)
+                    .SetData("Header Box", m.foldoutValue, boxOutlineWidth, 4f)
+                    .DrawLayout(3, 2f)
                     .Get(out m.foldoutValue);
 
                 if (m.foldoutValue)
@@ -55,15 +57,15 @@ namespace Rito.EditorUtilities.Demo
                     // Button & ToggleButton -> Width 8:2
                     Button.Blue
                         .SetData("Button")
-                        .Draw(0.01f, buttonRatio, 24f);
+                        .Draw(0.01f, buttonRatio, 20f);
 
                     ToggleButton.Blue
                         .SetData("Toggle Button", m.toggleButtonValue)
-                        .Draw(buttonRatio + 0.01f, 0.985f, 24f).Layout()
+                        .Draw(buttonRatio + 0.01f, 0.985f, 20f).Layout()
                         .Get(out m.toggleButtonValue);
-
-                    RitoEditorGUI.Space(8f);
                 }
+
+                RitoEditorGUI.Space(boxOutlineWidth);
 
                 RitoEditorGUI.Finalize(this);
             }
