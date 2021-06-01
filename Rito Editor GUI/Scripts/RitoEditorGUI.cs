@@ -17,7 +17,7 @@ namespace Rito.EditorUtilities
     public static class RitoEditorGUI
     {
         /***********************************************************************
-        *                               Internal Classes
+        *                               Internal Class
         ***********************************************************************/
         #region .
         public class _SettingBuilder
@@ -165,7 +165,7 @@ namespace Rito.EditorUtilities
 
 
                 // 인스펙터 상단부에 디버그 On/Off 토글 생성
-                ShowDebuggerToggles();
+                DrawDebuggerToggles();
 
                 // -------------------------------------------------------------------------------------
                 REG.ViewWidth =
@@ -177,14 +177,15 @@ namespace Rito.EditorUtilities
 
                 AlreadyInitiated = true;
             }
-            private void ShowDebuggerToggles()
+            private void DrawDebuggerToggles()
             {
-                float viewWidth = EditorGUIUtility.currentViewWidth - marginLeft - marginRight;
+                const float toggleLeftMargin = 8f;
+                float viewWidth = EditorGUIUtility.currentViewWidth - toggleLeftMargin;
 
                 // 1. Rect Debugger
                 if (REG.ShowRectDebugToggle)
                 {
-                    Rect toggleRect = new Rect(marginLeft, REG.CurrentY + 2f, viewWidth, DebugToggleHeight - 4f);
+                    Rect toggleRect = new Rect(toggleLeftMargin, REG.CurrentY + 2f, viewWidth, DebugToggleHeight - 4f);
                     Rect line = new Rect(0f, REG.CurrentY, EditorGUIUtility.currentViewWidth, DebugToggleHeight);
 
                     EditorGUI.DrawRect(line, Color.black);
@@ -202,7 +203,7 @@ namespace Rito.EditorUtilities
                 // 2. Tooltip Debugger
                 if (REG.ShowTooltipDebugToggle)
                 {
-                    Rect toggleRect = new Rect(marginLeft, REG.CurrentY + 2f, viewWidth, DebugToggleHeight - 4f);
+                    Rect toggleRect = new Rect(toggleLeftMargin, REG.CurrentY + 2f, viewWidth, DebugToggleHeight - 4f);
                     Rect line = new Rect(0f, REG.CurrentY, EditorGUIUtility.currentViewWidth, DebugToggleHeight);
 
                     EditorGUI.DrawRect(line, Color.black);
@@ -267,6 +268,8 @@ namespace Rito.EditorUtilities
 
         public static List<OverlayTooltip> TooltipList { get; } = new List<OverlayTooltip>();
         public static List<OverlayTooltip> DebugTooltipList { get; } = new List<OverlayTooltip>();
+
+        //--
 
         /// <summary> 에디터 전체 영역 높이 </summary>
         private static float EditorTotalHeight { get; set; }
@@ -499,7 +502,6 @@ namespace Rito.EditorUtilities
                         break;
                     }
                 }
-                DebugTooltipList.Clear();
 
                 // 1-2. 여백
                 if (!tooltipShowed)
@@ -584,9 +586,10 @@ namespace Rito.EditorUtilities
                     }
                 }
                 GUI.color = oldGUIColor;
-
-                TooltipList.Clear();
             }
+
+            DebugTooltipList.Clear();
+            TooltipList.Clear();
         }
 
         private static void ShowErrorHelpbox()

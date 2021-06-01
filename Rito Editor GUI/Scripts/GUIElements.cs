@@ -58,6 +58,7 @@ namespace Rito.EditorUtilities
         protected float tooltipHeight;
         protected string tooltipText;
 
+        protected bool tooltipDebugAllowed = true; // 디버그 허용 여부
 
         /// <summary> 마지막으로 그린 Rect 가져오기 </summary>
         public Rect GetLastRect()
@@ -96,8 +97,24 @@ namespace Rito.EditorUtilities
             return Margin(margin + REG.LayoutControlBottomMargin);
         }
 
+        /// <summary> 툴팁 디버그에서 제외하기 </summary>
+        public R ExcludeFromDebug()
+        {
+            tooltipDebugAllowed = false;
+            return this as R;
+        }
+
+        protected bool CheckDrawErrors()
+        {
+            return REG.ErrorOccured;
+        }
+
         /// <summary> Rect 위치 가시화하여 보여주기 </summary>
-        protected void DebugRect(Color color = default, in float border = 1f)
+        protected void DebugRect(in Color color = default, in float border = 1f)
+        {
+            DebugRect(this.rect, color, border);
+        }
+        protected void DebugRect(in Rect rect, Color color = default, in float border = 1f)
         {
             if(!REG.RectDebugActivated) return;
             if(rect == default) return;
@@ -119,12 +136,7 @@ namespace Rito.EditorUtilities
             EditorGUI.DrawRect(right, color);
         }
 
-        protected bool CheckDrawErrors()
-        {
-            return REG.ErrorOccured;
-        }
-
-        /// <summary> 툴팁 등록 여부 확인 및 요청 </summary>
+        /// <summary> 툴팁, 툴팁 디버그 등록 여부 확인 및 요청 </summary>
         protected void CheckTooltip()
         {
             CheckTooltip(this.rect);
@@ -133,7 +145,8 @@ namespace Rito.EditorUtilities
         {
             if (REG.TooltipDebugActivated)
             {
-                REG.DebugTooltipList.Add(new OverlayTooltip(rect, 200f, 60f, ""));
+                if(tooltipDebugAllowed)
+                    REG.DebugTooltipList.Add(new OverlayTooltip(rect, 200f, 60f, ""));
             }
             else if (tooltipFlag)
             {
@@ -142,6 +155,8 @@ namespace Rito.EditorUtilities
                 if (REG.ShowTooltip)
                     REG.TooltipList.Add(new OverlayTooltip(rect, tooltipWidth, tooltipHeight, tooltipText));
             }
+
+            tooltipDebugAllowed = true;
         }
 
         /// <summary> Draw() 마무리 </summary>
@@ -157,7 +172,7 @@ namespace Rito.EditorUtilities
         /// <summary> 그려질 지점의 Rect 설정 </summary>
         protected void SetRect(in fRatio xLeft, in fRatio xRight, in float yOffset, in float height)
         {
-            rect = REG.GetRect(xLeft, xRight, yOffset, height);
+            SetRect(xLeft, xRight, yOffset, height, 0f, 0f);
         }
         /// <summary> 그려질 지점의 Rect 설정 </summary>
         protected void SetRect(in fRatio xLeft, in fRatio xRight, in float yOffset, in float height,
@@ -1851,7 +1866,18 @@ namespace Rito.EditorUtilities
             EditorGUI.DrawRect(contentRect, contentColor);
             EditorGUI.LabelField(headerTextRect, headerText, headerStyle);
 
-            EndDraw();
+            //EndDraw();
+
+            CheckTooltip(rect);
+            CheckTooltip(headerRect);
+            CheckTooltip(contentRect);
+
+            if (REG.RectDebugActivated)
+            {
+                DebugRect();
+            }
+            isLastLayout = false;
+
             return this;
         }
     }
@@ -1953,14 +1979,21 @@ namespace Rito.EditorUtilities
             // Header Label
             EditorGUI.LabelField(headerTextRect, headerText, headerStyle);
 
+
+            CheckTooltip(rect);
+
             // Content Box
             if (foldout)
             {
                 Rect contentRect = new Rect(x, y + hh + o, w, ch);
                 EditorGUI.DrawRect(contentRect, contentColor);
+
+                CheckTooltip(contentRect);
             }
 
-            CheckTooltip(foldout ? rect : headerRect);
+            // Debug
+            CheckTooltip(headerRect);
+
             if (REG.RectDebugActivated)
             {
                 if(!foldout)
