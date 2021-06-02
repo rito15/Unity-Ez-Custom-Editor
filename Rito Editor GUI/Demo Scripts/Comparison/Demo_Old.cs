@@ -14,7 +14,7 @@ namespace Rito.EditorUtilities.Demo
     public class Demo_Old : MonoBehaviour
     {
         [CustomEditor(typeof(Demo_Old))]
-        private class CE : UnityEditor.Editor
+        private class CE : Editor
         {
             private bool foldout = true;
 
@@ -22,12 +22,10 @@ namespace Rito.EditorUtilities.Demo
 
             public override void OnInspectorGUI()
             {
-                RitoEditorGUI.Settings
-                    .SetMargins(top: 48f, bottom: 46f)
-                    .SetLayoutControlXPositions(0.01f, 0.985f)
-                    .ActivateRectDebugger()
-                    //.ActivateTooltipDebugger()
-                    .Init();
+                GUILayout.Button("ButtoN");
+                GUILayout.Button("ButtoN");
+                GUILayout.Button("ButtoN");
+                GUILayout.Button("ButtoN");
 
                 FoldoutHeaderBox.Brown
                     .SetData("Foldout Header Box", foldout, 2f)
@@ -45,15 +43,12 @@ namespace Rito.EditorUtilities.Demo
                         .DrawLayout();
                 }
 
-                floatVariable = EditorGUILayout.FloatField("Float Field", floatVariable);
 
                 floatVariable = 
                     FloatField.Brown
                         .SetData("Float FIeld", floatVariable)
                         .DrawLayout()
                         .GetValue();
-
-                RitoEditorGUI.Finalize(this);
             }
         }
     }

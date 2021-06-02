@@ -16,7 +16,7 @@ namespace Rito.EditorUtilities.Demo
     public class Sample_DefaultLayouts : MonoBehaviour
     {
         [CustomEditor(typeof(Sample_DefaultLayouts))]
-        private class CE : UnityEditor.Editor
+        private class CE : RitoEditor
         {
             const int MaxLength = 50;
             private int[] intValues = new int[MaxLength];
@@ -41,16 +41,18 @@ namespace Rito.EditorUtilities.Demo
             private float[] floatDropdownList = { 0.1f, 0.2f, 0.3f, 0.4f, 0.5f };
             private string[] stringDropdownList = { "String 1", "String 2", "String 3",  };
 
-            public override void OnInspectorGUI()
+            protected override void OnSetup(REG.Setting settings)
             {
-                REG.Settings
+                settings
                     //.SetMargins(top: 8f, left: 12f, right: 24f, bottom: 4f)
                     .ActivateRectDebugger(true)
                     .ActivateTooltipDebugger(true)
                     .SetDebugRectColor(Color.cyan)
-                    .SetDebugTooltipColor(Color.cyan.SetA(0.5f))
-                    .Init();
+                    .SetDebugTooltipColor(Color.cyan.SetA(0.5f));
+            }
 
+            protected override void OnDrawInspector()
+            {
                 int i = 0, f = 0, d = 0, s = 0, b = 0;
 
                 /***********************************************************************
@@ -71,7 +73,7 @@ namespace Rito.EditorUtilities.Demo
 
                 #endregion
 
-                REG.Space(8f);
+                Space(8f);
 
                 /***********************************************************************
                 *                               Fields
@@ -186,7 +188,7 @@ namespace Rito.EditorUtilities.Demo
 
                 #endregion
 
-                REG.Space(8f);
+                Space(8f);
 
                 /***********************************************************************
                 *                               Sliders
@@ -213,7 +215,7 @@ namespace Rito.EditorUtilities.Demo
 
                 #endregion
 
-                REG.Space(8f);
+                Space(8f);
 
                 /***********************************************************************
                 *                               Object Fields
@@ -240,7 +242,7 @@ namespace Rito.EditorUtilities.Demo
 
                 #endregion
 
-                REG.Space(8f);
+                Space(8f);
 
                 /***********************************************************************
                 *                                 Box
@@ -263,7 +265,7 @@ namespace Rito.EditorUtilities.Demo
 
                 #endregion
 
-                REG.Space(8f);
+                Space(8f);
 
                 /***********************************************************************
                 *                               Header Box
@@ -278,7 +280,7 @@ namespace Rito.EditorUtilities.Demo
                     .SetTooltip("Header Box")
                     .Draw(0f, 1f, -1f, headerHeight, 40f, -2f, 2f);
 
-                REG.Space(headerHeight + outlineWidth);
+                Space(headerHeight + outlineWidth);
 
                 Label.Default
                     .SetData("Content 1")
@@ -288,7 +290,7 @@ namespace Rito.EditorUtilities.Demo
                     .SetData("Content 2")
                     .DrawLayout().GetValue();
 
-                REG.Space(8f);
+                Space(8f);
 
                 outlineWidth = 1f;
 
@@ -296,8 +298,6 @@ namespace Rito.EditorUtilities.Demo
                     .SetData("Header", outlineWidth)
                     .SetTooltip("Header Box(Outlined)", 160f)
                     .DrawLayout(2, 0f, 2f);
-
-                REG.Space(outlineWidth);
 
                 Label.Default
                     .SetData("Content 1")
@@ -309,7 +309,7 @@ namespace Rito.EditorUtilities.Demo
 
                 #endregion
 
-                REG.Space(8f);
+                Space(8f);
 
                 /***********************************************************************
                 *                           Foldout Header Box
@@ -325,8 +325,6 @@ namespace Rito.EditorUtilities.Demo
 
                 if (boolValues[b])
                 {
-                    REG.Space(outlineWidth);
-
                     Label.Default
                         .SetData("Content 1")
                         .DrawLayout().GetValue();
@@ -341,7 +339,7 @@ namespace Rito.EditorUtilities.Demo
 
                 #endregion
 
-                REG.Space(8f);
+                Space(8f);
 
                 /***********************************************************************
                 *                               Help Boxes
@@ -365,7 +363,7 @@ namespace Rito.EditorUtilities.Demo
 
                 #endregion
 
-                REG.Space(8f);
+                Space(8f);
 
                 /***********************************************************************
                 *                               Dropdowns
@@ -405,8 +403,6 @@ namespace Rito.EditorUtilities.Demo
                 cursorLockMode = (CursorLockMode)clm;
 
                 #endregion
-
-                REG.Finalize(this);
             }
         }
     }

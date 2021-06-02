@@ -36,8 +36,6 @@ namespace Rito.EditorUtilities
         private static readonly string kFloatFieldFormatString = "g7";
         private static readonly string kDoubleFieldFormatString = "g15";
 
-        // NumericFieldDraggerUtility.CalculateIntDragSensitivity(value)
-
         static ReflectionGUI()
         {
             Type editorGUIType = typeof(EditorGUI);

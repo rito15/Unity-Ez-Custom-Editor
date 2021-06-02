@@ -20,21 +20,94 @@ namespace Rito.EditorUtilities
         *                               Internal Class
         ***********************************************************************/
         #region .
-        public class SettingBuilder
+        public class Setting
         {
-            public static SettingBuilder Instance
+            private static readonly Setting instance = new Setting();
+
+            private Setting() { }
+
+            public Setting SetMargins(
+                float left = DefaultMarginLeft, float right = DefaultMarginRight, 
+                float top = DefaultMarginTop, float bottom = DefaultMarginBottom)
             {
-                // Init
-                get
-                {
-                    return instance;
-                }
+                marginLeft = left;
+                marginRight = right;
+                marginTop = top;
+                marginBottom = bottom;
+                return this;
             }
-            private static readonly SettingBuilder instance = new SettingBuilder();
 
-            private SettingBuilder() { }
+            /// <summary> 렉트 디버거 토글 생성 </summary>
+            public Setting ActivateRectDebugger(bool value = true)
+            {
+                REG.ShowRectDebugToggle = value;
+                return this;
+            }
+            /// <summary> 디버그 렉트 색상 설정 </summary>
+            public Setting SetDebugRectColor(in Color color)
+            {
+                REG.RectDebugColor = color;
+                return this;
+            }
 
-            public SettingBuilder Reset()
+            /// <summary> 툴팁 디버거 토글 생성 </summary>
+            public Setting ActivateTooltipDebugger(bool value = true)
+            {
+                REG.ShowTooltipDebugToggle = value;
+                return this;
+            }
+            /// <summary> 디버그 렉트 색상 설정 </summary>
+            public Setting SetDebugTooltipColor(in Color color)
+            {
+                REG.TooltipDebugColor = color;
+                return this;
+            }
+
+            /// <summary> 레이아웃 요소의 기본 높이, 하단 여백 설정 </summary>
+            public Setting SetLayoutControlHeight(float height = DefaultLayoutControlHeight, 
+                float bottomMargin = DefaultLayoutControlBottomMargin)
+            {
+                if(height < 0f) height = 0f;
+                if(bottomMargin < 0f) bottomMargin = 0f;
+
+                LayoutControlHeight = height;
+                LayoutControlBottomMargin = bottomMargin;
+
+                return this;
+            }
+            /// <summary> 레이아웃 요소의 X 좌표 비율, 오프셋 설정 </summary>
+            public Setting SetLayoutControlXPositions(float xLeft = 0f, float xRight = 1f,
+                float xLeftOffset = 0f, float xRightOffset = 0f)
+            {
+                LayoutXLeft = xLeft;
+                LayoutXRight = xRight;
+                LayoutXLeftOffset = xLeftOffset;
+                LayoutXRightOffset = xRightOffset;
+
+                return this;
+            }
+            public Setting AllowTooltip(bool value = true)
+            {
+                ShowTooltip = value;
+                return this;
+            }
+            /// <summary> 에디터 우측 스크롤바 존재유무에 관계 없이 판정 너비 고정하기 </summary>
+            public Setting KeepSameViewWidth(bool value = true)
+            {
+                AlwaysKeepSameViewWidth = value;
+                return this;
+            }
+            /// <summary> 에디터의 배경 색상 지정 </summary>
+            public Setting SetEditorBackgroundColor(in Color color)
+            {
+                if (ErrorOccured) return this;
+
+                Rect editorFullRect = new Rect(0f, 0f, EditorGUIUtility.currentViewWidth, EditorTotalHeight);
+                EditorGUI.DrawRect(editorFullRect, color);
+                return this;
+            }
+
+            private static void Reset()
             {
                 // Debugs
                 RectDebugColor = Color.red;
@@ -59,92 +132,9 @@ namespace Rito.EditorUtilities
                 marginRight = DefaultMarginRight;
                 marginTop = DefaultMarginTop;
                 marginBottom = DefaultMarginBottom;
-
-                return this;
             }
 
-            public SettingBuilder SetMargins(
-                float left = DefaultMarginLeft, float right = DefaultMarginRight, 
-                float top = DefaultMarginTop, float bottom = DefaultMarginBottom)
-            {
-                marginLeft = left;
-                marginRight = right;
-                marginTop = top;
-                marginBottom = bottom;
-                return this;
-            }
-
-            /// <summary> 렉트 디버거 토글 생성 </summary>
-            public SettingBuilder ActivateRectDebugger(bool value = true)
-            {
-                REG.ShowRectDebugToggle = value;
-                return this;
-            }
-            /// <summary> 디버그 렉트 색상 설정 </summary>
-            public SettingBuilder SetDebugRectColor(in Color color)
-            {
-                REG.RectDebugColor = color;
-                return this;
-            }
-
-            /// <summary> 툴팁 디버거 토글 생성 </summary>
-            public SettingBuilder ActivateTooltipDebugger(bool value = true)
-            {
-                REG.ShowTooltipDebugToggle = value;
-                return this;
-            }
-            /// <summary> 디버그 렉트 색상 설정 </summary>
-            public SettingBuilder SetDebugTooltipColor(in Color color)
-            {
-                REG.TooltipDebugColor = color;
-                return this;
-            }
-
-            /// <summary> 레이아웃 요소의 기본 높이, 하단 여백 설정 </summary>
-            public SettingBuilder SetLayoutControlHeight(float height = DefaultLayoutControlHeight, 
-                float bottomMargin = DefaultLayoutControlBottomMargin)
-            {
-                if(height < 0f) height = 0f;
-                if(bottomMargin < 0f) bottomMargin = 0f;
-
-                LayoutControlHeight = height;
-                LayoutControlBottomMargin = bottomMargin;
-
-                return this;
-            }
-            /// <summary> 레이아웃 요소의 X 좌표 비율, 오프셋 설정 </summary>
-            public SettingBuilder SetLayoutControlXPositions(float xLeft = 0f, float xRight = 1f,
-                float xLeftOffset = 0f, float xRightOffset = 0f)
-            {
-                LayoutXLeft = xLeft;
-                LayoutXRight = xRight;
-                LayoutXLeftOffset = xLeftOffset;
-                LayoutXRightOffset = xRightOffset;
-
-                return this;
-            }
-            public SettingBuilder AllowTooltip(bool value = true)
-            {
-                ShowTooltip = value;
-                return this;
-            }
-            /// <summary> 에디터 우측 슬라이더 존재유무에 관계 없이 판정 너비 고정하기 </summary>
-            public SettingBuilder KeepSameViewWidth(bool value = true)
-            {
-                AlwaysKeepSameViewWidth = value;
-                return this;
-            }
-            /// <summary> 에디터의 배경 색상 지정 </summary>
-            public SettingBuilder SetEditorBackgroundColor(in Color color)
-            {
-                if (ErrorOccured) return this;
-
-                Rect editorFullRect = new Rect(0f, 0f, EditorGUIUtility.currentViewWidth, EditorTotalHeight);
-                EditorGUI.DrawRect(editorFullRect, color);
-                return this;
-            }
-
-            public void Init()
+            private static void Init()
             {
                 if (AlreadyInitiated)
                     return;
@@ -170,7 +160,7 @@ namespace Rito.EditorUtilities
 
                 // -------------------------------------------------------------------------------------
 
-                // 우측 슬라이더 존재 유무에 따라 유동적인 너비 설정
+                // 우측 스크롤바 존재 유무에 따라 유동적인 너비 설정
                 EditorGUILayout.Space(0f);
                 float flexibleViewWidth = GUILayoutUtility.GetLastRect().width + 23f;
 
@@ -185,7 +175,7 @@ namespace Rito.EditorUtilities
 
                 AlreadyInitiated = true;
             }
-            private void DrawDebuggerToggles()
+            private static void DrawDebuggerToggles()
             {
                 const float toggleLeftMargin = 8f;
                 float viewWidth = EditorGUIUtility.currentViewWidth - toggleLeftMargin;
@@ -226,6 +216,43 @@ namespace Rito.EditorUtilities
                     REG.Space(DebugToggleHeight);
                 }
             }
+
+            private static void Finish(Editor editor)
+            {
+                if (AlreadyFinalized) return;
+
+                AlreadyInitiated = false;
+
+                // Init() 여부 검사
+                if (initAndFinalizationCount == 0)
+                {
+                    ErrorOccured = true;
+                    errorType = ErrorType.NeverInitalized;
+                    ShowErrorHelpbox();
+                    return;
+                }
+                else
+                {
+                    initAndFinalizationCount = 0;
+                    ErrorOccured = false;
+                }
+
+                Space(marginBottom);
+
+                // 컨트롤 없는 부분에 클릭할 경우 강제로 포커스 제거
+                if (Event.current.type == EventType.MouseDown)
+                {
+                    EditorGUI.FocusTextInControl("");
+                }
+
+                // 툴팁 디버거, 툴팁 기능 동작
+                ShowTooltips(editor);
+
+                // 에디터 전체 높이 계산
+                EditorTotalHeight = CurrentY + EditorDefaultMarginBottom;
+
+                AlreadyFinalized = true;
+            }
         }
 
         #endregion
@@ -242,9 +269,6 @@ namespace Rito.EditorUtilities
         private const float DefaultMarginLeft = 18f;
         private const float DefaultMarginRight = 8f;
         private const float DefaultMarginBottom = 0f;
-
-        /// <summary> OnInspectorGUI 최상단에서 .Init()까지 호출 </summary>
-        public static SettingBuilder Settings => SettingBuilder.Instance;
 
         /// <summary> 현재 커서(Y 좌표) 위치 </summary>
         public static float CurrentY { get; private set; }
@@ -265,7 +289,7 @@ namespace Rito.EditorUtilities
 
         //--
 
-        /// <summary> 슬라이더 존재유무 관계 없이 항상 너비 고정하기 </summary>
+        /// <summary> 스크롤바 존재유무 관계 없이 항상 너비 고정하기 </summary>
         private static bool AlwaysKeepSameViewWidth { get; set; }
 
         /// <summary> 에디터 전체 영역 높이 </summary>
@@ -421,43 +445,6 @@ namespace Rito.EditorUtilities
         *                               Methods
         ***********************************************************************/
         #region .
-        /// <summary> 반드시 OnInspectorGUI 최하단에서 호출 </summary>
-        public static void Finalize(Editor editor)
-        {
-            if(AlreadyFinalized) return;
-
-            AlreadyInitiated = false;
-
-            // Init() 여부 검사
-            if (initAndFinalizationCount == 0)
-            {
-                ErrorOccured = true;
-                errorType = ErrorType.NeverInitalized;
-                ShowErrorHelpbox();
-                return;
-            }
-            else
-            {
-                initAndFinalizationCount = 0;
-                ErrorOccured = false;
-            }
-
-            Space(marginBottom);
-
-            // 컨트롤 없는 부분에 클릭할 경우 강제로 포커스 제거
-            if (Event.current.type == EventType.MouseDown)
-            {
-                EditorGUI.FocusTextInControl("");
-            }
-
-            // 툴팁 디버거, 툴팁 기능 동작
-            ShowTooltips(editor);
-
-            // 에디터 전체 높이 계산
-            EditorTotalHeight = CurrentY + EditorDefaultMarginBottom;
-
-            AlreadyFinalized = true;
-        }
 
         private static void ShowTooltips(Editor editor)
         {

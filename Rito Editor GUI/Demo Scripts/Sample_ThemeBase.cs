@@ -32,7 +32,7 @@ namespace Rito.EditorUtilities.Demo
         public int sSelected;
 
     }
-    public abstract class SampleCustomEditorBase: UnityEditor.Editor
+    public abstract class SampleCustomEditorBase: RitoEditor
     {
         private Sample_ThemeBase m;
 
@@ -71,23 +71,22 @@ namespace Rito.EditorUtilities.Demo
             m = target as Sample_ThemeBase;
         }
 
-        public override void OnInspectorGUI()
+        protected override void OnSetup(RGUI.Setting setting)
         {
-            RGUI.Settings.Reset();
-
             if (SetEditorBakgroundColor)
             {
-                RGUI.Settings
+                setting
                     .SetEditorBackgroundColor(EditorBackgroundColor);
             }
 
-            RGUI.Settings
+            setting
                 //.SetMargins(top: 12f, left: 12f, right: 20f, bottom: 16f)
                 .ActivateRectDebugger()
-                .ActivateTooltipDebugger()
-                .Init();
+                .ActivateTooltipDebugger();
+        }
 
-            // ------------------------------------------------------
+        protected override void OnDrawInspector()
+        {
             fhBox
                 .SetData(m.bool1, "Foldout Header Box", 2f, 2f)
                 .Draw(20f, 62f)
@@ -213,8 +212,6 @@ namespace Rito.EditorUtilities.Demo
             toggleButton
                 .SetData("Toggle Button", m.bool5)
                 .Draw(0.5f, 1.0f).Layout().GetValue(out m.bool5);
-
-            RGUI.Finalize(this);
         }
     }
 }

@@ -20,36 +20,23 @@ namespace Rito.EditorUtilities.Demo
         public int floatSelected;
 
         [CustomEditor(typeof(Demo_New))]
-        private class CE : UnityEditor.Editor
+        private class CE : RitoEditor
         {
-            private Label boldRedLabel = new Label()
-            {
-                fontStyle = FontStyle.Bold,
-                textColor = Color.red,
-                textAlignment = TextAnchor.MiddleCenter
-            };
-
-            private FloatField blueFloat = new FloatField()
-            {
-                labelColor = Color.blue,
-                inputTextColor = Color.blue,
-                inputBackgroundColor = Color.white
-            };
-
             private Demo_New m;
             private void OnEnable() => m = target as Demo_New;
 
-            public override void OnInspectorGUI()
+            protected override void OnSetup(RitoEditorGUI.Setting setting)
             {
-                RitoEditorGUI.Settings
-                    .Reset()
-                    //.SetMargins(top : 8f, bottom : 6f)
-                    .KeepSameViewWidth()
+                setting
+                    //.KeepSameViewWidth()
+                    //.SetEditorBackgroundColor(Color.white.SetA(0.2f))
                     .SetLayoutControlXPositions(0.01f, 0.985f)
                     .ActivateRectDebugger()
-                    .ActivateTooltipDebugger()
-                    .Init();
+                    .ActivateTooltipDebugger();
+            }
 
+            protected override void OnDrawInspector()
+            {
                 const float boxOutlineWidth = 2f;
 
                 FoldoutHeaderBox.Blue
@@ -80,9 +67,6 @@ namespace Rito.EditorUtilities.Demo
                         .Draw(buttonRatio + 0.01f, 0.985f, 20f).Layout()
                         .GetValue(out m.toggleButtonValue);
                 }
-
-
-                RitoEditorGUI.Finalize(this);
             }
         }
     }
