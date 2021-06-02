@@ -1,0 +1,156 @@
+#if UNITY_EDITOR
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+
+// 날짜 : 2021-06-02 PM 4:17:12
+// 작성자 : Rito
+
+namespace Rito.EditorUtilities
+{
+    public abstract partial class ValueSliderBase<T, R> : DrawingElement<T, R> where R : ValueSliderBase<T, R>, new()
+    {
+        protected GUIStyle labelStyle;
+        protected GUIStyle sliderStyle;
+
+        // Data
+        protected GUIContent labelContent;
+        protected T minValue;
+        protected T maxValue;
+        protected float widthThreshold = 0.4f;
+
+        // Styles - Label
+        public int labelFontSize = 12;
+        public Color labelColor = Color.white;
+        public FontStyle labelFontStyle = FontStyle.Normal;
+        public TextAnchor labelAlignment = TextAnchor.MiddleLeft;
+
+        // Styles - Slider
+        public Color sliderColor = Color.white;
+        public Color inputTextColor = Color.white;
+
+        /***********************************************************************
+        *                               Style Setters
+        ***********************************************************************/
+        #region .
+
+        public R SetLabelColor(Color color)
+        {
+            this.labelColor = color;
+            return this as R;
+        }
+        public R SetLabelFontSize(int fontSize)
+        {
+            this.labelFontSize = fontSize;
+            return this as R;
+        }
+        public R SetLabelFontStyle(FontStyle fontStyle)
+        {
+            this.labelFontStyle = fontStyle;
+            return this as R;
+        }
+        public R SetLabelTextAlignment(TextAnchor alignment)
+        {
+            this.labelAlignment = alignment;
+            return this as R;
+        }
+
+        public R SetSliderColor(Color color)
+        {
+            this.sliderColor = color;
+            return this as R;
+        }
+        public R SetInputTextColor(Color color)
+        {
+            this.inputTextColor = color;
+            return this as R;
+        }
+
+        #endregion
+
+        public R SetData(string label, T value, T minValue, T maxValue, float widthThreshold = 0.4f)
+        {
+            this.labelContent = new GUIContent(label);
+
+            this.value = value;
+            this.minValue = minValue;
+            this.maxValue = maxValue;
+            this.widthThreshold = widthThreshold;
+            return this as R;
+        }
+
+        public override R Draw(in float xLeft, in float xRight, float yOffset, in float height,
+            in float xLeftOffset = 0f, in float xRightOffset = 0f)
+        {
+            if (CheckDrawErrors()) return this as R;
+            SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
+
+            if (labelStyle == null)
+                labelStyle = new GUIStyle(GUI.skin.label);
+            if (sliderStyle == null)
+                sliderStyle = new GUIStyle(GUI.skin.horizontalSlider);
+
+            ref float t = ref widthThreshold;
+            float omt = 1f - t;
+            Rect labelRect = new Rect(rect.x, rect.y, rect.width * t, rect.height);
+            Rect sliderRect = new Rect(rect.x + rect.width * t, rect.y, rect.width * omt, rect.height);
+
+            // 1. Label
+            labelStyle.normal.textColor = labelColor;
+            labelStyle.fontSize = labelFontSize;
+            labelStyle.fontStyle = labelFontStyle;
+            labelStyle.alignment = labelAlignment;
+
+            EditorGUI.LabelField(labelRect, labelContent, labelStyle);
+
+            // 2. Slider
+            var oldContentColor = GUI.contentColor;
+            var oldBackgroundColor = GUI.backgroundColor;
+
+            GUI.contentColor = inputTextColor;
+            GUI.backgroundColor = sliderColor * 2f;
+
+            DrawSlider(sliderRect);
+
+            GUI.contentColor = oldContentColor;
+            GUI.backgroundColor = oldBackgroundColor;
+
+            // -
+            EndDraw();
+            return this as R;
+        }
+        protected abstract void DrawSlider(in Rect sliderRect);
+    }
+    public partial class IntSlider : ValueSliderBase<int, IntSlider>
+    {
+        public static IntSlider Default { get; } = new IntSlider();
+
+        protected override void DrawSlider(in Rect sliderRect)
+        {
+            value = EditorGUI.IntSlider(sliderRect, value, minValue, maxValue);
+        }
+    }
+    public partial class FloatSlider : ValueSliderBase<float, FloatSlider>
+    {
+        public static FloatSlider Default { get; } = new FloatSlider();
+
+        protected override void DrawSlider(in Rect sliderRect)
+        {
+            value = EditorGUI.Slider(sliderRect, value, minValue, maxValue);
+        }
+    }
+    public partial class DoubleSlider : ValueSliderBase<double, DoubleSlider>
+    {
+        public static DoubleSlider Default { get; } = new DoubleSlider();
+
+        protected override void DrawSlider(in Rect sliderRect)
+        {
+            value = EditorGUI.Slider(sliderRect, (float)value, (float)minValue, (float)maxValue);
+        }
+    }
+}
+
+#endif

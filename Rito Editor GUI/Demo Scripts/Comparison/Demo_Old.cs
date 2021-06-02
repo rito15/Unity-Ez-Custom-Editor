@@ -16,9 +16,34 @@ namespace Rito.EditorUtilities.Demo
         [CustomEditor(typeof(Demo_Old))]
         private class CE : UnityEditor.Editor
         {
+            private bool foldout = true;
+
             public override void OnInspectorGUI()
             {
-                GUILayout.Button("BUTTON");
+                RitoEditorGUI.Settings
+                    .SetMargins(top: 48f, bottom: 46f)
+                    .SetLayoutControlXPositions(0.01f, 0.985f)
+                    .ActivateRectDebugger()
+                    .ActivateTooltipDebugger()
+                    .Init();
+
+                FoldoutHeaderBox.Brown
+                    .SetData("Foldout Header Box", foldout, 2f)
+                    .DrawLayout(2)
+                    .GetValue(out foldout);
+
+                if (foldout)
+                {
+                    IntField.Brown
+                        .SetData("Int Field", 123)
+                        .DrawLayout();
+
+                    FloatField.Brown
+                        .SetData("Float Field", 123f)
+                        .DrawLayout();
+                }
+
+                RitoEditorGUI.Finalize(this);
             }
         }
     }

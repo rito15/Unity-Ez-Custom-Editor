@@ -253,7 +253,7 @@ namespace Rito.EditorUtilities
         public static readonly Color DefaultTooltipBgColor = Color.black.SetA(0.5f);
 
         public static List<OverlayTooltip> TooltipList { get; } = new List<OverlayTooltip>();
-        public static List<OverlayTooltip> DebugTooltipList { get; } = new List<OverlayTooltip>();
+        public static List<Rect> TooltipDebugRectList { get; } = new List<Rect>();
 
         //--
 
@@ -450,6 +450,7 @@ namespace Rito.EditorUtilities
 
         private static void ShowTooltips(Editor editor)
         {
+            // 화면을 넘어가지 않는 rect 영역 계산하기
             Rect Local_GetTooltipRect(in float width, in float height, in Vector2 mPos)
             {
                 float tooltipRectX = (mPos.x < ViewWidth - width) ? mPos.x + 10f : mPos.x - width;
@@ -471,10 +472,9 @@ namespace Rito.EditorUtilities
                 bool tooltipShowed = false;
 
                 // 1-1. 각 컨트롤 영역
-                for (int i = DebugTooltipList.Count - 1; i >= 0; i--)
+                for (int i = TooltipDebugRectList.Count - 1; i >= 0; i--)
                 {
-                    OverlayTooltip tooltip = DebugTooltipList[i];
-                    ref Rect curRect = ref tooltip.rect;
+                    Rect curRect = TooltipDebugRectList[i];
 
                     if (curRect.Contains(mPos))
                     {
@@ -482,7 +482,7 @@ namespace Rito.EditorUtilities
                         EditorGUI.DrawRect(curRect, TooltipDebugColor);
 
                         // [2] Tooltip Rect
-                        float tooltipRectWidth = 260f;
+                        float tooltipRectWidth = 270f;
                         float tooltipRectHeight = 60f;
                         Rect tooltipRect = Local_GetTooltipRect(tooltipRectWidth, tooltipRectHeight, mPos);
                         EditorGUI.DrawRect(tooltipRect, Color.black.SetA(0.8f));
@@ -614,12 +614,12 @@ namespace Rito.EditorUtilities
                 for (int i = TooltipList.Count - 1; i >= 0; i--)
                 {
                     OverlayTooltip tooltip = TooltipList[i];
-                    Rect rect = new Rect(mPos.x + 10f, mPos.y, tooltip.width, tooltip.height);
+                    Rect rect = Local_GetTooltipRect(tooltip.width, tooltip.height, mPos);
 
                     if (tooltip.rect.Contains(mPos))
                     {
                         EditorStyles.label.normal.textColor = tooltip.textColor;
-                        EditorGUI.DrawRect(rect, tooltip.bgColor);
+                        EditorGUI.DrawRect(rect, tooltip.backgroundColor);
                         EditorGUI.LabelField(rect, tooltip.text);
                         break;
                     }
@@ -628,7 +628,7 @@ namespace Rito.EditorUtilities
                 EditorStyles.label.alignment = oldAlign;
             }
 
-            DebugTooltipList.Clear();
+            TooltipDebugRectList.Clear();
             TooltipList.Clear();
         }
 

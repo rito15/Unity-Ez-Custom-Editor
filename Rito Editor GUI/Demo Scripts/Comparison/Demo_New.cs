@@ -52,8 +52,8 @@ namespace Rito.EditorUtilities.Demo
 
                 FoldoutHeaderBox.Blue
                     .SetData("Header Box", m.foldoutValue, boxOutlineWidth, 4f)
-                    //.DrawLayout(3, 2f)
-                    .Draw(20f, 64f).Margin(2f)//.Layout()
+                    .DrawLayout(3, 2f)
+                    //.Draw(20f, 64f).Layout()
                     .GetValue(out m.foldoutValue);
 
                 if (m.foldoutValue)
@@ -81,20 +81,7 @@ namespace Rito.EditorUtilities.Demo
 
                 RitoEditorGUI.Space(boxOutlineWidth);
 
-                RitoEditorGUI.Space(4f);
-
-                Box.Blue
-                    .SetData(2f)
-                    .Draw(40f)
-                    .Margin(4f)
-                    .SetTooltip("Tooltip", Color.blue, Color.red.SetA(0.8f));
-
-                Button.Red
-                    .SetData("Button")
-                    .Draw(32f)
-                    .Margin()
-                    .SetTooltip("Tooltip");
-
+               
 
                 RitoEditorGUI.Finalize(this);
             }
