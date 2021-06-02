@@ -28,6 +28,19 @@ namespace Rito.EditorUtilities
 
         public Color buttonColor = Color.white;
 
+        public override Button Clone()
+        {
+            return new Button
+            {
+                textColor = textColor,
+                pressedTextColor = pressedTextColor,
+                buttonColor = buttonColor,
+                textAlignment = textAlignment,
+                fontSize = fontSize,
+                fontStyle = fontStyle
+            };
+        }
+
         /***********************************************************************
         *                               Style Setters
         ***********************************************************************/
@@ -122,6 +135,20 @@ namespace Rito.EditorUtilities
         public Color pressedButtonColor = Color.white * 1.5f;
         public FontStyle pressedFontStyle = FontStyle.Bold;
 
+        public override ToggleButton Clone()
+        {
+            return new ToggleButton
+            {
+                fontSize = fontSize,
+                textAlignment = textAlignment,
+                normalTextColor = normalTextColor,
+                normalButtonColor = normalButtonColor,
+                normalFontStyle = normalFontStyle,
+                pressedTextColor = pressedTextColor,
+                pressedButtonColor = pressedButtonColor,
+                pressedFontStyle = pressedFontStyle
+            };
+        }
 
         /***********************************************************************
         *                               Style Setters

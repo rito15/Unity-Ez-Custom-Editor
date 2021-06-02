@@ -20,44 +20,50 @@ namespace Rito.EditorUtilities
         *                               Internal Class
         ***********************************************************************/
         #region .
-        public class _SettingBuilder
+        public class SettingBuilder
         {
-            public static _SettingBuilder Instance
+            public static SettingBuilder Instance
             {
                 // Init
                 get
                 {
-                    // Debugs
-                    RectDebugColor = Color.red;
-                    TooltipDebugColor = Color.red.SetA(0.7f);
-                    ShowRectDebugToggle = false;
-                    ShowTooltipDebugToggle = false;
-
-                    ShowTooltip = true;
-                    AlreadyFinalized = false;
-
-                    // Default Layout Values
-                    LayoutControlHeight = DefaultLayoutControlHeight;
-                    LayoutControlBottomMargin = DefaultLayoutControlBottomMargin;
-                    LayoutXLeft = 0f;
-                    LayoutXRight = 1f;
-                    LayoutXLeftOffset = 0f;
-                    LayoutXRightOffset = 0f;
-
-                    // Margins
-                    marginLeft   = DefaultMarginLeft;
-                    marginRight  = DefaultMarginRight;
-                    marginTop    = DefaultMarginTop;
-                    marginBottom = DefaultMarginBottom;
-
                     return instance;
                 }
             }
-            private static _SettingBuilder instance = new _SettingBuilder();
+            private static readonly SettingBuilder instance = new SettingBuilder();
 
-            private _SettingBuilder() { }
+            private SettingBuilder() { }
 
-            public _SettingBuilder SetMargins(
+            public SettingBuilder Reset()
+            {
+                // Debugs
+                RectDebugColor = Color.red;
+                TooltipDebugColor = Color.red.SetA(0.7f);
+                ShowRectDebugToggle = false;
+                ShowTooltipDebugToggle = false;
+
+                ShowTooltip = true;
+                AlreadyFinalized = false;
+                AlwaysKeepSameViewWidth = false;
+
+                // Default Layout Values
+                LayoutControlHeight = DefaultLayoutControlHeight;
+                LayoutControlBottomMargin = DefaultLayoutControlBottomMargin;
+                LayoutXLeft = 0f;
+                LayoutXRight = 1f;
+                LayoutXLeftOffset = 0f;
+                LayoutXRightOffset = 0f;
+
+                // Margins
+                marginLeft = DefaultMarginLeft;
+                marginRight = DefaultMarginRight;
+                marginTop = DefaultMarginTop;
+                marginBottom = DefaultMarginBottom;
+
+                return this;
+            }
+
+            public SettingBuilder SetMargins(
                 float left = DefaultMarginLeft, float right = DefaultMarginRight, 
                 float top = DefaultMarginTop, float bottom = DefaultMarginBottom)
             {
@@ -69,33 +75,33 @@ namespace Rito.EditorUtilities
             }
 
             /// <summary> 렉트 디버거 토글 생성 </summary>
-            public _SettingBuilder ActivateRectDebugger(bool value = true)
+            public SettingBuilder ActivateRectDebugger(bool value = true)
             {
                 REG.ShowRectDebugToggle = value;
                 return this;
             }
             /// <summary> 디버그 렉트 색상 설정 </summary>
-            public _SettingBuilder SetDebugRectColor(in Color color)
+            public SettingBuilder SetDebugRectColor(in Color color)
             {
                 REG.RectDebugColor = color;
                 return this;
             }
 
             /// <summary> 툴팁 디버거 토글 생성 </summary>
-            public _SettingBuilder ActivateTooltipDebugger(bool value = true)
+            public SettingBuilder ActivateTooltipDebugger(bool value = true)
             {
                 REG.ShowTooltipDebugToggle = value;
                 return this;
             }
             /// <summary> 디버그 렉트 색상 설정 </summary>
-            public _SettingBuilder SetDebugTooltipColor(in Color color)
+            public SettingBuilder SetDebugTooltipColor(in Color color)
             {
                 REG.TooltipDebugColor = color;
                 return this;
             }
 
             /// <summary> 레이아웃 요소의 기본 높이, 하단 여백 설정 </summary>
-            public _SettingBuilder SetLayoutControlHeight(float height = DefaultLayoutControlHeight, 
+            public SettingBuilder SetLayoutControlHeight(float height = DefaultLayoutControlHeight, 
                 float bottomMargin = DefaultLayoutControlBottomMargin)
             {
                 if(height < 0f) height = 0f;
@@ -107,7 +113,7 @@ namespace Rito.EditorUtilities
                 return this;
             }
             /// <summary> 레이아웃 요소의 X 좌표 비율, 오프셋 설정 </summary>
-            public _SettingBuilder SetLayoutControlXPositions(float xLeft = 0f, float xRight = 1f,
+            public SettingBuilder SetLayoutControlXPositions(float xLeft = 0f, float xRight = 1f,
                 float xLeftOffset = 0f, float xRightOffset = 0f)
             {
                 LayoutXLeft = xLeft;
@@ -117,13 +123,19 @@ namespace Rito.EditorUtilities
 
                 return this;
             }
-            public _SettingBuilder AllowTooltip(bool value = true)
+            public SettingBuilder AllowTooltip(bool value = true)
             {
                 ShowTooltip = value;
                 return this;
             }
+            /// <summary> 에디터 우측 슬라이더 존재유무에 관계 없이 판정 너비 고정하기 </summary>
+            public SettingBuilder KeepSameViewWidth(bool value = true)
+            {
+                AlwaysKeepSameViewWidth = value;
+                return this;
+            }
             /// <summary> 에디터의 배경 색상 지정 </summary>
-            public _SettingBuilder SetEditorBackgroundColor(in Color color)
+            public SettingBuilder SetEditorBackgroundColor(in Color color)
             {
                 if (ErrorOccured) return this;
 
@@ -134,6 +146,9 @@ namespace Rito.EditorUtilities
 
             public void Init()
             {
+                if (AlreadyInitiated)
+                    return;
+
                 REG.CurrentY = 0f;
 
                 // Finalize() 여부 검사
@@ -150,26 +165,19 @@ namespace Rito.EditorUtilities
                     return;
                 }
 
-                // Init() 중복 여부 검사
-                if (AlreadyInitiated)
-                {
-                    errorType = ErrorType.AlreadyInitiated;
-                    ErrorOccured = true;
-                    ShowErrorHelpbox();
-                    return;
-                }
-                else
-                {
-                    ErrorOccured = false;
-                }
-
-
                 // 인스펙터 상단부에 디버그 On/Off 토글 생성
                 DrawDebuggerToggles();
 
                 // -------------------------------------------------------------------------------------
+
+                // 우측 슬라이더 존재 유무에 따라 유동적인 너비 설정
+                EditorGUILayout.Space(0f);
+                float flexibleViewWidth = GUILayoutUtility.GetLastRect().width + 23f;
+
                 REG.ViewWidth =
-                    EditorGUIUtility.currentViewWidth
+                    (AlwaysKeepSameViewWidth ?
+                        EditorGUIUtility.currentViewWidth :
+                        flexibleViewWidth)
                     - marginLeft
                     - marginRight;
 
@@ -230,13 +238,13 @@ namespace Rito.EditorUtilities
         private static float marginRight;
         private static float marginBottom;
 
-        private const float DefaultMarginTop = 4f;
-        private const float DefaultMarginLeft = 20f;
-        private const float DefaultMarginRight = 20f;
+        private const float DefaultMarginTop = 8f;
+        private const float DefaultMarginLeft = 18f;
+        private const float DefaultMarginRight = 8f;
         private const float DefaultMarginBottom = 0f;
 
         /// <summary> OnInspectorGUI 최상단에서 .Init()까지 호출 </summary>
-        public static _SettingBuilder Settings => _SettingBuilder.Instance;
+        public static SettingBuilder Settings => SettingBuilder.Instance;
 
         /// <summary> 현재 커서(Y 좌표) 위치 </summary>
         public static float CurrentY { get; private set; }
@@ -256,6 +264,9 @@ namespace Rito.EditorUtilities
         public static List<Rect> TooltipDebugRectList { get; } = new List<Rect>();
 
         //--
+
+        /// <summary> 슬라이더 존재유무 관계 없이 항상 너비 고정하기 </summary>
+        private static bool AlwaysKeepSameViewWidth { get; set; }
 
         /// <summary> 에디터 전체 영역 높이 </summary>
         private static float EditorTotalHeight { get; set; }
@@ -453,7 +464,7 @@ namespace Rito.EditorUtilities
             // 화면을 넘어가지 않는 rect 영역 계산하기
             Rect Local_GetTooltipRect(in float width, in float height, in Vector2 mPos)
             {
-                float tooltipRectX = (mPos.x < ViewWidth - width) ? mPos.x + 10f : mPos.x - width;
+                float tooltipRectX = (mPos.x < ViewWidth * 0.5f) ? mPos.x + 10f : mPos.x - width;
                 float tooltipRectY = (mPos.y < CurrentY - height) ? mPos.y : mPos.y - height;
                 return new Rect(tooltipRectX, tooltipRectY, width, height);
             }

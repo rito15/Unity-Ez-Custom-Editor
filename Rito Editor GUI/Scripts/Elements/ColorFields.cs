@@ -29,6 +29,18 @@ namespace Rito.EditorUtilities
         // Styles - Color Picker
         public Color colorPickerColor = Color.white;
 
+        public override ColorField Clone()
+        {
+            return new ColorField
+            {
+                labelColor = labelColor,
+                labelFontSize = labelFontSize,
+                labelFontStyle = labelFontStyle,
+                labelAlignment = labelAlignment,
+                colorPickerColor = colorPickerColor,
+            };
+        }
+
         /***********************************************************************
         *                               Style Setters
         ***********************************************************************/
@@ -116,6 +128,14 @@ namespace Rito.EditorUtilities
 
         // Styles - Color Picker
         public Color colorPickerColor = Color.white;
+
+        public override ColorPicker Clone()
+        {
+            return new ColorPicker
+            {
+                colorPickerColor = colorPickerColor
+            };
+        }
 
         public ColorPicker SetData(Color value)
         {

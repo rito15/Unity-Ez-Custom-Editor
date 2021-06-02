@@ -24,6 +24,15 @@ namespace Rito.EditorUtilities
         public Color color = Color.gray.SetA(0.5f);
         public Color outlineColor = Color.black;
 
+        public override Box Clone()
+        {
+            return new Box
+            {
+                color = color,
+                outlineColor = outlineColor
+            };
+        }
+
         /***********************************************************************
         *                               Style Setters
         ***********************************************************************/

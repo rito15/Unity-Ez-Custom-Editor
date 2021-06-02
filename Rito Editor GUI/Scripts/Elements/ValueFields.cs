@@ -36,6 +36,23 @@ namespace Rito.EditorUtilities
         public FontStyle inputFontStyle = FontStyle.Normal;
         public TextAnchor inputTextAlignment = TextAnchor.MiddleLeft;
 
+        public override R Clone()
+        {
+            return new R
+            {
+                labelColor = labelColor,
+                labelFontSize = labelFontSize,
+                labelFontStyle = labelFontStyle,
+                labelAlignment = labelAlignment,
+                inputTextColor = inputTextColor,
+                inputTextFocusedColor = inputTextFocusedColor,
+                inputBackgroundColor = inputBackgroundColor,
+                inputFontSize = inputFontSize,
+                inputFontStyle = inputFontStyle,
+                inputTextAlignment = inputTextAlignment
+            };
+        }
+
         /***********************************************************************
         *                               Style Setters
         ***********************************************************************/

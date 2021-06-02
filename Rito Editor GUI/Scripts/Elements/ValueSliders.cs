@@ -32,6 +32,19 @@ namespace Rito.EditorUtilities
         public Color sliderColor = Color.white;
         public Color inputTextColor = Color.white;
 
+        public override R Clone()
+        {
+            return new R
+            {
+                labelFontSize = labelFontSize,
+                labelColor = labelColor,
+                labelFontStyle = labelFontStyle,
+                labelAlignment = labelAlignment,
+                sliderColor = sliderColor,
+                inputTextColor = inputTextColor,
+            };
+        }
+
         /***********************************************************************
         *                               Style Setters
         ***********************************************************************/

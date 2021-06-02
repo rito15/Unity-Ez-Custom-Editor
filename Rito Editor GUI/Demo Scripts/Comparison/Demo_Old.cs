@@ -18,13 +18,15 @@ namespace Rito.EditorUtilities.Demo
         {
             private bool foldout = true;
 
+            private float floatVariable;
+
             public override void OnInspectorGUI()
             {
                 RitoEditorGUI.Settings
                     .SetMargins(top: 48f, bottom: 46f)
                     .SetLayoutControlXPositions(0.01f, 0.985f)
                     .ActivateRectDebugger()
-                    .ActivateTooltipDebugger()
+                    //.ActivateTooltipDebugger()
                     .Init();
 
                 FoldoutHeaderBox.Brown
@@ -42,6 +44,14 @@ namespace Rito.EditorUtilities.Demo
                         .SetData("Float Field", 123f)
                         .DrawLayout();
                 }
+
+                floatVariable = EditorGUILayout.FloatField("Float Field", floatVariable);
+
+                floatVariable = 
+                    FloatField.Brown
+                        .SetData("Float FIeld", floatVariable)
+                        .DrawLayout()
+                        .GetValue();
 
                 RitoEditorGUI.Finalize(this);
             }

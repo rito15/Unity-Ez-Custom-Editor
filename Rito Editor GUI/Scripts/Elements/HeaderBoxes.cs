@@ -37,6 +37,20 @@ namespace Rito.EditorUtilities
         public Color contentColor = Color.gray.SetA(0.5f);
         public Color outlineColor = Color.black;
 
+        public override R Clone()
+        {
+            return new R
+            {
+                headerTextColor = headerTextColor,
+                headerFontSize = headerFontSize,
+                headerFontStyle = headerFontStyle,
+                headerTextAlignment = headerTextAlignment,
+                headerColor = headerColor,
+                contentColor = contentColor,
+                outlineColor = outlineColor,
+            };
+        }
+
         /***********************************************************************
         *                               Style Setters
         ***********************************************************************/
@@ -240,6 +254,13 @@ namespace Rito.EditorUtilities
         protected bool foldout; // true : 펼쳐짐
 
         protected Color headerHoverColor = RColor.Gray7;
+
+        public override FoldoutHeaderBox Clone()
+        {
+            FoldoutHeaderBox newBox = base.Clone();
+            newBox.headerHoverColor = this.headerHoverColor;
+            return newBox;
+        }
 
         /***********************************************************************
         *                               Style Setters

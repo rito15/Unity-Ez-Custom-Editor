@@ -42,7 +42,9 @@ namespace Rito.EditorUtilities.Demo
             public override void OnInspectorGUI()
             {
                 RitoEditorGUI.Settings
-                    .SetMargins(top : 8f, bottom : 6f)
+                    .Reset()
+                    //.SetMargins(top : 8f, bottom : 6f)
+                    .KeepSameViewWidth()
                     .SetLayoutControlXPositions(0.01f, 0.985f)
                     .ActivateRectDebugger()
                     .ActivateTooltipDebugger()
@@ -79,9 +81,6 @@ namespace Rito.EditorUtilities.Demo
                         .GetValue(out m.toggleButtonValue);
                 }
 
-                RitoEditorGUI.Space(boxOutlineWidth);
-
-               
 
                 RitoEditorGUI.Finalize(this);
             }

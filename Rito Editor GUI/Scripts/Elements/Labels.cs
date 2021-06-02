@@ -27,6 +27,17 @@ namespace Rito.EditorUtilities
         public int fontSize = 12;
         public FontStyle fontStyle = FontStyle.Normal;
 
+        public override R Clone()
+        {
+            return new R
+            {
+                textColor = textColor,
+                textAlignment = textAlignment,
+                fontSize = fontSize,
+                fontStyle = fontStyle,
+            };
+        }
+
         /***********************************************************************
         *                               Style Setters
         ***********************************************************************/

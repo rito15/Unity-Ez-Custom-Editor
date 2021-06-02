@@ -26,6 +26,18 @@ namespace Rito.EditorUtilities
         public FontStyle fontStyle = FontStyle.Normal;
         public TextAnchor textAlignment = TextAnchor.MiddleLeft;
 
+        public override HelpBox Clone()
+        {
+            return new HelpBox
+            {
+                textColor = textColor,
+                backgroundColor = backgroundColor,
+                fontSize = fontSize,
+                fontStyle = fontStyle,
+                textAlignment = textAlignment,
+            };
+        }
+
         /***********************************************************************
         *                               Style Setters
         ***********************************************************************/

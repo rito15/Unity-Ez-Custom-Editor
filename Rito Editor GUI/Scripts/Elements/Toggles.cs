@@ -30,6 +30,18 @@ namespace Rito.EditorUtilities
         // Styles - Toggle
         public Color toggleColor = Color.white;
 
+        public override BoolField Clone()
+        {
+            return new BoolField
+            {
+                labelColor = labelColor,
+                labelFontSize = labelFontSize,
+                labelFontStyle = labelFontStyle,
+                labelAlignment = labelAlignment,
+                toggleColor = toggleColor
+            };
+        }
+
         /***********************************************************************
         *                               Style Setters
         ***********************************************************************/
@@ -116,6 +128,14 @@ namespace Rito.EditorUtilities
 
         // Style
         public Color color = Color.white;
+
+        public override Toggle Clone()
+        {
+            return new Toggle
+            {
+                color = color
+            };
+        }
 
         /***********************************************************************
         *                               Style Setters

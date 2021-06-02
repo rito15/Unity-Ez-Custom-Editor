@@ -28,6 +28,18 @@ namespace Rito.EditorUtilities
         public FontStyle inputFontStyle = FontStyle.Normal;
         public TextAnchor inputTextAlignment = TextAnchor.MiddleLeft;
 
+        public override TextArea Clone()
+        {
+            return new TextArea
+            {
+                inputTextColor = inputTextColor,
+                inputBackgroundColor = inputBackgroundColor,
+                inputFontSize = inputFontSize,
+                inputFontStyle = inputFontStyle,
+                inputTextAlignment = inputTextAlignment
+            };
+        }
+
         /***********************************************************************
         *                               Style Setters
         ***********************************************************************/

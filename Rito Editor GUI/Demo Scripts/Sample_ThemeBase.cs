@@ -73,6 +73,8 @@ namespace Rito.EditorUtilities.Demo
 
         public override void OnInspectorGUI()
         {
+            RGUI.Settings.Reset();
+
             if (SetEditorBakgroundColor)
             {
                 RGUI.Settings
@@ -80,7 +82,7 @@ namespace Rito.EditorUtilities.Demo
             }
 
             RGUI.Settings
-                .SetMargins(top: 12f, left: 12f, right: 20f, bottom: 16f)
+                //.SetMargins(top: 12f, left: 12f, right: 20f, bottom: 16f)
                 .ActivateRectDebugger()
                 .ActivateTooltipDebugger()
                 .Init();

@@ -57,12 +57,23 @@ namespace Rito.EditorUtilities
 
     public abstract class GUIElement<R> where R : GUIElement<R>
     {
+        /***********************************************************************
+        *                               Fields
+        ***********************************************************************/
+        #region .
+
         protected Rect rect;
         protected bool isLastLayout = false; // 마지막으로 그린 요소가 레이아웃 요소였는지 여부
 
         private OverlayTooltip tooltip;
         private bool tooltipFlag = false; // 툴팁 등록 여부 설정
         private bool tooltipDebugAllowed = true; // 디버그 허용 여부
+
+        #endregion
+        /***********************************************************************
+        *                               Public Methods
+        ***********************************************************************/
+        #region .
 
         /// <summary> 마지막으로 그린 Rect 가져오기 </summary>
         public Rect GetLastRect()
@@ -124,6 +135,15 @@ namespace Rito.EditorUtilities
             tooltipDebugAllowed = false;
             return this as R;
         }
+
+        /// <summary> 스타일 그대로 동일하게 복제한 객체 생성 </summary>
+        public abstract R Clone();
+
+        #endregion
+        /***********************************************************************
+        *                           Protected Methods
+        ***********************************************************************/
+        #region .
 
         protected bool CheckDrawErrors()
         {
@@ -203,8 +223,10 @@ namespace Rito.EditorUtilities
         {
             rect = REG.GetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
         }
+
+        #endregion
     }
-    
+
 }
 
 #endif
