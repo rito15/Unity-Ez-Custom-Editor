@@ -145,6 +145,7 @@ namespace Rito.EditorUtilities
 
             GUI.backgroundColor = oldBackgroundColor;
 
+            CheckDebugs();
             EndDraw();
             return this as R;
         }

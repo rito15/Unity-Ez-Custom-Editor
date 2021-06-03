@@ -28,9 +28,10 @@ namespace Rito.EditorUtilities.Demo
             protected override void OnSetup(RitoEditorGUI.Setting setting)
             {
                 setting
+                    .SetMargins(bottom: 12f)
                     //.KeepSameViewWidth()
                     //.SetEditorBackgroundColor(Color.white.SetA(0.2f))
-                    .SetLayoutControlXPositions(0.01f, 0.985f)
+                    .SetLayoutControlWidth(0.01f, 0.985f)
                     .ActivateRectDebugger()
                     .ActivateTooltipDebugger();
             }
@@ -42,7 +43,6 @@ namespace Rito.EditorUtilities.Demo
                 FoldoutHeaderBox.Blue
                     .SetData("Header Box", m.foldoutValue, boxOutlineWidth, 4f)
                     .DrawLayout(3, 2f)
-                    .SetTooltip("Header Box")
                     //.Draw(20f, 64f).Layout()
                     .GetValue(out m.foldoutValue);
 
@@ -50,12 +50,10 @@ namespace Rito.EditorUtilities.Demo
                 {
                     StringField.Violet
                         .SetData("String Field", m.stringValue, "Placeholder")
-                    .SetTooltip("String Field")
                         .DrawLayout().GetValue(out m.stringValue);
 
                     Dropdown<float>.Purple
                         .SetData("Float Dropdown", m.floatArray, m.floatSelected)
-                    .SetTooltip("Dropdown")
                         .DrawLayout().GetValue(out m.floatSelected);
 
                     // Button & ToggleButton
@@ -63,12 +61,10 @@ namespace Rito.EditorUtilities.Demo
 
                     Button.Blue
                         .SetData("Button")
-                    .SetTooltip("Button")
                         .Draw(0.01f, buttonRatio, 20f);
 
                     ToggleButton.Blue
                         .SetData("Toggle Button", m.toggleButtonValue)
-                    .SetTooltip("ToggleButton")
                         .Draw(buttonRatio + 0.01f, 0.985f, 20f).Layout()
                         .GetValue(out m.toggleButtonValue);
                 }

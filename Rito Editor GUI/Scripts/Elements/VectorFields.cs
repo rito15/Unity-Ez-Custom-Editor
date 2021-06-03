@@ -59,6 +59,7 @@ namespace Rito.EditorUtilities
             EditorStyles.numberField.fontStyle = oldFontStyle;
             EditorStyles.numberField.alignment = oldTextAlign;
 
+            CheckDebugs();
             EndDraw();
             return this as R;
         }

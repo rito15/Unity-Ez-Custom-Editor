@@ -90,8 +90,8 @@ namespace Rito.EditorUtilities
 
             DrawLabel(rect, text, style);
 
+            CheckDebugs();
             EndDraw();
-
             return this as R;
         }
 

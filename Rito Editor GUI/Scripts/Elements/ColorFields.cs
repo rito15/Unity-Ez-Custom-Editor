@@ -118,6 +118,7 @@ namespace Rito.EditorUtilities
 
             GUI.color = oldColor;
 
+            CheckDebugs();
             EndDraw();
             return this;
         }
@@ -157,6 +158,7 @@ namespace Rito.EditorUtilities
 
             GUI.color = oldColor;
 
+            CheckDebugs();
             EndDraw();
             return this;
         }

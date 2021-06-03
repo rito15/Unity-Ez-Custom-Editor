@@ -90,6 +90,7 @@ namespace Rito.EditorUtilities
             }
             EditorGUI.DrawRect(rect, color);
 
+            CheckDebugs();
             EndDraw();
             return this;
         }

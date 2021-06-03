@@ -67,7 +67,7 @@ namespace Rito.EditorUtilities
 
         private OverlayTooltip tooltip;
         private bool tooltipFlag = false; // 툴팁 등록 여부 설정
-        private bool tooltipDebugAllowed = true; // 디버그 허용 여부
+        private bool debugAllowed = true; // 디버그 허용 여부
 
         #endregion
         /***********************************************************************
@@ -129,10 +129,10 @@ namespace Rito.EditorUtilities
             return Margin(REG.LayoutControlBottomMargin);
         }
 
-        /// <summary> 툴팁 디버그에서 제외하기 </summary>
+        /// <summary> 디버그에서 제외하기 </summary>
         public R ExcludeFromDebug()
         {
-            tooltipDebugAllowed = false;
+            debugAllowed = false;
             return this as R;
         }
 
@@ -151,12 +151,9 @@ namespace Rito.EditorUtilities
         }
 
         /// <summary> Rect 위치 가시화하여 보여주기 </summary>
-        protected void DebugRect(in Color color = default, in float border = 1f)
+        protected void CheckDebugRect(Color color = default, in float border = 1f)
         {
-            DebugRect(this.rect, color, border);
-        }
-        protected void DebugRect(in Rect rect, Color color = default, in float border = 1f)
-        {
+            if(!debugAllowed) return;
             if(!REG.RectDebugActivated) return;
             if(rect == default) return;
             if(color == default) color = REG.RectDebugColor;
@@ -180,13 +177,13 @@ namespace Rito.EditorUtilities
         /// <summary> 툴팁, 툴팁 디버그 등록 여부 확인 및 요청 </summary>
         protected void CheckTooltip()
         {
-            CheckTooltip(this.rect);
+            CheckTooltipDebug(this.rect);
         }
-        protected void CheckTooltip(in Rect rect)
+        protected void CheckTooltipDebug(in Rect rect)
         {
             if (REG.TooltipDebugActivated)
             {
-                if (tooltipDebugAllowed)
+                if (debugAllowed)
                 {
                     REG.TooltipDebugRectList.Add(rect);
                 }
@@ -200,16 +197,19 @@ namespace Rito.EditorUtilities
                     REG.TooltipList.Add(tooltip.Clone(rect));
                 }
             }
-
-            tooltipDebugAllowed = true;
         }
 
-        /// <summary> Draw() 마무리 </summary>
-        protected void EndDraw()
+        /// <summary> Draw() 하단에서 호출 - 디버거 두가지 확인 </summary>
+        protected void CheckDebugs()
         {
             CheckTooltip();
-            if (REG.RectDebugActivated)
-                DebugRect();
+            CheckDebugRect();
+        }
+
+        /// <summary> Draw() 최하단에서 호출 </summary>
+        protected void EndDraw()
+        {
+            debugAllowed = true;
             isLastLayout = false;
         }
 

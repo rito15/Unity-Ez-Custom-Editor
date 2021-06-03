@@ -234,16 +234,12 @@ namespace Rito.EditorUtilities
             EditorGUI.LabelField(headerTextRect, headerText, headerStyle);
 
             // Debug
-            CheckTooltip(rect);
-            CheckTooltip(headerRect);
-            CheckTooltip(contentRect);
+            CheckTooltipDebug(rect);
+            CheckTooltipDebug(headerRect);
+            CheckTooltipDebug(contentRect);
+            CheckDebugRect();
 
-            if (REG.RectDebugActivated)
-            {
-                DebugRect();
-            }
-            isLastLayout = false;
-
+            EndDraw();
             return this;
         }
     }
@@ -357,34 +353,32 @@ namespace Rito.EditorUtilities
 
             GUI.backgroundColor = oldBG;
 
-            // Header Box
+            // Draw Header Box
             bool mouseOver = headerRect.Contains(Event.current.mousePosition);
             EditorGUI.DrawRect(headerRect, !mouseOver ? headerColor : headerHoverColor);
 
-            // Header Label
+            // Draw Header Label
             EditorGUI.LabelField(headerTextRect, headerText, headerStyle);
 
 
             if (foldout)
             {
-                // Content Box
+                // Draw Content Box
                 Rect contentRect = new Rect(x, y + hh + o, w, ch);
                 EditorGUI.DrawRect(contentRect, contentColor);
 
-                CheckTooltip(rect);
-                CheckTooltip(contentRect);
+                CheckTooltipDebug(rect);
+                CheckTooltipDebug(contentRect);
             }
-
-            // Debug
-            CheckTooltip(headerRect);
-
-            if (REG.RectDebugActivated)
+            else
             {
-                if (!foldout)
-                    rect = headerRect;
-                DebugRect();
+                rect = headerRect;
             }
-            isLastLayout = false;
+
+            CheckTooltipDebug(headerRect);
+            CheckDebugRect();
+
+            EndDraw();
             return this;
         }
 

@@ -71,6 +71,7 @@ namespace Rito.EditorUtilities
             EditorStyles.objectField.fontStyle = oldFontStyle;
             EditorStyles.objectField.alignment = oldTextAlign;
 
+            CheckDebugs();
             EndDraw();
             return this;
         }

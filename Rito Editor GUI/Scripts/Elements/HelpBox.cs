@@ -106,6 +106,7 @@ namespace Rito.EditorUtilities
             helpBoxStyle.fontStyle = oldFontStyle;
             helpBoxStyle.alignment = oldAlignment;
 
+            CheckDebugs();
             EndDraw();
             return this;
         }

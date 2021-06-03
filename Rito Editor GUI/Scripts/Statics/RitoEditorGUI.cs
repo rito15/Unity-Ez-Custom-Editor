@@ -75,8 +75,8 @@ namespace Rito.EditorUtilities
 
                 return this;
             }
-            /// <summary> 레이아웃 요소의 X 좌표 비율, 오프셋 설정 </summary>
-            public Setting SetLayoutControlXPositions(float xLeft = 0f, float xRight = 1f,
+            /// <summary> 레이아웃 요소의 X 좌표 비율, 오프셋을 통한 너비 설정 </summary>
+            public Setting SetLayoutControlWidth(float xLeft = 0f, float xRight = 1f,
                 float xLeftOffset = 0f, float xRightOffset = 0f)
             {
                 LayoutXLeft = xLeft;
@@ -163,6 +163,7 @@ namespace Rito.EditorUtilities
                 // 우측 스크롤바 존재 유무에 따라 유동적인 너비 설정
                 EditorGUILayout.Space(0f);
                 float flexibleViewWidth = GUILayoutUtility.GetLastRect().width + 23f;
+                flexibleViewWidth = Mathf.Min(flexibleViewWidth, EditorGUIUtility.currentViewWidth);
 
                 REG.ViewWidth =
                     (AlwaysKeepSameViewWidth ?
@@ -217,7 +218,7 @@ namespace Rito.EditorUtilities
                 }
             }
 
-            private static void Finish(Editor editor)
+            private static void Finish(object editor)
             {
                 if (AlreadyFinalized) return;
 
@@ -249,7 +250,16 @@ namespace Rito.EditorUtilities
                 ShowTooltips(editor);
 
                 // 에디터 전체 높이 계산
-                EditorTotalHeight = CurrentY + EditorDefaultMarginBottom;
+                // 1. 에디터 윈도우
+                if (editor is EditorWindow ew)
+                {
+                    EditorTotalHeight = ew.position.height;
+                }
+                // 2. 커스텀 에디터
+                else
+                {
+                    EditorTotalHeight = CurrentY + EditorDefaultMarginBottom;
+                }
 
                 AlreadyFinalized = true;
             }
@@ -448,11 +458,14 @@ namespace Rito.EditorUtilities
 
         private static void ShowTooltips(object editor)
         {
+            Vector2 mPos = Event.current.mousePosition;
+            bool editorIsWindow = editor is EditorWindow;
+
             // 화면을 넘어가지 않는 rect 영역 계산하기
-            Rect Local_GetTooltipRect(in float width, in float height, in Vector2 mPos)
+            Rect Local_GetTooltipRect(in float width, in float height)
             {
-                float tooltipRectX = (mPos.x < ViewWidth * 0.5f) ? mPos.x + 10f : mPos.x - width;
-                float tooltipRectY = (mPos.y < CurrentY - height) ? mPos.y : mPos.y - height;
+                float tooltipRectX = (mPos.x < ViewWidth - width) ? mPos.x + 10f : mPos.x - width;
+                float tooltipRectY = (mPos.y < EditorTotalHeight - height) ? mPos.y : mPos.y - height;
                 return new Rect(tooltipRectX, tooltipRectY, width, height);
             }
             void Local_Repaint()
@@ -468,16 +481,58 @@ namespace Rito.EditorUtilities
                 }
             }
 
-            // 1. 툴팁 디버거
+            // 여백 영역 계산
+            float yMin = 0f;
+            if (ShowRectDebugToggle) yMin += DebugToggleHeight;
+            if (ShowTooltipDebugToggle) yMin += DebugToggleHeight;
+
+            float fullWidth = ViewWidth + marginLeft + marginRight;
+            float fullHeight = EditorTotalHeight - yMin;
+
+            Rect[] marginRects = new Rect[]
+            {
+                // Top
+                new Rect(0f, yMin, fullWidth, marginTop),
+                // Left
+                new Rect(0f, yMin, marginLeft, fullHeight), 
+                // Right
+                new Rect(marginLeft + ViewWidth, yMin, marginRight, fullHeight),
+                
+                // Bottom
+                new Rect(0f, CurrentY - marginBottom, fullWidth, marginBottom), 
+                // Bottom : Inspector Default Margin
+                new Rect(0f, CurrentY, fullWidth, EditorDefaultMarginBottom),
+            };
+
+            string[] tooltipStrings = new string[]
+            {
+                $"Margin Top : {marginTop} ({0f} ~ {marginTop})",
+                $"Margin Left : {marginLeft} ({0f} ~ {marginLeft})",
+                $"Margin Right : {marginRight} ({fullWidth - marginRight} ~ {fullWidth})",
+
+                $"Margin Bottom : {marginBottom} ({CurrentY - marginBottom - yMin} ~ {CurrentY - yMin})",
+                $"Default Margin : {EditorDefaultMarginBottom} ({CurrentY - yMin} ~ {CurrentY + EditorDefaultMarginBottom - yMin})",
+            };
+
+            int marginCount = editorIsWindow ? 3 : 5;
+
+            // 1. 렉트 디버거 - 여백 영역 표시
+            if (RectDebugActivated)
+            {
+                for (int i = 0; i < marginCount; i++)
+                {
+                    EditorGUI.DrawRect(marginRects[i], RectDebugColor.SetA(0.2f));
+                }
+            }
+
+            // 2. 툴팁 디버거
             if (TooltipDebugActivated)
             {
                 Local_Repaint();
 
-                Vector2 mPos = Event.current.mousePosition;
-
                 bool tooltipShowed = false;
 
-                // 1-1. 각 컨트롤 영역
+                // 2-1. 각 컨트롤 영역
                 for (int i = TooltipDebugRectList.Count - 1; i >= 0; i--)
                 {
                     Rect curRect = TooltipDebugRectList[i];
@@ -490,12 +545,16 @@ namespace Rito.EditorUtilities
                         // [2] Tooltip Rect
                         float tooltipRectWidth = 270f;
                         float tooltipRectHeight = 60f;
-                        Rect tooltipRect = Local_GetTooltipRect(tooltipRectWidth, tooltipRectHeight, mPos);
+                        Rect tooltipRect = Local_GetTooltipRect(tooltipRectWidth, tooltipRectHeight);
                         EditorGUI.DrawRect(tooltipRect, Color.black.SetA(0.8f));
 
                         // [2] Tooltip Rect : Label
                         float debugY = curRect.y;
-                        float viewHeight = EditorTotalHeight - marginTop - marginBottom - EditorDefaultMarginBottom;
+                        float viewHeight = EditorTotalHeight - marginTop;
+
+                        if(!editorIsWindow)
+                            viewHeight -= (marginBottom + EditorDefaultMarginBottom);
+
                         if (ShowRectDebugToggle)
                         {
                             debugY -= DebugToggleHeight;
@@ -520,14 +579,6 @@ namespace Rito.EditorUtilities
                             $"yMin : {debugY} ({yTop:F3})\n" +
                             $"yMax : {debugY + curRect.height} ({yBottom:F3})\n" +
                             $"Height : {curRect.height} ({(yBottom - yTop):F3})";
-                        //string debugInfoLeft =
-                        //    $"xMin : {curRect.x}\n" +
-                        //    $"xMax : {curRect.x + curRect.width}\n" +
-                        //    $"Width : {curRect.width}";
-                        //string debugInfoRight =
-                        //    $"yMin : {debugY}\n" +
-                        //    $"yMax : {debugY + curRect.height}\n" +
-                        //    $"Height : {curRect.height}";
 
                         tooltipRect.x += 10f;
                         Rect leftRect = new Rect(tooltipRect);
@@ -544,50 +595,16 @@ namespace Rito.EditorUtilities
                     }
                 }
 
-                // 1-2. 여백
+                // 2-2. 여백
                 if (!tooltipShowed)
                 {
-                    float yMin = 0f;
-                    if (ShowRectDebugToggle) yMin += DebugToggleHeight;
-                    if (ShowTooltipDebugToggle) yMin += DebugToggleHeight;
-
-                    float fullWidth = ViewWidth + marginLeft + marginRight;
-                    float fullHeight = CurrentY - yMin;
-
-                    Rect[] marginRects = new Rect[]
-                    {
-                        // Top
-                        new Rect(0f, yMin, fullWidth, marginTop),
-                        // Bottom
-                        new Rect(0f, CurrentY - marginBottom, fullWidth, marginBottom), 
-
-                        // Left
-                        new Rect(0f, yMin, marginLeft, fullHeight), 
-                        // Right
-                        new Rect(marginLeft + ViewWidth, yMin, marginRight, fullHeight),
-
-                        // Bottom : Inspector Default Margin
-                        new Rect(0f, CurrentY, fullWidth, EditorDefaultMarginBottom),
-                    };
-
-                    string[] tooltipStrings = new string[]
-                    {
-                        $"Margin Top : {marginTop} ({0f} ~ {marginTop})",
-                        $"Margin Bottom : {marginBottom} ({CurrentY - marginBottom - yMin} ~ {CurrentY - yMin})",
-
-                        $"Margin Left : {marginLeft} ({0f} ~ {marginLeft})",
-                        $"Margin Right : {marginRight} ({fullWidth - marginRight} ~ {fullWidth})",
-
-                        $"Default Margin : {EditorDefaultMarginBottom} ({CurrentY - yMin} ~ {CurrentY + EditorDefaultMarginBottom - yMin})",
-                    };
-
-                    for (int i = 0; i < marginRects.Length; i++)
+                    for (int i = 0; i < marginCount; i++)
                     {
                         if (marginRects[i].Contains(mPos))
                         {
                             EditorGUI.DrawRect(marginRects[i], TooltipDebugColor);
 
-                            Rect tooltipRect = Local_GetTooltipRect(200f, 25f, mPos);
+                            Rect tooltipRect = Local_GetTooltipRect(200f, 25f);
                             EditorGUI.DrawRect(tooltipRect, Color.black.SetA(0.8f));
 
                             var oldAlign = EditorStyles.label.alignment;
@@ -601,12 +618,10 @@ namespace Rito.EditorUtilities
                     }
                 }
             }
-            // 2. 툴팁 기능
+            // 3. 툴팁 기능
             else if (ShowTooltip)
             {
                 Local_Repaint();
-
-                Vector2 mPos = Event.current.mousePosition;
 
                 var oldTextColor = EditorStyles.label.normal.textColor;
                 var oldAlign = EditorStyles.label.alignment;
@@ -616,7 +631,7 @@ namespace Rito.EditorUtilities
                 for (int i = TooltipList.Count - 1; i >= 0; i--)
                 {
                     OverlayTooltip tooltip = TooltipList[i];
-                    Rect rect = Local_GetTooltipRect(tooltip.width, tooltip.height, mPos);
+                    Rect rect = Local_GetTooltipRect(tooltip.width, tooltip.height);
 
                     if (tooltip.rect.Contains(mPos))
                     {
