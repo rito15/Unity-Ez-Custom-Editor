@@ -332,8 +332,6 @@ namespace Rito.EditorUtilities.Demo
                     Label.Default
                         .SetData("Content 2")
                         .DrawLayout().GetValue();
-
-                    Label.Default.SetTooltip("Label Tooltip", 100f, 20f);
                 }
                 b++;
 
@@ -394,11 +392,13 @@ namespace Rito.EditorUtilities.Demo
                     Debug.Log(selected);
 
                 EnumDropdown<CursorLockMode>.Default
-                    .SetData("Enum Dropdown", cursorLockMode)
+                    .SetData("Enum<T> Dropdown", cursorLockMode)
+                    .SetTooltip("Enum<T> Dropdown", 120f)
                     .DrawLayout().GetValue(out cursorLockMode);
 
                 EnumDropdown.Default
                     .SetData("Enum Dropdown", cursorLockMode)
+                    .SetTooltip("Enum Dropdown", 120f)
                     .DrawLayout().GetValue(out Enum clm);
                 cursorLockMode = (CursorLockMode)clm;
 

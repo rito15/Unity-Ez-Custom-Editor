@@ -98,7 +98,7 @@ namespace Rito.EditorUtilities
             if(tooltip == null)
                 tooltip = new OverlayTooltip();
 
-            tooltip.rect = this.rect;
+            //tooltip.rect = this.rect; // CheckTooltip()에서 초기화
             tooltip.text = text;
             tooltip.width = width;
             tooltip.height = height;
@@ -196,7 +196,9 @@ namespace Rito.EditorUtilities
                 tooltipFlag = false;
 
                 if (REG.ShowTooltip)
-                    REG.TooltipList.Add(tooltip);
+                {
+                    REG.TooltipList.Add(tooltip.Clone(rect));
+                }
             }
 
             tooltipDebugAllowed = true;

@@ -33,6 +33,19 @@ namespace Rito.EditorUtilities
             this.textColor = textColor;
             this.backgroundColor = bgColor;
         }
+
+        public OverlayTooltip Clone(in Rect newRect)
+        {
+            return new OverlayTooltip
+            {
+                rect = newRect,
+                width = width,
+                height = height,
+                text = text,
+                textColor = textColor,
+                backgroundColor = backgroundColor
+            };
+        }
     }
 }
 

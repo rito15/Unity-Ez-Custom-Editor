@@ -446,7 +446,7 @@ namespace Rito.EditorUtilities
         ***********************************************************************/
         #region .
 
-        private static void ShowTooltips(Editor editor)
+        private static void ShowTooltips(object editor)
         {
             // 화면을 넘어가지 않는 rect 영역 계산하기
             Rect Local_GetTooltipRect(in float width, in float height, in Vector2 mPos)
@@ -455,15 +455,23 @@ namespace Rito.EditorUtilities
                 float tooltipRectY = (mPos.y < CurrentY - height) ? mPos.y : mPos.y - height;
                 return new Rect(tooltipRectX, tooltipRectY, width, height);
             }
-
-            // 1. 툴팁 디버거
-            if (TooltipDebugActivated)
+            void Local_Repaint()
             {
                 // 매 에디터 프레임마다 다시 그려주기
                 if (Event.current.type == EventType.Layout)
                 {
-                    editor.Repaint();
+                    switch (editor)
+                    {
+                        case Editor e: e.Repaint(); break;
+                        case EditorWindow ew: ew.Repaint(); break;
+                    }
                 }
+            }
+
+            // 1. 툴팁 디버거
+            if (TooltipDebugActivated)
+            {
+                Local_Repaint();
 
                 Vector2 mPos = Event.current.mousePosition;
 
@@ -596,11 +604,7 @@ namespace Rito.EditorUtilities
             // 2. 툴팁 기능
             else if (ShowTooltip)
             {
-                // 매 에디터 프레임마다 다시 그려주기
-                if (Event.current.type == EventType.Layout)
-                {
-                    editor.Repaint();
-                }
+                Local_Repaint();
 
                 Vector2 mPos = Event.current.mousePosition;
 
