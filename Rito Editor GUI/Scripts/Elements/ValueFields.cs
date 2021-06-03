@@ -141,7 +141,11 @@ namespace Rito.EditorUtilities
             inputStyle.fontStyle = inputFontStyle;
             inputStyle.alignment = inputTextAlignment;
 
+            EditorGUI.BeginChangeCheck();
+
             DrawFields(labelRect, inputRect);
+
+            isChanged = EditorGUI.EndChangeCheck();
 
             GUI.backgroundColor = oldBackgroundColor;
 

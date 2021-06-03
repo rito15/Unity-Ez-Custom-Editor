@@ -218,7 +218,7 @@ namespace Rito.EditorUtilities
                 }
             }
 
-            private static void Finish(object editor)
+            private static void Finish(ScriptableObject editor)
             {
                 if (AlreadyFinalized) return;
 
@@ -414,16 +414,23 @@ namespace Rito.EditorUtilities
         *                               Tiny Methods
         ***********************************************************************/
         #region .
-        public static void Space(float height, float space)
-        {
-            Space(height + space);
-        }
         public static void Space(float height = 8f)
         {
             if(ErrorOccured) return;
+            if(height < 0) return;
 
             CurrentY += height;
-            EditorGUILayout.Space(height);
+
+            // Exception Fixed : 2021. 06. 04. 00:51
+            /*
+                ArgumentException: Getting control position in a group 
+                with only ## controls when doing repaint
+
+                -> Color Picker 또는 오브젝트 선택 팝업을 띄울 때 발생
+                -> 이벤트 타입이 Layout일 때만 Space() 호출함으로써 해결
+            */
+            if (Event.current.type == EventType.Layout)
+                EditorGUILayout.Space(height);
         }
 
         // xLeft : Rect 좌측 끝의 위치 비율(0 ~ 1)
@@ -432,11 +439,13 @@ namespace Rito.EditorUtilities
         // height : Rect의 높이(픽셀 값)
         public static Rect GetRect(in float xLeft, in float xRight, float yOffset, in float height)
         {
-            return new Rect(
+            return new Rect
+            (
                 marginLeft + ViewWidth * xLeft, 
                 CurrentY + yOffset, 
                 ViewWidth * (xRight - xLeft), 
-                height);
+                height
+            );
         }
         // xLeftOffset : xLeft에 더할 픽셀값
         // xRightOffset : xRight에 더할 픽셀값
@@ -456,7 +465,7 @@ namespace Rito.EditorUtilities
         ***********************************************************************/
         #region .
 
-        private static void ShowTooltips(object editor)
+        private static void ShowTooltips(ScriptableObject editor)
         {
             Vector2 mPos = Event.current.mousePosition;
             bool editorIsWindow = editor is EditorWindow;

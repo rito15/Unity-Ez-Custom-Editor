@@ -114,7 +114,11 @@ namespace Rito.EditorUtilities
             var oldToggleColor = GUI.color;
             GUI.color = toggleColor;
 
+            EditorGUI.BeginChangeCheck();
+
             value = EditorGUI.Toggle(toggleLeft ? leftRect : rightRect, "", value);
+
+            isChanged = EditorGUI.EndChangeCheck();
 
             GUI.color = oldToggleColor;
 
@@ -167,7 +171,11 @@ namespace Rito.EditorUtilities
             var oldColor = GUI.color;
             GUI.color = color;
 
+            EditorGUI.BeginChangeCheck();
+
             value = EditorGUI.Toggle(rect, "", value);
+
+            isChanged = EditorGUI.EndChangeCheck();
 
             GUI.color = oldColor;
 

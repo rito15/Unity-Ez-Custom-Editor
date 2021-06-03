@@ -18,6 +18,7 @@ namespace Rito.EditorUtilities
     public abstract class DrawingElement<T, R> : GUIElement<R> where R : DrawingElement<T, R>
     {
         protected T value;
+        protected bool isChanged;
 
         public abstract R Draw(in fRatio xLeft, in fRatio xRight, float yOffset, in float height,
             in float xLeftOffset = 0f, in float xRightOffset = 0f);
@@ -69,6 +70,13 @@ namespace Rito.EditorUtilities
         public virtual R GetValue(out T variable)
         {
             variable = this.value;
+            return this as R;
+        }
+
+        /// <summary> GUI의 변화 여부 반환 </summary>
+        public R GetChangeState(out bool variable)
+        {
+            variable = this.isChanged;
             return this as R;
         }
     }

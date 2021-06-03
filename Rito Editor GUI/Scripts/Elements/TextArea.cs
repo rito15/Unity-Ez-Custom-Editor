@@ -99,8 +99,13 @@ namespace Rito.EditorUtilities
             inputStyle.fontStyle = inputFontStyle;
             inputStyle.alignment = inputTextAlignment;
 
+
+            EditorGUI.BeginChangeCheck();
+
             GUI.SetNextControlName("TextField");
             value = EditorGUI.TextArea(rect, value, inputStyle);
+
+            isChanged = EditorGUI.EndChangeCheck();
 
             // Placeholder
             inputStyle.normal.textColor = inputTextColor.SetA(0.5f);

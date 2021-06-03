@@ -62,7 +62,12 @@ namespace Rito.EditorUtilities
 
             // Draw
             EditorGUI.PrefixLabel(labelRect, labelContent, labelStyle);
+
+            EditorGUI.BeginChangeCheck();
+
             value = EditorGUI.ObjectField(inputRect, value, typeof(T), allowSceneObjects) as T;
+
+            isChanged = EditorGUI.EndChangeCheck();
 
             GUI.backgroundColor = oldBackgroundColor;
             EditorStyles.objectField.normal.textColor = oldTextColor;

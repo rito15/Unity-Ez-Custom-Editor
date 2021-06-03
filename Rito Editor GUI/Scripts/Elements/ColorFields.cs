@@ -114,7 +114,11 @@ namespace Rito.EditorUtilities
             var oldColor = GUI.color;
             GUI.color = colorPickerColor;
 
+            EditorGUI.BeginChangeCheck();
+
             value = EditorGUI.ColorField(inputRect, "", value);
+
+            isChanged = EditorGUI.EndChangeCheck();
 
             GUI.color = oldColor;
 
@@ -154,7 +158,11 @@ namespace Rito.EditorUtilities
             var oldColor = GUI.color;
             GUI.color = colorPickerColor;
 
+            EditorGUI.BeginChangeCheck();
+
             value = EditorGUI.ColorField(rect, "", value);
+
+            isChanged = EditorGUI.EndChangeCheck();
 
             GUI.color = oldColor;
 

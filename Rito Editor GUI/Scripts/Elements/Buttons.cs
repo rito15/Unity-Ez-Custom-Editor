@@ -105,7 +105,11 @@ namespace Rito.EditorUtilities
             style.fontStyle = fontStyle;
             style.alignment = textAlignment;
 
+            EditorGUI.BeginChangeCheck();
+
             value = GUI.Button(rect, text, style);
+
+            isChanged = EditorGUI.EndChangeCheck();
 
             GUI.backgroundColor = oldBackgroundColor;
 
@@ -247,8 +251,13 @@ namespace Rito.EditorUtilities
             style.fontStyle = value ? pressedFontStyle : normalFontStyle;
             style.alignment = textAlignment;
 
+            isChanged = false;
+
             if (GUI.Button(rect, label, style))
+            {
                 value = !value;
+                isChanged = true;
+            }
 
             GUI.backgroundColor = oldBackgroundColor;
 

@@ -57,7 +57,11 @@ namespace Rito.EditorUtilities
             var oldBackgroundColor = GUI.backgroundColor;
             GUI.backgroundColor = inputBackgroundColor;
 
+            EditorGUI.BeginChangeCheck();
+
             value = EditorGUI.Popup(inputRect, value, stringOptions, inputStyle);
+
+            isChanged = EditorGUI.EndChangeCheck();
 
             GUI.backgroundColor = oldBackgroundColor;
         }
@@ -85,7 +89,11 @@ namespace Rito.EditorUtilities
             var oldBackgroundColor = GUI.backgroundColor;
             GUI.backgroundColor = inputBackgroundColor;
 
+            EditorGUI.BeginChangeCheck();
+
             value = (T)EditorGUI.EnumPopup(inputRect, value, inputStyle);
+
+            isChanged = EditorGUI.EndChangeCheck();
 
             GUI.backgroundColor = oldBackgroundColor;
         }
@@ -113,7 +121,11 @@ namespace Rito.EditorUtilities
             var oldBackgroundColor = GUI.backgroundColor;
             GUI.backgroundColor = inputBackgroundColor;
 
+            EditorGUI.BeginChangeCheck();
+
             value = EditorGUI.EnumPopup(inputRect, value, inputStyle);
+
+            isChanged = EditorGUI.EndChangeCheck();
 
             GUI.backgroundColor = oldBackgroundColor;
         }

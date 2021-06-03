@@ -75,7 +75,11 @@ namespace Rito.EditorUtilities
             EditorStyles.label.hover.textColor = labelColor.AddRGB(0.25f);
             EditorStyles.label.focused.textColor = labelColor.AddRGB(0.25f);
 
+            EditorGUI.BeginChangeCheck();
+
             DrawVectorField(inputRect);
+
+            isChanged = EditorGUI.EndChangeCheck();
 
             EditorStyles.label.normal.textColor = oldLabelColor;
             EditorStyles.label.hover.textColor = oldLabelHoverColor;

@@ -126,7 +126,11 @@ namespace Rito.EditorUtilities
             GUI.contentColor = inputTextColor;
             GUI.backgroundColor = sliderColor * 2f;
 
+            EditorGUI.BeginChangeCheck();
+
             DrawSlider(sliderRect);
+
+            isChanged = EditorGUI.EndChangeCheck();
 
             GUI.contentColor = oldContentColor;
             GUI.backgroundColor = oldBackgroundColor;
