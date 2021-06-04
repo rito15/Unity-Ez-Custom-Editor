@@ -34,6 +34,7 @@ namespace Rito.EditorUtilities.Demo
             private long longValue1;
             private CursorLockMode cursorLockMode;
 
+            private string editableLabel = "Editable Label";
             private Material materialValue;
             private GameObject gameObjectValue;
             private UnityEngine.Object objectValue;
@@ -89,6 +90,12 @@ namespace Rito.EditorUtilities.Demo
                     .SetData("Selectable Label")
                     .SetTooltip("Selectable Label")
                     .DrawLayout();
+
+                EditableLabel.Default
+                    .SetData(editableLabel)
+                    .SetTooltip("Editable Label")
+                    .DrawLayout()
+                    .GetValue(out editableLabel);
 
                 intValues[i] = 
                     IntField.Default

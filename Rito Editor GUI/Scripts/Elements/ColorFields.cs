@@ -84,8 +84,8 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public override ColorField Draw(in float xLeft, in float xRight, float yOffset, in float height,
-            in float xLeftOffset = 0f, in float xRightOffset = 0f)
+        public override ColorField Draw(float xLeft, float xRight, float yOffset, float height,
+            float xLeftOffset = 0f, float xRightOffset = 0f)
         {
             if (CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -149,8 +149,8 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public override ColorPicker Draw(in float xLeft, in float xRight, float yOffset, in float height,
-            in float xLeftOffset = 0f, in float xRightOffset = 0f)
+        public override ColorPicker Draw(float xLeft, float xRight, float yOffset, float height,
+            float xLeftOffset = 0f, float xRightOffset = 0f)
         {
             if (CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);

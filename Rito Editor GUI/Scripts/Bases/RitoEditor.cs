@@ -27,6 +27,7 @@ namespace Rito.EditorUtilities
             OnSetup(settingBuilder);
             CallInit();
 
+            Undo.RecordObject(target, "Edited RitoEditor Fields");
             OnDrawInspector();
 
             CallFinish();

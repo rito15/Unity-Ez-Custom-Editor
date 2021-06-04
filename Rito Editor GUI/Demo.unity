@@ -318,6 +318,7 @@ MonoBehaviour:
   - 0.3
   - 0.4
   floatSelected: 0
+  labelText: aBcDe
 --- !u!114 &319512592
 MonoBehaviour:
   m_ObjectHideFlags: 0

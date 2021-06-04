@@ -95,8 +95,8 @@ namespace Rito.EditorUtilities
             return this as R;
         }
 
-        public override R Draw(in float xLeft, in float xRight, float yOffset, in float height,
-            in float xLeftOffset = 0f, in float xRightOffset = 0f)
+        public override R Draw(float xLeft, float xRight, float yOffset, float height,
+            float xLeftOffset = 0f, float xRightOffset = 0f)
         {
             if (CheckDrawErrors()) return this as R;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);

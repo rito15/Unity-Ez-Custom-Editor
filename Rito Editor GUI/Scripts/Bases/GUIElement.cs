@@ -50,8 +50,6 @@ using UnityEditor;
 namespace Rito.EditorUtilities
 {
     using REG = RitoEditorGUI;
-    using fPixel = System.Single;
-    using fRatio = System.Single;
 
     public struct None { public static readonly None Empty = new None(); }
 
@@ -115,10 +113,10 @@ namespace Rito.EditorUtilities
             return this as R;
         }
         /// <summary> rect 높이 + 지정 높이만큼 여백 지정 </summary>
-        public virtual R Margin(float margin = 0f)
+        public virtual R Margin(float height = 0f)
         {
-            if(!isLastLayout) margin += rect.height;
-            REG.Space(margin);
+            if(!isLastLayout) height += rect.height;
+            REG.Space(height);
             return this as R;
         }
 
@@ -215,12 +213,12 @@ namespace Rito.EditorUtilities
 
         // xLeft, xRight : ViewWidth에 대한 Rect 좌우 지점의 비율(0 ~ 1)
         /// <summary> 그려질 지점의 Rect 설정 </summary>
-        protected void SetRect(in fRatio xLeft, in fRatio xRight, in float yOffset, in float height)
+        protected void SetRect(in float xLeft, in float xRight, in float yOffset, in float height)
         {
             SetRect(xLeft, xRight, yOffset, height, 0f, 0f);
         }
         /// <summary> 그려질 지점의 Rect 설정 </summary>
-        protected void SetRect(in fRatio xLeft, in fRatio xRight, in float yOffset, in float height,
+        protected void SetRect(in float xLeft, in float xRight, in float yOffset, in float height,
             in float xLeftOffset, in float xRightOffset)
         {
             rect = REG.GetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);

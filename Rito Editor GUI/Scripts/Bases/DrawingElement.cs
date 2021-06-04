@@ -12,24 +12,22 @@ using UnityEditor;
 namespace Rito.EditorUtilities
 {
     using REG = RitoEditorGUI;
-    using fPixel = System.Single;
-    using fRatio = System.Single;
 
     public abstract class DrawingElement<T, R> : GUIElement<R> where R : DrawingElement<T, R>
     {
         protected T value;
         protected bool isChanged;
 
-        public abstract R Draw(in fRatio xLeft, in fRatio xRight, float yOffset, in float height,
-            in float xLeftOffset = 0f, in float xRightOffset = 0f);
+        public abstract R Draw(float xLeft, float xRight, float yOffset, float height,
+            float xLeftOffset = 0f, float xRightOffset = 0f);
 
-        public virtual R Draw(in float height)
+        public virtual R Draw(float height)
             => Draw(0f, 1f, 0f, height, 0f, 0f);
 
-        public virtual R Draw(in fRatio xLeft, in fRatio xRight)
+        public virtual R Draw(float xLeft, float xRight)
             => Draw(xLeft, xRight, 0f, REG.LayoutControlHeight, 0f, 0f);
 
-        public virtual R Draw(in fRatio xLeft, in fRatio xRight, in float height)
+        public virtual R Draw(float xLeft, float xRight, float height)
             => Draw(xLeft, xRight, 0f, height, 0f, 0f);
 
         // 레이아웃 요소?
@@ -47,7 +45,7 @@ namespace Rito.EditorUtilities
             return this as R;
         }
         /// <summary> 레이아웃 요소로 그리기 + 너비(비율) 설정 </summary>
-        public virtual R DrawLayout(in fRatio xLeft, in fRatio xRight)
+        public virtual R DrawLayout(float xLeft, float xRight)
         {
             Draw(xLeft, xRight, 0f, REG.LayoutControlHeight, REG.LayoutXLeftOffset, REG.LayoutXRightOffset);
             REG.Space(REG.LayoutControlHeight + REG.LayoutControlBottomMargin);
@@ -56,8 +54,8 @@ namespace Rito.EditorUtilities
             return this as R;
         }
         /// <summary> 레이아웃 요소로 그리기 + 너비(비율, 픽셀) 설정 </summary>
-        public virtual R DrawLayout(in fRatio xLeft, in fRatio xRight,
-                                    in float xLeftOffset, in float xRightOffset)
+        public virtual R DrawLayout(float xLeft, float xRight,
+                                    float xLeftOffset, float xRightOffset)
         {
             Draw(xLeft, xRight, 0f, REG.LayoutControlHeight, xLeftOffset, xRightOffset);
             REG.Space(REG.LayoutControlHeight + REG.LayoutControlBottomMargin);
@@ -77,6 +75,14 @@ namespace Rito.EditorUtilities
         public R GetChangeState(out bool variable)
         {
             variable = this.isChanged;
+            return this as R;
+        }
+
+        /// <summary> 값이 변경되었을 때 동작 </summary>
+        public R OnValueChanged(Action<T> action)
+        {
+            if(this.isChanged)
+                action(value);
             return this as R;
         }
     }

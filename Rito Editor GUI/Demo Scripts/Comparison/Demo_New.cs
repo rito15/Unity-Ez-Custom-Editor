@@ -68,8 +68,46 @@ namespace Rito.EditorUtilities.Demo
                         .Draw(buttonRatio + 0.01f, 0.985f, 20f).Layout()
                         .GetValue(out m.toggleButtonValue);
                 }
+
+                StringField.Blue
+                    .Space(8f)
+                    .SetData("String field", "STR")
+                    .DrawLayout()
+                    .OnValueChanged(v => Debug.Log(v))
+                    ;
+
+                BoolField.Blue
+                    .SetData("Bool Field", b)
+                    .DrawLayout()
+                    .GetValue(out b)
+                    .OnValueChanged(v => Debug.Log(v));
+
+
+                Space(40f);
+
+                // private string labelText = "Editable Label"
+
+                EditableLabel.Default
+                    .SetData(m.labelText)
+                    .DrawLayout()
+                    .GetValue(out m.labelText);
+                
+                StringField.Default
+                    .SetData("String FIeld", m.labelText)
+                    .DrawLayout()
+                    .GetValue(out m.labelText);
+
+
+
+                m.labelText.DrawStringField("String FIeld", StringField.Brown)
+                    .GetValue(out m.labelText);
+
+                Space(40f);
             }
+            bool b;
+            private string labelText = "Editable Label";
         }
+        public string labelText = "Editable Label";
     }
 }
 

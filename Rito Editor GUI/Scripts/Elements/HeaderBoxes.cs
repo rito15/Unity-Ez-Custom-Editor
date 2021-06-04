@@ -12,8 +12,6 @@ using UnityEditor;
 namespace Rito.EditorUtilities
 {
     using REG = RitoEditorGUI;
-    using fPixel = System.Single;
-    using fRatio = System.Single;
 
     public abstract partial class HeaderBoxBase<R> : GUIElement<R> where R : HeaderBoxBase<R>, new()
     {
@@ -96,19 +94,19 @@ namespace Rito.EditorUtilities
         #endregion
 
         /// <summary> 헤더 높이만큼 Space + 컨텐츠 박스 상단 내부 여백 지정 </summary>
-        public override R Margin(float margin = 0f)
+        public override R Margin(float height = 0f)
         {
-            REG.Space(headerHeight + outlineWidth + margin);
+            REG.Space(headerHeight + outlineWidth + height);
             return this as R;
         }
 
-        public abstract R Draw(in fRatio xLeft, in fRatio xRight, float yOffset,
-            in float headerHeight, in float contentHeight,
-            in float xLeftOffset = 0f, in float xRightOffset = 0f);
+        public abstract R Draw(float xLeft, float xRight, float yOffset,
+            float headerHeight, float contentHeight,
+            float xLeftOffset = 0f, float xRightOffset = 0f);
 
-        public R Draw(in float headerHeight, in float contentHeight)
+        public R Draw(float headerHeight, float contentHeight)
             => Draw(0f, 1f, 0f, headerHeight, contentHeight, 0f, 0f);
-        public R Draw(in fRatio xLeft, in fRatio xRight, in float headerHeight, in float contentHeight)
+        public R Draw(float xLeft, float xRight, float headerHeight, float contentHeight)
             => Draw(xLeft, xRight, 0f, headerHeight, contentHeight, 0f, 0f);
 
         /// <summary>
@@ -187,9 +185,9 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public override HeaderBox Draw(in float xLeft, in float xRight, float yOffset,
-            in float headerHeight, in float contentHeight,
-            in float xLeftOffset = 0f, in float xRightOffset = 0f)
+        public override HeaderBox Draw(float xLeft, float xRight, float yOffset,
+            float headerHeight, float contentHeight,
+            float xLeftOffset = 0f, float xRightOffset = 0f)
         {
             if (CheckDrawErrors()) return this;
             this.headerHeight = headerHeight;
@@ -285,9 +283,9 @@ namespace Rito.EditorUtilities
         }
 
         /// <summary> 헤더 높이만큼 Space + 컨텐츠 박스 상단 내부 여백 지정 </summary>
-        public override FoldoutHeaderBox Margin(float margin = 0f)
+        public override FoldoutHeaderBox Margin(float height = 0f)
         {
-            REG.Space(headerHeight + (foldout ? outlineWidth + margin : 0f));
+            REG.Space(headerHeight + (foldout ? outlineWidth + height : 0f));
             return this;
         }
         /// <summary> rect 높이 + 레이아웃 요소 기본 여백 + 추가 여백만큼 여백 지정 </summary>
@@ -296,9 +294,9 @@ namespace Rito.EditorUtilities
             return Margin(REG.LayoutControlBottomMargin);
         }
 
-        public override FoldoutHeaderBox Draw(in float xLeft, in float xRight, float yOffset,
-            in float headerHeight, in float contentHeight,
-            in float xLeftOffset = 0f, in float xRightOffset = 0f)
+        public override FoldoutHeaderBox Draw(float xLeft, float xRight, float yOffset,
+            float headerHeight, float contentHeight,
+            float xLeftOffset = 0f, float xRightOffset = 0f)
         {
             if (CheckDrawErrors()) return this;
             this.headerHeight = headerHeight;

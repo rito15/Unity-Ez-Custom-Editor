@@ -11,15 +11,12 @@ using UnityEditor;
 
 namespace Rito.EditorUtilities
 {
-    public abstract partial class LabelBase<R> : DrawingElement<None, R> where R : LabelBase<R>, new()
+    public abstract partial class LabelBase<R> : DrawingElement<string, R> where R : LabelBase<R>, new()
     {
         public static R Default { get; } = new R();
         public static R Bold { get; } = new R { fontStyle = FontStyle.Bold };
 
         protected GUIStyle style;
-
-        // Data
-        protected string text;
 
         // Styles
         public Color textColor = Color.white;
@@ -67,12 +64,12 @@ namespace Rito.EditorUtilities
 
         public R SetData(string text)
         {
-            this.text = text;
+            this.value = text;
             return this as R;
         }
 
-        public override R Draw(in float xLeft, in float xRight, float yOffset, in float height,
-            in float xLeftOffset = 0f, in float xRightOffset = 0f)
+        public override R Draw(float xLeft, float xRight, float yOffset, float height,
+            float xLeftOffset = 0f, float xRightOffset = 0f)
         {
             if (CheckDrawErrors()) return this as R;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -88,27 +85,51 @@ namespace Rito.EditorUtilities
             style.fontStyle = fontStyle;
             style.alignment = textAlignment;
 
-            DrawLabel(rect, text, style);
+            DrawLabel(rect, style);
 
             CheckDebugs();
             EndDraw();
             return this as R;
         }
 
-        protected abstract void DrawLabel(in Rect rect, in string text, GUIStyle style);
+        protected abstract void DrawLabel(in Rect rect, GUIStyle style);
     }
     public class Label : LabelBase<Label>
     {
-        protected override void DrawLabel(in Rect rect, in string text, GUIStyle style)
+        protected override void DrawLabel(in Rect rect, GUIStyle style)
         {
-            EditorGUI.LabelField(rect, text, style);
+            EditorGUI.LabelField(rect, value, style);
         }
     }
     public class SelectableLabel : LabelBase<SelectableLabel>
     {
-        protected override void DrawLabel(in Rect rect, in string text, GUIStyle style)
+        protected override void DrawLabel(in Rect rect, GUIStyle style)
         {
-            EditorGUI.SelectableLabel(rect, text, style);
+            EditorGUI.SelectableLabel(rect, value, style);
+        }
+    }
+    public class EditableLabel : LabelBase<EditableLabel>
+    {
+        protected override void DrawLabel(in Rect rect, GUIStyle style)
+        {
+            string focusedName = GUI.GetNameOfFocusedControl();
+
+            if (focusedName != "TextArea")
+            {
+                GUI.SetNextControlName("Label");
+                EditorGUI.SelectableLabel(rect, value, style);
+            }
+
+            if (focusedName == "Label" || focusedName == "TextArea")
+            {
+                EditorGUI.BeginChangeCheck();
+
+                GUI.SetNextControlName("TextArea");
+                value = EditorGUI.TextArea(rect, value);
+                GUI.FocusControl("TextArea");
+
+                isChanged = EditorGUI.EndChangeCheck();
+            }
         }
     }
 }

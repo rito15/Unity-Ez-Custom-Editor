@@ -429,8 +429,21 @@ namespace Rito.EditorUtilities
                 -> Color Picker 또는 오브젝트 선택 팝업을 띄울 때 발생
                 -> 이벤트 타입이 Layout일 때만 Space() 호출함으로써 해결
             */
-            if (Event.current.type == EventType.Layout)
+            //if (Event.current.type == EventType.Layout)
+
+            // 2021. 06. 04. 20:40
+            /*
+                위와 같이 해결할 경우, EditorGUILayout 요소가 
+                RitoEditorGUI 요소들과 함께 그려지지 않고,
+                에디터 꼭대기에서 그려지는 현상 발생
+
+                부득이하게 try-catch(ArgumentException)으로 해결
+            */
+            try
+            {
                 EditorGUILayout.Space(height);
+            }
+            catch (ArgumentException) { }
         }
 
         // xLeft : Rect 좌측 끝의 위치 비율(0 ~ 1)

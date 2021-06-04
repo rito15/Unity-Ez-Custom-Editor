@@ -58,14 +58,14 @@ namespace Rito.EditorUtilities
         }
 
         /// <summary> 박스 상단 내부 여백 지정 (Space()와 동일) </summary>
-        public override Box Margin(float margin = 0f)
+        public override Box Margin(float height = 0f)
         {
-            REG.Space(margin);
+            REG.Space(height);
             return this;
         }
 
-        public Box Draw(in float xLeft, in float xRight, float yOffset, in float height,
-            in float xLeftOffset = 0f, in float xRightOffset = 0f)
+        public Box Draw(float xLeft, float xRight, float yOffset, float height,
+            float xLeftOffset = 0f, float xRightOffset = 0f)
         {
             if (CheckDrawErrors()) return this;
             SetRect(xLeft, xRight, yOffset, height, xLeftOffset, xRightOffset);
@@ -95,11 +95,11 @@ namespace Rito.EditorUtilities
             return this;
         }
 
-        public Box Draw(in float height)
+        public Box Draw(float height)
             => Draw(0f, 1f, 0f, height, 0f, 0f);
-        public Box Draw(in float xLeft, in float xRight)
+        public Box Draw(float xLeft, float xRight)
             => Draw(xLeft, xRight, 0f, REG.LayoutControlHeight, 0f, 0f);
-        public Box Draw(in float xLeft, in float xRight, in float height)
+        public Box Draw(float xLeft, float xRight, float height)
             => Draw(xLeft, xRight, 0f, height, 0f, 0f);
 
         /// <summary>
