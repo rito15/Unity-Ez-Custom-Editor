@@ -9,7 +9,7 @@ using UnityEditor;
 // 날짜 : 2021-05-24 AM 1:33:13
 // 작성자 : Rito
 
-using REG = Rito.EditorUtilities.RitoEditorGUI;
+using RGUI = Rito.EditorUtilities.RitoEditorGUI;
 
 namespace Rito.EditorUtilities.Demo
 {
@@ -42,7 +42,9 @@ namespace Rito.EditorUtilities.Demo
             private float[] floatDropdownList = { 0.1f, 0.2f, 0.3f, 0.4f, 0.5f };
             private string[] stringDropdownList = { "String 1", "String 2", "String 3",  };
 
-            protected override void OnSetup(REG.Setting settings)
+            private EColor colorTheme;
+
+            protected override void OnSetup(RGUI.Setting settings)
             {
                 settings
                     //.SetMargins(top: 8f, left: 12f, right: 24f, bottom: 4f)
@@ -56,6 +58,14 @@ namespace Rito.EditorUtilities.Demo
             protected override void OnDrawInspector()
             {
                 int i = 0, f = 0, d = 0, s = 0, b = 0;
+
+                EnumDropdown<EColor>.Default
+                    .SetData("Theme", colorTheme)
+                    .DrawLayout()
+                    .GetValue(out colorTheme)
+                    .Space(8f);
+
+                RGUI.SetDefaultColorTheme(colorTheme);
 
                 /***********************************************************************
                 *                               Buttons

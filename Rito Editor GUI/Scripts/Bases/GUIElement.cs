@@ -107,7 +107,7 @@ namespace Rito.EditorUtilities
         }
 
         /// <summary> 하단 여백 지정 </summary>
-        public virtual R Space(float height)
+        public virtual R Space(float height = 8f)
         {
             REG.Space(height);
             return this as R;

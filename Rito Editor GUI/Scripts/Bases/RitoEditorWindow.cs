@@ -62,11 +62,11 @@ namespace Rito.EditorUtilities
                 FinishMethod = t.GetMethod("Finish", bf);
             }
         }
-        private static void CallReset()
+        private void CallReset()
         {
             ResetMethod?.Invoke(null, null);
         }
-        private static void CallInit()
+        private void CallInit()
         {
             InitMethod?.Invoke(null, null);
         }

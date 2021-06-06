@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Rito.EditorUtilities
 {
-    public static class ColorExtensions
+    public static partial class ColorExtensions
     {
         public static Color AddRGB(this Color color, float rgb)
         {

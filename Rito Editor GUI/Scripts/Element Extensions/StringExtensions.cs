@@ -90,6 +90,49 @@ namespace Rito.EditorUtilities
             => DrawTextArea(@this, placeholder, TextArea.Default);
 
         #endregion
+        /***********************************************************************
+        *                               Header Box
+        ***********************************************************************/
+        #region 
+        public static HeaderBox DrawHeaderBox(this string @this, HeaderBox headerBox,
+            int elementCount, float outlineWidth = 0f, float headerTextLeftPadding = 2f)
+        {
+            return headerBox
+                .SetData(@this, outlineWidth, headerTextLeftPadding)
+                .DrawLayout(elementCount);
+        }
+        public static HeaderBox DrawHeaderBox(this string @this,
+            int elementCount, float outlineWidth = 0f, float headerTextLeftPadding = 2f)
+        {
+            return HeaderBox.Default
+                .SetData(@this, outlineWidth, headerTextLeftPadding)
+                .DrawLayout(elementCount);
+        }
+        
+        #endregion
+        /***********************************************************************
+        *                               Foldout Header Box
+        ***********************************************************************/
+        #region 
+        public static FoldoutHeaderBox DrawFoldoutHeaderBox(this string @this, ref bool toggle, 
+            FoldoutHeaderBox foldoutHeaderBox,
+            int elementCount, float outlineWidth = 0f, float headerTextLeftPadding = 2f)
+        {
+            return foldoutHeaderBox
+                .SetData(toggle, @this, outlineWidth, headerTextLeftPadding)
+                .DrawLayout(elementCount)
+                .GetValue(out toggle);
+        }
+        public static FoldoutHeaderBox DrawFoldoutHeaderBox(this string @this, ref bool toggle,
+            int elementCount, float outlineWidth = 0f, float headerTextLeftPadding = 2f)
+        {
+            return FoldoutHeaderBox.Default
+                .SetData(toggle, @this, outlineWidth, headerTextLeftPadding)
+                .DrawLayout(elementCount)
+                .GetValue(out toggle);
+        }
+        
+        #endregion
     }
 }
 

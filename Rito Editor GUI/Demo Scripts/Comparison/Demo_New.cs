@@ -96,12 +96,12 @@ namespace Rito.EditorUtilities.Demo
                     .SetData("String FIeld", m.labelText)
                     .DrawLayout()
                     .GetValue(out m.labelText);
-                
+
 
                 m.labelText.DrawStringField("String FIeld", StringField.Brown)
                     .GetValue(out m.labelText);
 
-                Space(40f);
+                Space(40f); 
             }
             bool b;
             private string labelText = "Editable Label";
