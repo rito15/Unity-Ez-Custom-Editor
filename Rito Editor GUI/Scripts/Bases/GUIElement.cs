@@ -190,10 +190,7 @@ namespace Rito.EditorUtilities
             {
                 tooltipFlag = false;
 
-                if (REG.ShowTooltip)
-                {
-                    REG.TooltipList.Add(tooltip.Clone(rect));
-                }
+                REG.TooltipList.Add(tooltip.Clone(rect));
             }
         }
 

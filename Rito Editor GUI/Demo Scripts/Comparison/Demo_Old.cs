@@ -27,29 +27,6 @@ namespace Rito.EditorUtilities.Demo
                 GUILayout.Button("ButtoN");
                 GUILayout.Button("ButtoN");
                 
-
-                FoldoutHeaderBox.Brown
-                    .SetData("Foldout Header Box", foldout, 2f)
-                    .DrawLayout(2)
-                    .GetValue(out foldout);
-
-                if (foldout)
-                {
-                    IntField.Brown
-                        .SetData("Int Field", 123)
-                        .DrawLayout();
-
-                    FloatField.Brown
-                        .SetData("Float Field", 123f)
-                        .DrawLayout();
-                }
-
-
-                floatVariable = 
-                    FloatField.Brown
-                        .SetData("Float FIeld", floatVariable)
-                        .DrawLayout()
-                        .GetValue();
             }
         }
     }

@@ -101,7 +101,7 @@ namespace Rito.EditorUtilities.Demo
                 m.labelText.DrawStringField("String FIeld", StringField.Brown)
                     .GetValue(out m.labelText);
 
-                Space(40f); 
+                Space(40f);
             }
             bool b;
             private string labelText = "Editable Label";

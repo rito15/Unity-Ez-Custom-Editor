@@ -22,6 +22,10 @@ namespace Rito.EditorUtilities
         #region .
         public class Setting
         {
+            public static readonly string ResetMethodName  = nameof(ResetSettings);
+            public static readonly string InitMethodName   = nameof(InitGUI);
+            public static readonly string FinishMethodName = nameof(Finish);
+
             private static readonly Setting instance = new Setting();
 
             private Setting() { }
@@ -79,11 +83,6 @@ namespace Rito.EditorUtilities
 
                 return this;
             }
-            public Setting AllowTooltip(bool value = true)
-            {
-                ShowTooltip = value;
-                return this;
-            }
             /// <summary> 에디터 우측 스크롤바 존재유무에 관계 없이 판정 너비 고정하기 </summary>
             public Setting KeepSameViewWidth(bool value = true)
             {
@@ -106,16 +105,14 @@ namespace Rito.EditorUtilities
                 return this;
             }
 
-            private static void Reset()
+            /// <summary> OnEnable()에서 호출 </summary>
+            private static void ResetSettings()
             {
                 // Debugs
                 RectDebugColor = Color.red;
                 TooltipDebugColor = Color.red.SetA(0.7f);
                 ShowRectDebugToggle = false;
                 ShowTooltipDebugToggle = false;
-
-                ShowTooltip = true;
-                AlreadyFinalized = false;
                 AlwaysKeepSameViewWidth = false;
 
                 // Settings
@@ -130,31 +127,13 @@ namespace Rito.EditorUtilities
                 marginBottom = DefaultMarginBottom;
             }
 
-            private static void Init()
+            /// <summary> OnInspectorGUI() 상단에서 호출 </summary>
+            private static void InitGUI()
             {
-                if (AlreadyInitiated)
-                    return;
-
                 REG.CurrentY = 0f;
-
-                // Finalize() 여부 검사
-                if (initAndFinalizationCount < 2f)
-                {
-                    initAndFinalizationCount++;
-                    ErrorOccured = false;
-                }
-                else
-                {
-                    ErrorOccured = true;
-                    errorType = ErrorType.NeverFinalized;
-                    ShowErrorHelpbox();
-                    return;
-                }
 
                 // 인스펙터 상단부에 디버그 On/Off 토글 생성
                 DrawDebuggerToggles();
-
-                // -------------------------------------------------------------------------------------
 
                 // 우측 스크롤바 존재 유무에 따라 유동적인 너비 설정
                 EditorGUILayout.Space(0f);
@@ -169,8 +148,6 @@ namespace Rito.EditorUtilities
                     - marginRight;
 
                 REG.Space(marginTop);
-
-                AlreadyInitiated = true;
             }
             private static void DrawDebuggerToggles()
             {
@@ -216,24 +193,6 @@ namespace Rito.EditorUtilities
 
             private static void Finish(ScriptableObject editor)
             {
-                if (AlreadyFinalized) return;
-
-                AlreadyInitiated = false;
-
-                // Init() 여부 검사
-                if (initAndFinalizationCount == 0)
-                {
-                    ErrorOccured = true;
-                    errorType = ErrorType.NeverInitalized;
-                    ShowErrorHelpbox();
-                    return;
-                }
-                else
-                {
-                    initAndFinalizationCount = 0;
-                    ErrorOccured = false;
-                }
-
                 Space(marginBottom);
 
                 // 컨트롤 없는 부분에 클릭할 경우 강제로 포커스 제거
@@ -256,8 +215,6 @@ namespace Rito.EditorUtilities
                 {
                     EditorTotalHeight = CurrentY + EditorDefaultMarginBottom;
                 }
-
-                AlreadyFinalized = true;
             }
 
         }// public class Setting
@@ -284,10 +241,6 @@ namespace Rito.EditorUtilities
         /// <summary> CurrentViewWidth에서 MarginLeft, MarginRight를 뺀 너비 </summary>
         public static float ViewWidth { get; private set; }
 
-
-        /// <summary> 툴팁을 표시할 수 있는지 여부 </summary>
-        public static bool ShowTooltip { get; private set; } = true;
-
         public static readonly Color DefaultTooltipTextColor = Color.white * 10f;
         public static readonly Color DefaultTooltipBgColor = Color.black.SetA(0.5f);
 
@@ -301,12 +254,6 @@ namespace Rito.EditorUtilities
 
         /// <summary> 에디터 전체 영역 높이 </summary>
         private static float EditorTotalHeight { get; set; }
-
-        /// <summary> 이미 Init() 메소드가 호출되었는지 여부 </summary>
-        private static bool AlreadyInitiated { get; set; }
-
-        /// <summary> 이미 Finalize() 메소드가 호출되었는지 여부 </summary>
-        private static bool AlreadyFinalized { get; set; }
 
         /// <summary> 윈도우의 기본 하단 여백 </summary>
         const float EditorDefaultMarginBottom = 10f;
@@ -641,7 +588,7 @@ namespace Rito.EditorUtilities
                 }
             }
             // 3. 툴팁 기능
-            else if (ShowTooltip)
+            else
             {
                 Local_Repaint();
 

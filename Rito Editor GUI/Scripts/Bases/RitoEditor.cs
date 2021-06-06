@@ -58,9 +58,9 @@ namespace Rito.EditorUtilities
                 if (instance != null)
                     settingBuilder = instance as RGUI.Setting;
 
-                ResetMethod  = t.GetMethod("Reset",  bf);
-                InitMethod   = t.GetMethod("Init",   bf);
-                FinishMethod = t.GetMethod("Finish", bf);
+                ResetMethod  = t.GetMethod(RGUI.Setting.ResetMethodName,  bf);
+                InitMethod   = t.GetMethod(RGUI.Setting.InitMethodName,   bf);
+                FinishMethod = t.GetMethod(RGUI.Setting.FinishMethodName, bf);
             }
         }
         private void CallReset()
