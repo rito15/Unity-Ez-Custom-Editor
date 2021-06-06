@@ -13,7 +13,33 @@ namespace Rito.EditorUtilities
 {
     public partial class BoolField : DrawingElement<bool, BoolField>
     {
-        public static BoolField Default { get; } = new BoolField();
+        public static BoolField Default
+        {
+            get
+            {
+                switch (RitoEditorGUI.DefaultColorTheme)
+                {
+                    default:
+                    case EColor.Gray:    return Gray;
+                    case EColor.White:   return White;
+                    case EColor.Black:   return Black;
+                    case EColor.Red:     return Red;    
+                    case EColor.Green:   return Green;  
+                    case EColor.Blue:    return Blue;   
+                    case EColor.Pink:    return Pink;   
+                    case EColor.Magenta: return Magenta;
+                    case EColor.Violet:  return Violet; 
+                    case EColor.Purple:  return Purple; 
+                    case EColor.Brown:   return Brown;  
+                    case EColor.Gold:    return Gold;   
+                    case EColor.Orange:  return Orange; 
+                    case EColor.Yellow:  return Yellow; 
+                    case EColor.Lime:    return Lime;   
+                    case EColor.Mint:    return Mint;    
+                    case EColor.Cyan:    return Cyan;   
+                }
+            }
+        }
         protected GUIStyle labelStyle;
 
         // Data
@@ -129,7 +155,33 @@ namespace Rito.EditorUtilities
     }
     public partial class Toggle : DrawingElement<bool, Toggle>
     {
-        public static Toggle Default { get; } = new Toggle();
+        public static Toggle Default
+        {
+            get
+            {
+                switch (RitoEditorGUI.DefaultColorTheme)
+                {
+                    default:
+                    case EColor.Gray:    return Gray;
+                    case EColor.White:   return White;
+                    case EColor.Black:   return Black;
+                    case EColor.Red:     return Red;    
+                    case EColor.Green:   return Green;  
+                    case EColor.Blue:    return Blue;   
+                    case EColor.Pink:    return Pink;   
+                    case EColor.Magenta: return Magenta;
+                    case EColor.Violet:  return Violet; 
+                    case EColor.Purple:  return Purple; 
+                    case EColor.Brown:   return Brown;  
+                    case EColor.Gold:    return Gold;   
+                    case EColor.Orange:  return Orange; 
+                    case EColor.Yellow:  return Yellow; 
+                    case EColor.Lime:    return Lime;   
+                    case EColor.Mint:    return Mint;    
+                    case EColor.Cyan:    return Cyan;   
+                }
+            }
+        }
 
         // Style
         public Color color = Color.white;

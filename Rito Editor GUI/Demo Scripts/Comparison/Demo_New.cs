@@ -96,8 +96,7 @@ namespace Rito.EditorUtilities.Demo
                     .SetData("String FIeld", m.labelText)
                     .DrawLayout()
                     .GetValue(out m.labelText);
-
-
+                
 
                 m.labelText.DrawStringField("String FIeld", StringField.Brown)
                     .GetValue(out m.labelText);

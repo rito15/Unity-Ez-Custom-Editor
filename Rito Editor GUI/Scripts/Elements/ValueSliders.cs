@@ -13,6 +13,34 @@ namespace Rito.EditorUtilities
 {
     public abstract partial class ValueSliderBase<T, R> : DrawingElement<T, R> where R : ValueSliderBase<T, R>, new()
     {
+        public static R Default
+        {
+            get
+            {
+                switch (RitoEditorGUI.DefaultColorTheme)
+                {
+                    default:
+                    case EColor.Gray:    return Gray;
+                    case EColor.White:   return White;
+                    case EColor.Black:   return Black;
+                    case EColor.Red:     return Red;    
+                    case EColor.Green:   return Green;  
+                    case EColor.Blue:    return Blue;   
+                    case EColor.Pink:    return Pink;   
+                    case EColor.Magenta: return Magenta;
+                    case EColor.Violet:  return Violet; 
+                    case EColor.Purple:  return Purple; 
+                    case EColor.Brown:   return Brown;  
+                    case EColor.Gold:    return Gold;   
+                    case EColor.Orange:  return Orange; 
+                    case EColor.Yellow:  return Yellow; 
+                    case EColor.Lime:    return Lime;   
+                    case EColor.Mint:    return Mint;    
+                    case EColor.Cyan:    return Cyan;   
+                }
+            }
+        }
+
         protected GUIStyle labelStyle;
         protected GUIStyle sliderStyle;
 
@@ -144,8 +172,6 @@ namespace Rito.EditorUtilities
     }
     public partial class IntSlider : ValueSliderBase<int, IntSlider>
     {
-        public static IntSlider Default { get; } = new IntSlider();
-
         protected override void DrawSlider(in Rect sliderRect)
         {
             value = EditorGUI.IntSlider(sliderRect, value, minValue, maxValue);
@@ -153,8 +179,6 @@ namespace Rito.EditorUtilities
     }
     public partial class FloatSlider : ValueSliderBase<float, FloatSlider>
     {
-        public static FloatSlider Default { get; } = new FloatSlider();
-
         protected override void DrawSlider(in Rect sliderRect)
         {
             value = EditorGUI.Slider(sliderRect, value, minValue, maxValue);
@@ -162,8 +186,6 @@ namespace Rito.EditorUtilities
     }
     public partial class DoubleSlider : ValueSliderBase<double, DoubleSlider>
     {
-        public static DoubleSlider Default { get; } = new DoubleSlider();
-
         protected override void DrawSlider(in Rect sliderRect)
         {
             value = EditorGUI.Slider(sliderRect, (float)value, (float)minValue, (float)maxValue);

@@ -49,7 +49,8 @@ namespace Rito.EditorUtilities.Demo
                     .ActivateRectDebugger(true)
                     .ActivateTooltipDebugger(true)
                     .SetDebugRectColor(Color.cyan)
-                    .SetDebugTooltipColor(Color.cyan.SetA(0.5f));
+                    .SetDebugTooltipColor(Color.cyan.SetA(0.5f))
+                    ;
             }
 
             protected override void OnDrawInspector()

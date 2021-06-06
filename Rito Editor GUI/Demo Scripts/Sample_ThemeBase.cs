@@ -36,35 +36,10 @@ namespace Rito.EditorUtilities.Demo
     {
         private Sample_ThemeBase m;
 
-        protected abstract FoldoutHeaderBox fhBox { get; }
-        protected abstract HeaderBox hBox { get; }
-        protected abstract Box box { get; }
-        protected abstract Label label { get; }
-        protected abstract SelectableLabel sLabel { get; }
-
-        protected abstract IntField intField { get; }
-        protected abstract FloatField floatField { get; }
-        protected abstract Vector3Field v3Field { get; }
-        protected abstract Vector4Field v4Field { get; }
-        protected abstract BoolField boolField { get; }
-        protected abstract StringField stringField { get; }
-        protected abstract ColorField colorField { get; }
-        protected abstract ObjectField<Material> materialField { get; }
-
-        protected abstract IntSlider intSlider { get; }
-        protected abstract FloatSlider floatSlider { get; }
-        protected abstract TextArea textArea { get; }
-        protected abstract ColorPicker colorPicker { get; }
-        protected abstract HelpBox helpBox { get; }
-
-        protected abstract Dropdown<float> floatDropdown { get; }
-        protected abstract Dropdown<string> stringDropdown { get; }
-        protected abstract Button button { get; }
-        protected abstract ToggleButton toggleButton { get; }
-        protected abstract Toggle toggle { get; }
 
         protected abstract bool SetEditorBakgroundColor { get; }
         protected abstract Color EditorBackgroundColor { get; }
+        protected abstract EColor DefaultColorTheme { get; }
 
         protected virtual void OnEnable()
         {
@@ -82,12 +57,14 @@ namespace Rito.EditorUtilities.Demo
             setting
                 //.SetMargins(top: 12f, left: 12f, right: 20f, bottom: 16f)
                 .ActivateRectDebugger()
-                .ActivateTooltipDebugger();
+                .ActivateTooltipDebugger()
+                .SetDefaultColorTheme(DefaultColorTheme)
+                ;
         }
 
         protected override void OnDrawInspector()
         {
-            fhBox
+            FoldoutHeaderBox.Default
                 .SetData(m.bool1, "Foldout Header Box", 2f, 2f)
                 .Draw(20f, 62f)
                 .Layout()
@@ -95,19 +72,19 @@ namespace Rito.EditorUtilities.Demo
 
             if (m.bool1)
             {
-                label
+                Label.Default
                     .SetData("Label 012345")
                     .Draw(0.01f, 0.4f);
-                sLabel
+                SelectableLabel.Default
                     .SetData("Selectable Label")
                     .Draw(0.4f, 0.99f).Layout();
 
-                intField
+                IntField.Default
                     .SetData("Int Field", m.int1)
                     .Draw(0.01f, 0.99f).Layout()
                     .GetValue(out m.int1);
 
-                intSlider
+                IntSlider.Default
                     .SetData("Int Slider", m.int2, 0, 10)
                     .Draw(0.01f, 0.99f).Layout()
                     .GetValue(out m.int2);
@@ -116,100 +93,100 @@ namespace Rito.EditorUtilities.Demo
             RGUI.Space(10f);
 
             // ------------------------------------------------------
-            hBox
+            HeaderBox.Default
                 .SetData("Header Box", 2f, 2f)
                 .Draw(20f, 82f).Layout();
                 //.DrawLayout(4);
 
-            v3Field
+            Vector3Field.Default
                 .SetData("Vector3 Field", m.vector3)
                 .DrawLayout(0.01f, 0.99f).GetValue(out m.vector3);
 
-            boolField
+            BoolField.Default
                 .SetData("Bool Field", m.bool2)
                 .DrawLayout(0.01f, 0.99f).GetValue(out m.bool2);
 
-            stringField
+            StringField.Default
                 .SetData("String Field", m.string1, "Placeholder")
                 .DrawLayout(0.01f, 0.99f).GetValue(out m.string1);
 
-            button
+            Button.Default
                 .SetData("Button")
                 .Draw(0.01f, 0.49f);
-            toggleButton
+            ToggleButton.Default
                 .SetData("Toggle Button", m.bool3)
                 .Draw(0.5f, 0.99f).Layout().GetValue(out m.bool3);
 
             RGUI.Space(12f);
 
             // ------------------------------------------------------
-            box
+            Box.Default
                 .SetData(2f)
                 .DrawLayout(4, 2f, 0f);
 
-            colorField
+            ColorField.Default
                 .SetData("Color Field", m.color1)
                 .DrawLayout(0.01f, 0.99f).GetValue(out m.color1);
 
-            materialField
+            ObjectField<Material>.Default
                 .SetData("Material Field", m.material1)
                 .DrawLayout(0.01f, 0.99f).GetValue(out m.material1);
 
-            floatDropdown
+            Dropdown<float>.Default
                 .SetData("Float Dropdown", m.fList, m.fSelected)
                 .DrawLayout(0.01f, 0.99f).GetValue(out m.fSelected);
 
-            helpBox
+            HelpBox.Default
                 .SetData("Help Box", MessageType.Warning)
                 .DrawLayout(0.01f, 0.99f);
 
             RGUI.Space(8f);
 
             // ------------------------------------------------------
-            label
+            Label.Default
                 .SetData("Label ABCD abcd")
                 .Draw(0f, 0.4f);
 
-            sLabel
-                .SetData("Selectable Label")
+            EditableLabel.Default
+                .SetData("Editable Label")
                 .Draw(0.4f, 1.0f).Layout();
 
-            floatField
+            FloatField.Default
                 .SetData("Float Field", m.float1)
                 .DrawLayout().GetValue(out m.float1);
 
-            v4Field
+            Vector4Field.Default
                 .SetData("Vector4 Field", m.vector4)
                 .DrawLayout().GetValue(out m.vector4);
 
-            floatSlider
+            FloatSlider.Default
                 .SetData("Float Slider", m.float2, 0f, 1f)
                 .DrawLayout().GetValue(out m.float2);
 
-            textArea
+            TextArea.Default
                 .SetData(m.string2, "Text Area")
                 .DrawLayout().GetValue(out m.string2);
 
-            colorPicker
+            ColorPicker.Default
                 .SetData(m.color2)
                 .DrawLayout().GetValue(out m.color2);
 
-            helpBox
+            HelpBox.Default
                 .SetData("Help Box", MessageType.Error)
                 .DrawLayout();
 
-            stringDropdown
+            Dropdown<string>.Default
                 .SetData("String Dropdown", m.sArray, m.sSelected)
                 .DrawLayout().GetValue(out m.sSelected);
 
-            toggle
+            Toggle.Default
                 .SetData(m.bool4)
                 .DrawLayout().GetValue(out m.bool4);
 
-            button
+            Button.Default
                 .SetData("Button")
                 .Draw(0f, 0.49f);
-            toggleButton
+            ToggleButton.Default
                 .SetData("Toggle Button", m.bool5)
                 .Draw(0.5f, 1.0f).Layout().GetValue(out m.bool5);
         }

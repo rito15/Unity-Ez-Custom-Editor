@@ -15,7 +15,33 @@ namespace Rito.EditorUtilities
 
     public partial class TextArea : DrawingElement<string, TextArea>
     {
-        public static TextArea Default { get; } = new TextArea();
+        public static TextArea Default
+        {
+            get
+            {
+                switch (RitoEditorGUI.DefaultColorTheme)
+                {
+                    default:
+                    case EColor.Gray:    return Gray;
+                    case EColor.White:   return White;
+                    case EColor.Black:   return Black;
+                    case EColor.Red:     return Red;    
+                    case EColor.Green:   return Green;  
+                    case EColor.Blue:    return Blue;   
+                    case EColor.Pink:    return Pink;   
+                    case EColor.Magenta: return Magenta;
+                    case EColor.Violet:  return Violet; 
+                    case EColor.Purple:  return Purple; 
+                    case EColor.Brown:   return Brown;  
+                    case EColor.Gold:    return Gold;   
+                    case EColor.Orange:  return Orange; 
+                    case EColor.Yellow:  return Yellow; 
+                    case EColor.Lime:    return Lime;   
+                    case EColor.Mint:    return Mint;    
+                    case EColor.Cyan:    return Cyan;   
+                }
+            }
+        }
         protected GUIStyle inputStyle;
 
         // Data

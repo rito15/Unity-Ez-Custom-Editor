@@ -67,11 +67,7 @@ namespace Rito.EditorUtilities
             public Setting SetLayoutControlHeight(float height = DefaultLayoutControlHeight, 
                 float bottomMargin = DefaultLayoutControlBottomMargin)
             {
-                if(height < 0f) height = 0f;
-                if(bottomMargin < 0f) bottomMargin = 0f;
-
-                LayoutControlHeight = height;
-                LayoutControlBottomMargin = bottomMargin;
+                REG.SetLayoutControlHeight(height, bottomMargin);
 
                 return this;
             }
@@ -79,10 +75,7 @@ namespace Rito.EditorUtilities
             public Setting SetLayoutControlWidth(float xLeft = 0f, float xRight = 1f,
                 float xLeftOffset = 0f, float xRightOffset = 0f)
             {
-                LayoutXLeft = xLeft;
-                LayoutXRight = xRight;
-                LayoutXLeftOffset = xLeftOffset;
-                LayoutXRightOffset = xRightOffset;
+                REG.SetLayoutControlWidth(xLeft, xRight, xLeftOffset, xRightOffset);
 
                 return this;
             }
@@ -106,6 +99,12 @@ namespace Rito.EditorUtilities
                 EditorGUI.DrawRect(editorFullRect, color);
                 return this;
             }
+            /// <summary> Defualt를 참조했을 때 사용할 테마 설정 </summary>
+            public Setting SetDefaultColorTheme(EColor colorTheme)
+            {
+                REG.SetDefaultColorTheme(colorTheme);
+                return this;
+            }
 
             private static void Reset()
             {
@@ -119,13 +118,10 @@ namespace Rito.EditorUtilities
                 AlreadyFinalized = false;
                 AlwaysKeepSameViewWidth = false;
 
-                // Default Layout Values
-                LayoutControlHeight = DefaultLayoutControlHeight;
-                LayoutControlBottomMargin = DefaultLayoutControlBottomMargin;
-                LayoutXLeft = 0f;
-                LayoutXRight = 1f;
-                LayoutXLeftOffset = 0f;
-                LayoutXRightOffset = 0f;
+                // Settings
+                REG.SetLayoutControlHeight();
+                REG.SetLayoutControlWidth();
+                REG.SetDefaultColorTheme();
 
                 // Margins
                 marginLeft = DefaultMarginLeft;
@@ -263,7 +259,8 @@ namespace Rito.EditorUtilities
 
                 AlreadyFinalized = true;
             }
-        }
+
+        }// public class Setting
 
         #endregion
         /***********************************************************************
@@ -316,7 +313,7 @@ namespace Rito.EditorUtilities
 
         #endregion
         /***********************************************************************
-        *                               Layout Fields
+        *                               Setting Fields
         ***********************************************************************/
         #region .
 
@@ -340,6 +337,9 @@ namespace Rito.EditorUtilities
 
         /// <summary> 레이아웃 요소의 X 우측 위치 조정값(픽셀) </summary>
         public static float LayoutXRightOffset { get; private set; } = 0f;
+
+
+        public static EColor DefaultColorTheme { get; private set; } = EColor.Gray;
 
         #endregion
         /***********************************************************************
@@ -474,7 +474,7 @@ namespace Rito.EditorUtilities
 
         #endregion
         /***********************************************************************
-        *                               Methods
+        *                               Private Methods
         ***********************************************************************/
         #region .
 
@@ -674,6 +674,40 @@ namespace Rito.EditorUtilities
         private static void ShowErrorHelpbox()
         {
             EditorGUILayout.HelpBox(errorMessageDict[errorType], MessageType.Error);
+        }
+
+        #endregion
+        /***********************************************************************
+        *                               Public Methods
+        ***********************************************************************/
+        #region 
+
+        /// <summary> 레이아웃 요소의 기본 높이, 하단 여백 설정 </summary>
+        public static void SetLayoutControlHeight(
+            float height = DefaultLayoutControlHeight,
+            float bottomMargin = DefaultLayoutControlBottomMargin)
+        {
+            if (height < 0f) height = 0f;
+            if (bottomMargin < 0f) bottomMargin = 0f;
+
+            LayoutControlHeight = height;
+            LayoutControlBottomMargin = bottomMargin;
+        }
+
+        /// <summary> 레이아웃 요소의 X 좌표 비율, 오프셋을 통한 너비 설정 </summary>
+        public static void SetLayoutControlWidth(float xLeft = 0f, float xRight = 1f,
+                float xLeftOffset = 0f, float xRightOffset = 0f)
+        {
+            LayoutXLeft = xLeft;
+            LayoutXRight = xRight;
+            LayoutXLeftOffset = xLeftOffset;
+            LayoutXRightOffset = xRightOffset;
+        }
+
+        /// <summary> Default를 참조했을 때 사용할 테마 설정 </summary>
+        public static void SetDefaultColorTheme(EColor colorTheme = EColor.Gray)
+        {
+            DefaultColorTheme = colorTheme;
         }
 
         #endregion
