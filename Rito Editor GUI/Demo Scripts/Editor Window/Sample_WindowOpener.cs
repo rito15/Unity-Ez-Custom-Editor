@@ -10,6 +10,7 @@ namespace Rito.EditorUtilities.Demo
 {
     public class Sample_WindowOpener : MonoBehaviour
     {
+#if UNITY_EDITOR
         [UnityEditor.CustomEditor(typeof(Sample_WindowOpener))]
         private class CE : RitoEditor
         {
@@ -23,5 +24,6 @@ namespace Rito.EditorUtilities.Demo
 
             protected override void OnSetup(RitoEditorGUI.Setting setting) { }
         }
+#endif
     }
 }

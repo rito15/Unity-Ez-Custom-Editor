@@ -36,6 +36,7 @@ namespace Rito.EditorUtilities.Demo
 
         public bool toggle1 = true;
 
+#if UNITY_EDITOR
         [UnityEditor.CustomEditor(typeof(Sample_Extensions))]
         private class CE : RitoEditor
         {
@@ -166,5 +167,6 @@ namespace Rito.EditorUtilities.Demo
                 m.mat.DrawField("Material Field").GetValue(out m.mat);
             }
         }
+#endif
     }
 }
