@@ -112,48 +112,48 @@ namespace Rito.EditorUtilities
         /// <summary>
         /// 레이아웃 요소들을 감싸는 헤더박스 그리기
         /// </summary>
-        /// <param name="elementCount">레이아웃 요소 개수</param>
-        public R DrawLayout(int elementCount)
+        /// <param name="contentCount">레이아웃 요소 개수</param>
+        public R DrawLayout(int contentCount)
         {
-            return DrawLayout(elementCount, 0f, 0f, 0f, 0f);
+            return DrawLayout(contentCount, 0f, 0f, 0f, 0f);
         }
         /// <summary>
         /// 레이아웃 요소들을 감싸는 헤더박스 그리기 + 추가 높이 지정
         /// </summary>
-        /// <param name="elementCount">레이아웃 요소 개수</param>
+        /// <param name="contentCount">레이아웃 요소 개수</param>
         /// <param name="bonusContentHeight">추가 높이(PaddingBottom)</param>
-        public R DrawLayout(int elementCount, float bonusContentHeight)
+        public R DrawLayout(int contentCount, float bonusContentHeight)
         {
-            return DrawLayout(elementCount, 0f, bonusContentHeight, 0f, 0f);
+            return DrawLayout(contentCount, 0f, bonusContentHeight, 0f, 0f);
         }
         /// <summary>
         /// 레이아웃 요소들을 감싸는 헤더박스 그리기
         /// </summary>
-        /// <param name="elementCount">레이아웃 요소 개수</param>
+        /// <param name="contentCount">레이아웃 요소 개수</param>
         /// <param name="paddingVertical">상하 내부 여백</param>
         /// <param name="paddingHorizontal">좌우 내부 여백</param>
-        public R DrawLayout(int elementCount, float paddingVertical, float paddingHorizontal)
+        public R DrawLayout(int contentCount, float paddingVertical, float paddingHorizontal)
         {
-            return DrawLayout(elementCount, paddingVertical, paddingVertical, paddingHorizontal, paddingHorizontal);
+            return DrawLayout(contentCount, paddingVertical, paddingVertical, paddingHorizontal, paddingHorizontal);
         }
         /// <summary>
         /// 레이아웃 요소들을 감싸는 헤더박스 그리기
         /// </summary>
-        /// <param name="elementCount">레이아웃 요소 개수</param>
+        /// <param name="contentCount">레이아웃 요소 개수</param>
         /// <param name="paddingTop">상단 내부 여백</param>
         /// <param name="paddingBottom">하단 내부 여백</param>
         /// <param name="paddingLeft">좌측 내부 여백</param>
         /// <param name="paddingRight">우측 내부 여백</param>
-        public virtual R DrawLayout(int elementCount, float paddingTop, float paddingBottom, float paddingLeft, float paddingRight)
+        public virtual R DrawLayout(int contentCount, float paddingTop, float paddingBottom, float paddingLeft, float paddingRight)
         {
-            if (elementCount < 0) elementCount = 0;
+            if (contentCount < 0) contentCount = 0;
 
             float lcHeight = REG.LayoutControlHeight;
             float lcMargin = REG.LayoutControlBottomMargin;
             float OneHeight = lcHeight + lcMargin;
 
             // 모든 레이아웃 요소의 높이 합
-            float AllControlHeight = OneHeight * elementCount;
+            float AllControlHeight = OneHeight * contentCount;
 
             Draw
             (
@@ -438,16 +438,16 @@ namespace Rito.EditorUtilities
             value = this.foldout;
             return this;
         }
-        public override FoldoutHeaderBox DrawLayout(int elementCount, float paddingTop, float paddingBottom, float paddingLeft, float paddingRight)
+        public override FoldoutHeaderBox DrawLayout(int contentCount, float paddingTop, float paddingBottom, float paddingLeft, float paddingRight)
         {
-            if (elementCount < 0) elementCount = 0;
+            if (contentCount < 0) contentCount = 0;
 
             float lcHeight = REG.LayoutControlHeight;
             float lcMargin = REG.LayoutControlBottomMargin;
             float OneHeight = lcHeight + lcMargin;
 
             // 모든 레이아웃 요소의 높이 합
-            float AllControlHeight = OneHeight * elementCount;
+            float AllControlHeight = OneHeight * contentCount;
 
             Draw
             (
