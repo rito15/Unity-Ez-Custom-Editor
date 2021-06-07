@@ -109,6 +109,11 @@ namespace Rito.EditorUtilities
             this.inputTextColor = color;
             return this as R;
         }
+        public R SetInputTextFocusedColor(Color color)
+        {
+            this.inputTextFocusedColor = color;
+            return this as R;
+        }
         public R SetInputBackgroundColor(Color color)
         {
             this.inputBackgroundColor = color;

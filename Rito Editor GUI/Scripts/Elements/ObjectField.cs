@@ -13,13 +13,14 @@ namespace Rito.EditorUtilities
 {
     public class ObjectField<T> : ValueFieldWithSetter<T, ObjectField<T>> where T : UnityEngine.Object
     {
+        // 
         protected bool allowSceneObjects = true;
 
-        public ObjectField<T> SetData(string label, T value, bool allowSceneObject = true, float widthThreshold = 0.4f)
+        public ObjectField<T> SetData(string label, T value, bool allowSceneObjects, float widthThreshold = 0.4f)
         {
             this.labelContent = new GUIContent(label);
             this.value = value;
-            this.allowSceneObjects = allowSceneObject;
+            this.allowSceneObjects = allowSceneObjects;
             this.widthThreshold = widthThreshold;
 
             return this;

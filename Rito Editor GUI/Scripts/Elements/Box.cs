@@ -129,7 +129,7 @@ namespace Rito.EditorUtilities
             => Draw(xLeft, xRight, 0f, height, 0f, 0f);
 
         /// <summary>
-        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
+        /// 레이아웃 요소들을 감싸는 박스 그리기
         /// </summary>
         /// <param name="contentCount">레이아웃 요소 개수</param>
         public Box DrawLayout(int contentCount)
@@ -137,7 +137,7 @@ namespace Rito.EditorUtilities
             return DrawLayout(contentCount, 0f, 0f, 0f, 0f);
         }
         /// <summary>
-        /// 레이아웃 요소들을 감싸는 헤더박스 그리기 + 추가 높이 지정
+        /// 레이아웃 요소들을 감싸는 박스 그리기 + 추가 높이 지정
         /// </summary>
         /// <param name="contentCount">레이아웃 요소 개수</param>
         /// <param name="bonusHeight">추가 높이(paddingBottom) </param>
@@ -146,7 +146,7 @@ namespace Rito.EditorUtilities
             return DrawLayout(contentCount, 0f, bonusHeight, 0f, 0f);
         }
         /// <summary>
-        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
+        /// 레이아웃 요소들을 감싸는 박스 그리기
         /// </summary>
         /// <param name="contentCount">레이아웃 요소 개수</param>
         /// <param name="paddingVertical">상하 내부 여백</param>
@@ -156,7 +156,7 @@ namespace Rito.EditorUtilities
             return DrawLayout(contentCount, paddingVertical, paddingVertical, paddingHorizontal, paddingHorizontal);
         }
         /// <summary>
-        /// 레이아웃 요소들을 감싸는 헤더박스 그리기
+        /// 레이아웃 요소들을 감싸는 박스 그리기
         /// </summary>
         /// <param name="contentCount">레이아웃 요소 개수</param>
         /// <param name="paddingTop">상단 내부 여백</param>

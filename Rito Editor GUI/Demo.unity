@@ -318,7 +318,7 @@ MonoBehaviour:
   - 0.3
   - 0.4
   floatSelected: 0
-  labelText: aBcDewe
+  labelText: ABCD12345
 --- !u!114 &319512592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1073,7 +1073,7 @@ GameObject:
   - component: {fileID: 1063854860}
   - component: {fileID: 1063854859}
   m_Layer: 0
-  m_Name: Editor Window
+  m_Name: Sample Editor Window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

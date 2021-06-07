@@ -20,7 +20,7 @@ namespace Rito.EditorUtilities
         // Data
         protected float outlineWidth = 0f;
         protected string headerText = "Header";
-        protected float headerTextLeftPadding = 0f;
+        protected float headerTextIndent = 0f; // 헤더 텍스트 들여쓰기
 
         protected float headerHeight; // 헤더박스 높이
 
@@ -203,9 +203,9 @@ namespace Rito.EditorUtilities
             }
         }
 
-        public HeaderBox SetData(string headerText, float outlineWidth = 0f, float headerTextLeftPadding = 2f)
+        public HeaderBox SetData(string headerText, float outlineWidth = 0f, float headerTextIndent = 2f)
         {
-            this.headerTextLeftPadding = headerTextLeftPadding;
+            this.headerTextIndent = headerTextIndent;
             this.headerText = headerText;
             this.outlineWidth = outlineWidth;
             return this;
@@ -251,7 +251,7 @@ namespace Rito.EditorUtilities
             }
 
             Rect headerRect = new Rect(x, y, w, hh);
-            Rect headerTextRect = new Rect(x + headerTextLeftPadding, y, w - headerTextLeftPadding, hh);
+            Rect headerTextRect = new Rect(x + headerTextIndent, y, w - headerTextIndent, hh);
             Rect contentRect = new Rect(x, y + hh + o, w, ch);
             EditorGUI.DrawRect(headerRect, headerColor);
             EditorGUI.DrawRect(contentRect, contentColor);
@@ -321,17 +321,17 @@ namespace Rito.EditorUtilities
 
         #endregion
 
-        public FoldoutHeaderBox SetData(bool foldout, string headerText, float outlineWidth = 0f, float headerTextLeftPadding = 2f)
+        public FoldoutHeaderBox SetData(bool foldout, string headerText, float outlineWidth = 0f, float headerTextIndent = 2f)
         {
             this.foldout = foldout;
             this.headerText = headerText;
             this.outlineWidth = outlineWidth;
-            this.headerTextLeftPadding = headerTextLeftPadding;
+            this.headerTextIndent = headerTextIndent;
             return this;
         }
-        public FoldoutHeaderBox SetData(string headerText, bool foldout, float outlineWidth = 0f, float headerTextLeftPadding = 2f)
+        public FoldoutHeaderBox SetData(string headerText, bool foldout, float outlineWidth = 0f, float headerTextIndent = 2f)
         {
-            return SetData(foldout, headerText, outlineWidth, headerTextLeftPadding);
+            return SetData(foldout, headerText, outlineWidth, headerTextIndent);
         }
 
         /// <summary> 헤더 높이만큼 Space + 컨텐츠 박스 상단 내부 여백 지정 </summary>
@@ -390,7 +390,7 @@ namespace Rito.EditorUtilities
             }
 
             Rect headerRect = new Rect(x, y, w, hh);
-            Rect headerTextRect = new Rect(x + headerTextLeftPadding, y, w - headerTextLeftPadding, hh);
+            Rect headerTextRect = new Rect(x + headerTextIndent, y, w - headerTextIndent, hh);
 
             // Header Button
             var oldBG = GUI.backgroundColor;

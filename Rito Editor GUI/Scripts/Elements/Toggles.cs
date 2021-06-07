@@ -102,13 +102,23 @@ namespace Rito.EditorUtilities
 
         #endregion
 
-        public BoolField SetData(string label, bool value, bool toggleLeft = false, float widthThreshold = 0.4f)
+        public BoolField SetData(string label, bool value, float widthThreshold = 0.4f)
         {
             this.labelContent = new GUIContent(label);
+            this.value = value;
+            this.widthThreshold = widthThreshold;
+            this.toggleLeft = false;
 
+            return this;
+        }
+
+        public BoolField SetData(string label, bool value, bool toggleLeft, float widthThreshold = 0.4f)
+        {
+            this.labelContent = new GUIContent(label);
             this.value = value;
             this.widthThreshold = widthThreshold;
             this.toggleLeft = toggleLeft;
+
             return this;
         }
 

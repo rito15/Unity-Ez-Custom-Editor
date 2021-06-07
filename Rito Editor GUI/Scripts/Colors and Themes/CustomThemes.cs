@@ -199,83 +199,99 @@ namespace Rito.EditorUtilities
         public static TextArea Gray { get; } = new TextArea { };
         public static TextArea White { get; } = new TextArea
         {
-            inputBackgroundColor = ColorReg.White.InputBG,
-            inputTextColor = ColorReg.White.InputText,
+            backgroundColor = ColorReg.White.InputBG,
+            textColor = ColorReg.White.InputText,
+            textFocusedColor = ColorReg.White.InputTextFocused,
         };
         public static TextArea Black { get; } = new TextArea
         {
-            inputBackgroundColor = ColorReg.Black.InputBG,
-            inputTextColor = ColorReg.Black.InputText,
+            backgroundColor = ColorReg.Black.InputBG,
+            textColor = ColorReg.Black.InputText,
+            textFocusedColor = ColorReg.Black.InputTextFocused,
         };
         public static TextArea Red { get; } = new TextArea
         {
-            inputBackgroundColor = ColorReg.Red.InputBG,
-            inputTextColor = ColorReg.Red.InputText,
+            backgroundColor = ColorReg.Red.InputBG,
+            textColor = ColorReg.Red.InputText,
+            textFocusedColor = ColorReg.Red.InputTextFocused,
         };
         public static TextArea Green { get; } = new TextArea
         {
-            inputBackgroundColor = ColorReg.Green.InputBG,
-            inputTextColor = ColorReg.Green.InputText,
+            backgroundColor = ColorReg.Green.InputBG,
+            textColor = ColorReg.Green.InputText,
+            textFocusedColor = ColorReg.Green.InputTextFocused,
         };
         public static TextArea Blue { get; } = new TextArea
         {
-            inputBackgroundColor = ColorReg.Blue.InputBG,
-            inputTextColor = ColorReg.Blue.InputText,
+            backgroundColor = ColorReg.Blue.InputBG,
+            textColor = ColorReg.Blue.InputText,
+            textFocusedColor = ColorReg.Blue.InputTextFocused,
         };
         public static TextArea Pink { get; } = new TextArea
         {
-            inputBackgroundColor = ColorReg.Pink.InputBG,
-            inputTextColor = ColorReg.Pink.InputText,
+            backgroundColor = ColorReg.Pink.InputBG,
+            textColor = ColorReg.Pink.InputText,
+            textFocusedColor = ColorReg.Pink.InputTextFocused,
         };
         public static TextArea Magenta { get; } = new TextArea
         {
-            inputBackgroundColor = ColorReg.Magenta.InputBG,
-            inputTextColor = ColorReg.Magenta.InputText,
+            backgroundColor = ColorReg.Magenta.InputBG,
+            textColor = ColorReg.Magenta.InputText,
+            textFocusedColor = ColorReg.Magenta.InputTextFocused,
         };
         public static TextArea Violet { get; } = new TextArea
         {
-            inputBackgroundColor = ColorReg.Violet.InputBG,
-            inputTextColor = ColorReg.Violet.InputText,
+            backgroundColor = ColorReg.Violet.InputBG,
+            textColor = ColorReg.Violet.InputText,
+            textFocusedColor = ColorReg.Violet.InputTextFocused,
         };
         public static TextArea Purple { get; } = new TextArea
         {
-            inputBackgroundColor = ColorReg.Purple.InputBG,
-            inputTextColor = ColorReg.Purple.InputText,
+            backgroundColor = ColorReg.Purple.InputBG,
+            textColor = ColorReg.Purple.InputText,
+            textFocusedColor = ColorReg.Purple.InputTextFocused,
         };
         public static TextArea Brown { get; } = new TextArea
         {
-            inputBackgroundColor = ColorReg.Brown.InputBG,
-            inputTextColor = ColorReg.Brown.InputText,
+            backgroundColor = ColorReg.Brown.InputBG,
+            textColor = ColorReg.Brown.InputText,
+            textFocusedColor = ColorReg.Brown.InputTextFocused,
         };
         public static TextArea Gold { get; } = new TextArea
         {
-            inputBackgroundColor = ColorReg.Gold.InputBG,
-            inputTextColor = ColorReg.Gold.InputText,
+            backgroundColor = ColorReg.Gold.InputBG,
+            textColor = ColorReg.Gold.InputText,
+            textFocusedColor = ColorReg.Gold.InputTextFocused,
         };
         public static TextArea Orange { get; } = new TextArea
         {
-            inputBackgroundColor = ColorReg.Orange.InputBG,
-            inputTextColor = ColorReg.Orange.InputText,
+            backgroundColor = ColorReg.Orange.InputBG,
+            textColor = ColorReg.Orange.InputText,
+            textFocusedColor = ColorReg.Orange.InputTextFocused,
         };
         public static TextArea Yellow { get; } = new TextArea
         {
-            inputBackgroundColor = ColorReg.Yellow.InputBG,
-            inputTextColor = ColorReg.Yellow.InputText,
+            backgroundColor = ColorReg.Yellow.InputBG,
+            textColor = ColorReg.Yellow.InputText,
+            textFocusedColor = ColorReg.Yellow.InputTextFocused,
         };
         public static TextArea Lime { get; } = new TextArea
         {
-            inputBackgroundColor = ColorReg.Lime.InputBG,
-            inputTextColor = ColorReg.Lime.InputText,
+            backgroundColor = ColorReg.Lime.InputBG,
+            textColor = ColorReg.Lime.InputText,
+            textFocusedColor = ColorReg.Lime.InputTextFocused,
         };
         public static TextArea Mint { get; } = new TextArea
         {
-            inputBackgroundColor = ColorReg.Mint.InputBG,
-            inputTextColor = ColorReg.Mint.InputText,
+            backgroundColor = ColorReg.Mint.InputBG,
+            textColor = ColorReg.Mint.InputText,
+            textFocusedColor = ColorReg.Mint.InputTextFocused,
         };
         public static TextArea Cyan { get; } = new TextArea
         {
-            inputBackgroundColor = ColorReg.Cyan.InputBG,
-            inputTextColor = ColorReg.Cyan.InputText,
+            backgroundColor = ColorReg.Cyan.InputBG,
+            textColor = ColorReg.Cyan.InputText,
+            textFocusedColor = ColorReg.Cyan.InputTextFocused,
         };
     }
     public partial class BoolField

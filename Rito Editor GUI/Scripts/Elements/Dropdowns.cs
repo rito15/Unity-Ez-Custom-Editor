@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
 
 // 날짜 : 2021-06-02 PM 4:17:12
 // 작성자 : Rito
@@ -32,7 +33,7 @@ namespace Rito.EditorUtilities
 
             return this;
         }
-        public Dropdown<T> SetData(string label, List<T> options, int selectedIndex, float widthThreshold = 0.4f)
+        public Dropdown<T> SetData(string label, IList<T> options, int selectedIndex, float widthThreshold = 0.4f)
             => SetData(label, options.ToArray(), selectedIndex, widthThreshold);
 
         /// <summary> 선택된 요소의 값을 직접 가져오기 </summary>

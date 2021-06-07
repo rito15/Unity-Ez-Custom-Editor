@@ -48,21 +48,23 @@ namespace Rito.EditorUtilities
         protected string placeholder = "";
 
         // Styles - Input Field
-        public Color inputTextColor = Color.white;
-        public Color inputBackgroundColor = Color.white;
-        public int inputFontSize = 12;
-        public FontStyle inputFontStyle = FontStyle.Normal;
-        public TextAnchor inputTextAlignment = TextAnchor.MiddleLeft;
+        public Color textColor = Color.white;
+        public Color textFocusedColor = Color.white;
+        public Color backgroundColor = Color.white;
+        public int fontSize = 12;
+        public FontStyle fontStyle = FontStyle.Normal;
+        public TextAnchor textAlignment = TextAnchor.MiddleLeft;
 
         public override TextArea Clone()
         {
             return new TextArea
             {
-                inputTextColor = inputTextColor,
-                inputBackgroundColor = inputBackgroundColor,
-                inputFontSize = inputFontSize,
-                inputFontStyle = inputFontStyle,
-                inputTextAlignment = inputTextAlignment
+                textColor = textColor,
+                textFocusedColor = textFocusedColor,
+                backgroundColor = backgroundColor,
+                fontSize = fontSize,
+                fontStyle = fontStyle,
+                textAlignment = textAlignment
             };
         }
 
@@ -73,27 +75,32 @@ namespace Rito.EditorUtilities
 
         public TextArea SetTextColor(Color color)
         {
-            this.inputTextColor = color;
+            this.textColor = color;
+            return this;
+        }
+        public TextArea SetTextFocusedColor(Color color)
+        {
+            this.textFocusedColor = color;
             return this;
         }
         public TextArea SetBackgroundColor(Color color)
         {
-            this.inputBackgroundColor = color;
+            this.backgroundColor = color;
             return this;
         }
         public TextArea SetFontSize(int fontSize)
         {
-            this.inputFontSize = fontSize;
+            this.fontSize = fontSize;
             return this;
         }
         public TextArea SetFontStyle(FontStyle fontStyle)
         {
-            this.inputFontStyle = fontStyle;
+            this.fontStyle = fontStyle;
             return this;
         }
         public TextArea SetTextAlignment(TextAnchor allignment)
         {
-            this.inputTextAlignment = allignment;
+            this.textAlignment = allignment;
             return this;
         }
 
@@ -116,14 +123,14 @@ namespace Rito.EditorUtilities
                 inputStyle = new GUIStyle(GUI.skin.textField);
 
             var oldBackgroundColor = GUI.backgroundColor;
-            GUI.backgroundColor = inputBackgroundColor * 2f;
+            GUI.backgroundColor = backgroundColor * 2f;
 
-            inputStyle.normal.textColor = inputTextColor;
-            inputStyle.hover.textColor = inputTextColor.AddRGB(0.25f);
-            inputStyle.focused.textColor = inputTextColor.AddRGB(0.25f);
-            inputStyle.fontSize = inputFontSize;
-            inputStyle.fontStyle = inputFontStyle;
-            inputStyle.alignment = inputTextAlignment;
+            inputStyle.normal.textColor = textColor;
+            inputStyle.hover.textColor = textColor.AddRGB(0.25f);
+            inputStyle.focused.textColor = textFocusedColor;
+            inputStyle.fontSize = fontSize;
+            inputStyle.fontStyle = fontStyle;
+            inputStyle.alignment = textAlignment;
 
 
             EditorGUI.BeginChangeCheck();
@@ -134,7 +141,7 @@ namespace Rito.EditorUtilities
             isChanged = EditorGUI.EndChangeCheck();
 
             // Placeholder
-            inputStyle.normal.textColor = inputTextColor.SetA(0.5f);
+            inputStyle.normal.textColor = textColor.SetA(0.5f);
             if (string.IsNullOrWhiteSpace(value) && !string.IsNullOrWhiteSpace(placeholder) &&
                 !(GUI.GetNameOfFocusedControl() == "TextField"))
                 EditorGUI.LabelField(rect, placeholder, inputStyle);

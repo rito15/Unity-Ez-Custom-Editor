@@ -176,7 +176,7 @@ namespace Rito.EditorUtilities
         protected GUIStyle style;
 
         // Data
-        protected string label = "Toggle Button";
+        protected string text = "Toggle Button";
 
         // Styles
         public int fontSize = 12;
@@ -275,10 +275,10 @@ namespace Rito.EditorUtilities
 
         #endregion
 
-        public ToggleButton SetData(string label, bool value)
+        public ToggleButton SetData(string text, bool pressed)
         {
-            this.label = label;
-            this.value = value;
+            this.text = text;
+            this.value = pressed;
             return this;
         }
 
@@ -305,7 +305,7 @@ namespace Rito.EditorUtilities
 
             isChanged = false;
 
-            if (GUI.Button(rect, label, style))
+            if (GUI.Button(rect, text, style))
             {
                 value = !value;
                 isChanged = true;

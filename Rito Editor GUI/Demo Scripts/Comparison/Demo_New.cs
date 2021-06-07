@@ -28,7 +28,7 @@ namespace Rito.EditorUtilities.Demo
             protected override void OnSetup(RitoEditorGUI.Setting setting)
             {
                 setting
-                    .SetMargins(bottom: 12f)
+                    .SetMargins(bottom: 12f, right:12f)
                     //.KeepSameViewWidth()
                     //.SetEditorBackgroundColor(Color.white.SetA(0.2f))
                     .SetLayoutControlWidth(0.01f, 0.985f)
@@ -69,42 +69,49 @@ namespace Rito.EditorUtilities.Demo
                         .GetValue(out m.toggleButtonValue);
                 }
 
-                StringField.Blue
-                    .Space(8f)
-                    .SetData("String field", "STR")
-                    .DrawLayout()
-                    .OnValueChanged(v => Debug.Log(v))
-                    ;
+                Space(40f);
 
-                BoolField.Blue
-                    .SetData("Bool Field", b)
-                    .DrawLayout()
-                    .GetValue(out b)
-                    .OnValueChanged(v => Debug.Log(v));
+                //private bool boolValue = false;
+
+                HeaderBox.Default
+                    .SetData("Header Box 1", 0f)
+                    .Draw(20f, 40f)
+                    .Space(70f);
+
+                HeaderBox.Default
+                    .SetData("Header Box 2", 2f)
+                    .DrawLayout(2);
+
+                IntField.Default
+                    .SetData("Int Field", 1)
+                    .DrawLayout();
+
+                Button.Default
+                    .SetData("Button")
+                    .DrawLayout();
 
 
                 Space(40f);
-
-                // private string labelText = "Editable Label"
-
-                EditableLabel.Default
-                    .SetData(m.labelText)
-                    .DrawLayout()
-                    .GetValue(out m.labelText);
-                
-                StringField.Default
-                    .SetData("String FIeld", m.labelText)
-                    .DrawLayout()
-                    .GetValue(out m.labelText);
-
-
-                m.labelText.DrawStringField("String FIeld", StringField.Brown)
-                    .GetValue(out m.labelText);
-
+                Space(40f);
                 Space(40f);
             }
-            bool b;
-            private string labelText = "Editable Label";
+            private bool boolValue, toggle;
+            private int intValue = 5;
+            private float floatValue = 5f;
+            private double doubleValue = 5.0;
+            private string stringValue = "abcde";
+            private string stringValue2 = "";
+
+            private Space enumValue;
+
+            private Color color = Color.red;
+
+            private Vector2 vector2Value = new Vector2(1f, 2f);
+            private Vector3 vector3Value = new Vector3(1f, 2f, 3f);
+            private Vector4 vector4Value = new Vector4(1f, 2f, 3f, 4f);
+            private Vector2Int vector2IntValue = new Vector2Int(1, 2);
+            private Vector3Int vector3IntValue = new Vector3Int(1, 2, 3);
+
         }
         public string labelText = "Editable Label";
     }
