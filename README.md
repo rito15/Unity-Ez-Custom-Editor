@@ -172,9 +172,9 @@ public class TestWindow : RitoEditorWindow
 
 </details>
 
-<br>
-
 </details>
+
+<br>
 
 ## [2] 옵션 설정
 
@@ -331,9 +331,9 @@ private void OnEnable()
 
 </details>
 
-<br>
-
 </details>
+
+<br>
 
 ## [4] 그리기
 
@@ -1261,9 +1261,9 @@ FloatField.Brown
 
 </details>
 
-<br>
-
 </details>
+
+<br>
 
 <br>
 
@@ -1383,9 +1383,9 @@ protected override void OnSetup(RitoEditorGUI.Setting setting)
 
 </details>
 
-<br>
-
 </details>
+
+<br>
 
 <br>
 
@@ -3054,9 +3054,9 @@ if (foldout2)
 
 </details>
 
-<br>
-
 </details>
+
+<br>
 
 <br>
 
@@ -3687,8 +3687,8 @@ stringList.DrawDropdown("String List", sIndex).GetValue(out sIndex);
 
 </details>
 
-<br>
-
 </details>
+
+<br>
 
 <br>
