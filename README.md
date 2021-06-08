@@ -100,11 +100,15 @@ public class MyComponentEditor : RitoEditor
 #endif
 ```
 
+<br>
+
 기존의 커스텀 에디터 작성 방식과 매우 유사합니다.
 
 `CustomEditor` 애트리뷰트를 사용하는 점은 동일하며,
 
 `Editor` 클래스 대신 `RitoEditor` 클래스를 상속받습니다.
+
+<br>
 
 그리고 `OnSetup()` 메소드와 `OnDrawInspector()` 메소드를 위와 같이 작성해야 하며,
 
