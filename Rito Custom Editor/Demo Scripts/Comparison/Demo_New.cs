@@ -19,12 +19,12 @@ namespace Rito.EditorUtilities.Demo
         public float[] floatArray = { 0.1f, 0.2f, 0.3f, 0.4f };
         public int floatSelected;
 
-        [CustomEditor(typeof(Demo_New))]
+        [UnityEditor.CustomEditor(typeof(Demo_New))]
         private class CE : RitoEditor
         {
             private Demo_New m;
             private void OnEnable() => m = target as Demo_New;
-
+            
             protected override void OnSetup(RitoEditorGUI.Setting setting)
             {
                 setting
@@ -71,30 +71,37 @@ namespace Rito.EditorUtilities.Demo
 
                 Space(40f);
 
-                //private bool boolValue = false;
+                //private bool foldout1, foldout2;
 
-                HeaderBox.Default
-                    .SetData("Header Box 1", 0f)
+                FoldoutHeaderBox.Default
+                    .SetData(foldout1, "Foldout Header Box 1", 0f)
                     .Draw(20f, 40f)
-                    .Space(70f);
+                    .GetValue(out foldout1)
+                    .Space(!foldout1 ? 30f : 70f);
 
-                HeaderBox.Default
-                    .SetData("Header Box 2", 2f)
-                    .DrawLayout(2);
+                FoldoutHeaderBox.Default
+                    .SetData(foldout2, "Foldout Header Box 2", 2f)
+                    .DrawLayout(2)
+                    .GetValue(out foldout2);
 
-                IntField.Default
-                    .SetData("Int Field", 1)
-                    .DrawLayout();
+                if (foldout2)
+                {
+                    IntField.Default
+                        .SetData("Int Field", 1)
+                        .DrawLayout();
 
-                Button.Default
-                    .SetData("Button")
-                    .DrawLayout();
+                    Button.Default
+                        .SetData("Button")
+                        .DrawLayout();
+                }
 
 
                 Space(40f);
                 Space(40f);
                 Space(40f);
             }
+            private bool foldout1, foldout2;
+
             private bool boolValue, toggle;
             private int intValue = 5;
             private float floatValue = 5f;

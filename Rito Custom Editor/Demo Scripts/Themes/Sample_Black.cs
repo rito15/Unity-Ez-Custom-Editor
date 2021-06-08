@@ -11,16 +11,16 @@ using UnityEditor;
 
 namespace Rito.EditorUtilities.Demo
 {
-    public class Sample_Blue : Sample_ThemeBase
+    public class Sample_Black : Sample_ThemeBase
     {
-        [CustomEditor(typeof(Sample_Blue))]
+        [UnityEditor.CustomEditor(typeof(Sample_Black))]
         private class CE : SampleCustomEditorBase
         {
             protected override bool SetEditorBakgroundColor { get; } = true;
 
-            protected override Color EditorBackgroundColor { get; } = RColor.Gray2;
+            protected override Color EditorBackgroundColor { get; } = Color.gray;
 
-            protected override EColor DefaultColorTheme => EColor.Blue;
+            protected override EColor DefaultColorTheme => EColor.Black;
         }
     }
 }

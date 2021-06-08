@@ -13,7 +13,7 @@ namespace Rito.EditorUtilities.Demo
 {
     public class Demo_Old : MonoBehaviour
     {
-        [CustomEditor(typeof(Demo_Old))]
+        [UnityEditor.CustomEditor(typeof(Demo_Old))]
         private class CE : Editor
         {
             private bool foldout = true;

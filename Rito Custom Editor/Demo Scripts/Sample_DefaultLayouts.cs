@@ -15,7 +15,7 @@ namespace Rito.EditorUtilities.Demo
 {
     public class Sample_DefaultLayouts : MonoBehaviour
     {
-        [CustomEditor(typeof(Sample_DefaultLayouts))]
+        [UnityEditor.CustomEditor(typeof(Sample_DefaultLayouts))]
         private class CE : RitoEditor
         {
             const int MaxLength = 50;
