@@ -222,6 +222,12 @@ namespace Rito.EditorUtilities
     }
     public class FloatField : ValueFieldWithSetter<float, FloatField>
     {
+        /// <summary> 소수점 자리수 제한 </summary>
+        public FloatField SetPrecision(int precision)
+        {
+            value.SetPrecision(precision);
+            return this;
+        }
         protected override void DrawFields(in Rect labelRect, in Rect inputRect)
         {
             value =
@@ -230,6 +236,12 @@ namespace Rito.EditorUtilities
     }
     public class DoubleField : ValueFieldWithSetter<double, DoubleField>
     {
+        /// <summary> 소수점 자리수 제한 </summary>
+        public DoubleField SetPrecision(int precision)
+        {
+            value.SetPrecision(precision);
+            return this;
+        }
         protected override void DrawFields(in Rect labelRect, in Rect inputRect)
         {
             value =

@@ -179,6 +179,12 @@ namespace Rito.EditorUtilities
     }
     public partial class FloatSlider : ValueSliderBase<float, FloatSlider>
     {
+        /// <summary> 소수점 자리수 제한 </summary>
+        public FloatSlider SetPrecision(int precision)
+        {
+            value.SetPrecision(precision);
+            return this;
+        }
         protected override void DrawSlider(in Rect sliderRect)
         {
             value = EditorGUI.Slider(sliderRect, value, minValue, maxValue);
@@ -186,6 +192,12 @@ namespace Rito.EditorUtilities
     }
     public partial class DoubleSlider : ValueSliderBase<double, DoubleSlider>
     {
+        /// <summary> 소수점 자리수 제한 </summary>
+        public DoubleSlider SetPrecision(int precision)
+        {
+            value.SetPrecision(precision);
+            return this;
+        }
         protected override void DrawSlider(in Rect sliderRect)
         {
             value = EditorGUI.Slider(sliderRect, (float)value, (float)minValue, (float)maxValue);

@@ -89,6 +89,12 @@ namespace Rito.EditorUtilities
     }
     public class Vector2Field : VectorFieldBase<Vector2, Vector2Field>
     {
+        /// <summary> 소수점 자리수 제한 </summary>
+        public Vector2Field SetPrecision(int precision)
+        {
+            value.SetPrecision(precision);
+            return this;
+        }
         protected override void DrawVectorField(in Rect inputRect)
         {
             value = EditorGUI.Vector2Field(inputRect, "", value);
@@ -96,6 +102,12 @@ namespace Rito.EditorUtilities
     }
     public class Vector3Field : VectorFieldBase<Vector3, Vector3Field>
     {
+        /// <summary> 소수점 자리수 제한 </summary>
+        public Vector3Field SetPrecision(int precision)
+        {
+            value.SetPrecision(precision);
+            return this;
+        }
         protected override void DrawVectorField(in Rect inputRect)
         {
             value = EditorGUI.Vector3Field(inputRect, "", value);
@@ -103,6 +115,12 @@ namespace Rito.EditorUtilities
     }
     public class Vector4Field : VectorFieldBase<Vector4, Vector4Field>
     {
+        /// <summary> 소수점 자리수 제한 </summary>
+        public Vector4Field SetPrecision(int precision)
+        {
+            value.SetPrecision(precision);
+            return this;
+        }
         protected override void DrawVectorField(in Rect inputRect)
         {
             value = EditorGUI.Vector4Field(inputRect, "", value);
