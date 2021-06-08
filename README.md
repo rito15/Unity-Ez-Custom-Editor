@@ -1252,6 +1252,8 @@ FloatField.Brown
 
 </details>
 
+<br>
+
 # 디버깅
 
 <details>
@@ -1371,6 +1373,8 @@ protected override void OnSetup(RitoEditorGUI.Setting setting)
 </details>
 
 </details>
+
+<br>
 
 # API
 
@@ -3040,6 +3044,8 @@ if (foldout2)
 </details>
 
 </details>
+
+<br>
 
 # 확장 메소드
 
