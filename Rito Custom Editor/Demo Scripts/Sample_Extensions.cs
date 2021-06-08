@@ -54,7 +54,7 @@ namespace Rito.EditorUtilities.Demo
                     .ActivateTooltipDebugger()
                     ;
             }
-
+            
             protected override void OnDrawInspector()
             {
                 RitoEditorGUI.SetDefaultColorTheme(m.theme);
