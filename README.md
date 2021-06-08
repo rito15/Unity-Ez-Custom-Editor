@@ -376,9 +376,9 @@ protected override void OnDrawInspector()
 }
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ### [4-2] 스타일 지정하기(선택)
 
@@ -412,9 +412,9 @@ boldRedLabel
     .SetFontSize(14)
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ### [4-3] 값 지정하기(필수)
 
@@ -455,9 +455,9 @@ proteced override void OnDrawInspector()
 
 ![image](https://user-images.githubusercontent.com/42164422/120968902-78316880-c7a4-11eb-9c7e-1c9559a3bf8b.png)
 
-</details>
-
 <br>
+
+</details>
 
 ### [4-4] 툴팁 설정(선택)
 
@@ -504,9 +504,9 @@ Button.Black
 
 ![2021_0602_Tooltips](https://user-images.githubusercontent.com/42164422/120375526-dcdc6580-c355-11eb-9930-58a1a7ed3be1.gif)
 
-</details>
-
 <br>
+
+</details>
 
 ### [4-5] 그리기(필수)
 
@@ -690,9 +690,9 @@ Label.Default
 
 ![image](https://user-images.githubusercontent.com/42164422/120970758-cf383d00-c7a6-11eb-99b1-21e0b4758488.png)
 
-</details>
-
 <br>
+
+</details>
 
 ### [4-6] 하단 여백 설정 및 커서 이동(선택)
 
@@ -817,9 +817,9 @@ Label.Default
 
 ![image](https://user-images.githubusercontent.com/42164422/120971409-8cc33000-c7a7-11eb-8d01-d0474bd6a258.png)
 
-</details>
-
 <br>
+
+</details>
 
 ### **참고 : 박스 요소 그리기**
 
@@ -1115,9 +1115,9 @@ protected override void OnDrawInspector()
 
 위와 같이 작성합니다.
 
-</details>
-
 <br>
+
+</details>
 
 ### [4-7] 값 참조하기(선택)
 
@@ -1168,9 +1168,9 @@ FloatField.Brown
 
 이를 통해 가독성을 좀더 향상시킬 수 있습니다.
 
-</details>
-
 <br>
+
+</details>
 
 ### [4-8] 변화 감지하기(선택)
 
@@ -1220,9 +1220,9 @@ FloatField.Brown
 
 콘솔 창에 현재 값을 출력합니다.
 
-</details>
-
 <br>
+
+</details>
 
 ### [4-9] 정리
 
