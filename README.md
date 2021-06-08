@@ -27,10 +27,17 @@
 
 # 테마 미리보기
 
+<details>
+<summary markdown="span"> 
+.
+</summary>
+
  - 미리 만들어진 17가지 색상의 테마가 제공됩니다.
  - Gray(Default), Black, White, Red, Green, Blue, Pink, Magenta, Violet, Purple, Brown, Orange, Gold, Yellow, Lime, Mint, Cyan
 
 ![2021_0601_EditorGUISamples](https://user-images.githubusercontent.com/42164422/120315975-e21abf80-c317-11eb-9e42-6c65193ca672.gif)
+
+</details>
 
 <br>
 
