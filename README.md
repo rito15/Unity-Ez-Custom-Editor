@@ -1,4 +1,4 @@
-# Rito Editor GUI
+# Rito Custom Editor
 
 - UPM(Unity Package Manager) 형태로 작성
 
@@ -6,4 +6,4 @@
 
 # How To Import
 
-`[Window]` - `[Package Manager]` - `[+]` - `[Add package from git URL]` - `https://github.com/rito15/Unity-Rito-Editor-GUI.git`
+`[Window]` - `[Package Manager]` - `[+]` - `[Add package from git URL]` - `https://github.com/rito15/Unity-Rito-Custom-Editor.git`
