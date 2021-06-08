@@ -1417,83 +1417,83 @@ protected override void OnSetup(RitoEditorGUI.Setting setting)
 
 ### **메소드**
 
-- **Clone()**
+#### **Clone()**
   - 스타일을 유지한 채로 객체를 복제합니다.
 
-- **SetTooltip(string text, float width, float height)**
+#### **SetTooltip(string text, float width, float height)**
   - 마우스를 올리면 표시할 툴팁 텍스트와 툴팁의 너비, 높이를 지정합니다.
   - 텍스트의 색상은 흰색, 배경 색상은 반투명한 검정색으로 지정됩니다.
   - `.Draw()` 이전에 호출해야 합니다.
 
-- **SetTooltip(string text, float width, float height, Color textColor, Color backgroundColor)**
+#### **SetTooltip(string text, float width, float height, Color textColor, Color backgroundColor)**
   - 텍스트의 색상과 배경 색상까지 직접 지정합니다.
 
-- **SetTooltip(string text, Color textColor, Color backgroundColor, float width, float height)**
+#### **SetTooltip(string text, Color textColor, Color backgroundColor, float width, float height)**
   - 텍스트의 색상과 배경 색상까지 직접 지정합니다.
 
-- **Draw(float height)**
+#### **Draw(float height)**
   - 높이를 지정하여 그립니다.
   - 너비는 여백을 제외한 좌측 끝부터 우측 끝까지 지정됩니다.
 
-- **Draw(float xLeft, float xRight)**
+#### **Draw(float xLeft, float xRight)**
   - rect의 좌측, 우측 지점 비율을 지정하여 그립니다.
   - 높이는 레이아웃 요소 기본 높이(18f)로 자동 지정됩니다.
 
-- **Draw(float xLeft, float xRight, float height)**
+#### **Draw(float xLeft, float xRight, float height)**
   - 좌우 비율, 높이를 지정하여 그립니다.
 
-- **Draw(float xLeft, float xRight, float yOffset, float height, float xLeftOffset, float xRightOffset)**
+#### **Draw(float xLeft, float xRight, float yOffset, float height, float xLeftOffset, float xRightOffset)**
   - 좌우 비율, y축 시작 좌표, 높이를 지정하여 그립니다.
   - 좌측 및 우측 지점의 위치를 각각 `xLeftOffset`, `xRightOffset`을 통해 픽셀값으로 보정할 수 있습니다.
 
-- **Space(float height)**
+#### **Space(float height)**
   - 커서를 height만큼 하단으로 이동합니다.
 
-- **Margin(float height)**
+#### **Margin(float height)**
   - 커서를 (GUI 요소의 높이 + height)만큼 하단으로 이동합니다.
 
-- **Layout()**
+#### **Layout()**
   - 커서를 (GUI 요소의 높이 + 레이아웃 요소 기본 여백(2f))만큼 하단으로 이동합니다.
 
-- **DrawLayout()**
+#### **DrawLayout()**
   - 너비, 높이를 자동으로 지정하여 그립니다.
   - 너비는 여백을 제외한 좌측 끝부터 우측 끝까지 지정됩니다.
   - 높이는 레이아웃 요소 기본 높이(18f)로 자동 지정됩니다.
   - 그려진 높이 + 레이아웃 요소 기본 여백(2f)만큼 커서도 이동합니다.
 
-- **DrawLayout(float xLeft, float xRight)**
+#### **DrawLayout(float xLeft, float xRight)**
   - rect의 좌측, 우측 지점 비율을 지정하여 그립니다.
   - 높이는 레이아웃 요소 기본 높이(18f)로 자동 지정됩니다.
   - 그려진 높이 + 레이아웃 요소 기본 여백(2f)만큼 커서도 이동합니다.
 
-- **DrawLayout(float xLeft, float xRight, float xLeftOffset, float xRightOffset)**
+#### **DrawLayout(float xLeft, float xRight, float xLeftOffset, float xRightOffset)**
   - rect의 좌측, 우측 지점 비율을 지정하여 그립니다.
   - 좌측 및 우측 지점의 위치를 각각 `xLeftOffset`, `xRightOffset`을 통해 픽셀값으로 보정할 수 있습니다.
   - 높이는 레이아웃 요소 기본 높이(18f)로 자동 지정됩니다.
   - 그려진 높이 + 레이아웃 요소 기본 여백(2f)만큼 커서도 이동합니다.
 
-- **Set~()**
+#### **Set~()**
   - 특정 필드의 스타일을 지정하는 메소드입니다.
   - 각 메소드의 이름은 `Set`으로 시작하며, 각 스타일의 필드와 동일한 이름으로 이어집니다.
   - 해당 GUI 요소의 필드 개수만큼 존재합니다.
 
-- **GetValue()**
+#### **GetValue()**
   - 값이 존재하는 GUI 요소의 경우에만 해당합니다.<br>
     (`Box`, `HeaderBox`, `HelpBox` 제외)
   - 현재 입력 값을 반환합니다.
   - 반환 타입은 각 GUI 요소의 입력 값에 따라 결정됩니다.
   - 값의 입력이 없는 는 항상 false를 반환합니다.
 
-- **GetValue(out T variable)**
+#### **GetValue(out T variable)**
   - 값이 존재하는 GUI 요소의 경우에만 해당합니다.
   - 현재 입력 값을 매개변수 variable에 전달합니다.
   - T 타입은 각 GUI 요소의 입력 값에 따라 결정됩니다.
 
-- **GetChangeState(out bool variable)
+#### **GetChangeState(out bool variable)**
   - 입력된 값이 여부를 `variable` 변수에 전달합니다.
   - 입력 값이 없는 `Label`, `SelectableLabel`, `Box`, `HeaderBox`, `HelpBox`는 항상 false를 반환합니다.
 
-- **OnValueChanged(Action&lt;T&gt; action)**
+#### **OnValueChanged(Action&lt;T&gt; action)**
   - 입력된 값이 변화했을 때의 동작을 등록합니다.
 
 <br>
