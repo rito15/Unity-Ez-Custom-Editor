@@ -95,17 +95,17 @@ namespace Rito.EditorUtilities
         ***********************************************************************/
         #region .
         public static HeaderBox DrawHeaderBox(this string @this, int contentCount, HeaderBox headerBox,
-            float outlineWidth = 0f, float headerTextLeftPadding = 2f)
+            float outlineWidth = 0f, float headerTextIndent = 2f)
         {
             return headerBox
-                .SetData(@this, outlineWidth, headerTextLeftPadding)
+                .SetData(@this, outlineWidth, headerTextIndent)
                 .DrawLayout(contentCount);
         }
         public static HeaderBox DrawHeaderBox(this string @this, int contentCount,
-            float outlineWidth = 0f, float headerTextLeftPadding = 2f)
+            float outlineWidth = 0f, float headerTextIndent = 2f)
         {
             return HeaderBox.Default
-                .SetData(@this, outlineWidth, headerTextLeftPadding)
+                .SetData(@this, outlineWidth, headerTextIndent)
                 .DrawLayout(contentCount);
         }
         
@@ -116,18 +116,18 @@ namespace Rito.EditorUtilities
         #region .
         public static FoldoutHeaderBox DrawFoldoutHeaderBox(this string @this, ref bool toggle,
             int contentCount, FoldoutHeaderBox foldoutHeaderBox,
-            float outlineWidth = 0f, float headerTextLeftPadding = 2f)
+            float outlineWidth = 0f, float headerTextIndent = 2f)
         {
             return foldoutHeaderBox
-                .SetData(toggle, @this, outlineWidth, headerTextLeftPadding)
+                .SetData(toggle, @this, outlineWidth, headerTextIndent)
                 .DrawLayout(contentCount)
                 .GetValue(out toggle);
         }
         public static FoldoutHeaderBox DrawFoldoutHeaderBox(this string @this, ref bool toggle,
-            int contentCount, float outlineWidth = 0f, float headerTextLeftPadding = 2f)
+            int contentCount, float outlineWidth = 0f, float headerTextIndent = 2f)
         {
             return FoldoutHeaderBox.Default
-                .SetData(toggle, @this, outlineWidth, headerTextLeftPadding)
+                .SetData(toggle, @this, outlineWidth, headerTextIndent)
                 .DrawLayout(contentCount)
                 .GetValue(out toggle);
         }
