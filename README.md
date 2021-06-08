@@ -1410,9 +1410,9 @@ protected override void OnSetup(RitoEditorGUI.Setting setting)
 - `Space(float height)`
   - 커서를 하단으로 지정한 높이만큼 이동시킵니다.
 
-</details>
-
 <br>
+
+</details>
 
 ## **GUIElement** 공통
 
@@ -1502,9 +1502,9 @@ protected override void OnSetup(RitoEditorGUI.Setting setting)
 #### **OnValueChanged(Action&lt;T&gt; action)**
   - 입력된 값이 변화했을 때의 동작을 등록합니다.
 
-</details>
-
 <br>
+
+</details>
 
 ## **Label**
 
@@ -1539,9 +1539,9 @@ Label.Default
 - **SetData(string text)**
   - 레이블 텍스트를 지정합니다.
 
-</details>
-
 <br>
+
+</details>
 
 ## **SelectableLabel**
 
@@ -1574,9 +1574,9 @@ SelectableLabel.Default
 - **SetData(string text)**
   - 레이블 텍스트를 지정합니다.
 
-</details>
-
 <br>
+
+</details>
 
 ## **EditableLabel**
 
@@ -1612,9 +1612,9 @@ EditableLabel.Default
 - **SetData(string text)**
   - 레이블 텍스트를 지정합니다.
 
-</details>
-
 <br>
+
+</details>
 
 ## **IntField**
 
@@ -1659,9 +1659,9 @@ IntField.Default
   - value : 우측의 입력 필드에 지정할 값
   - widthThreshold : 좌측 레이블과 우측 입력 필드의 너비 비율(기본값 : 0.4f)
 
-</details>
-
 <br>
+
+</details>
 
 ## **LongField**
 
@@ -1706,9 +1706,9 @@ LongField.Default
   - value : 우측의 입력 필드에 지정할 값
   - widthThreshold : 좌측 레이블과 우측 입력 필드의 너비 비율(기본값 : 0.4f)
 
-</details>
-
 <br>
+
+</details>
 
 ## **FloatField**
 
@@ -1753,9 +1753,9 @@ FloatField.Default
   - value : 우측의 입력 필드에 지정할 값
   - widthThreshold : 좌측 레이블과 우측 입력 필드의 너비 비율(기본값 : 0.4f)
 
-</details>
-
 <br>
+
+</details>
 
 ## **DoubleField**
 
@@ -1800,9 +1800,9 @@ DoubleField.Default
   - value : 우측의 입력 필드에 지정할 값
   - widthThreshold : 좌측 레이블과 우측 입력 필드의 너비 비율(기본값 : 0.4f)
 
-</details>
-
 <br>
+
+</details>
 
 ## **StringField**
 
@@ -1856,9 +1856,9 @@ StringField.Default
 - **SetData(string label, string value, string placeholder, float widthThreshold)**
   - placeholder : 필드에 값이 존재하지 않을 경우 표시할 텍스트를 지정합니다.
 
-</details>
-
 <br>
+
+</details>
 
 ## **Vector2Field**
 
@@ -1903,9 +1903,9 @@ Vector2Field.Default
   - value : 우측의 입력 필드에 지정할 값
   - widthThreshold : 좌측 레이블과 우측 입력 필드의 너비 비율(기본값 : 0.4f)
 
-</details>
-
 <br>
+
+</details>
 
 ## **Vector3Field**
 
@@ -1950,9 +1950,9 @@ Vector3Field.Default
   - value : 우측의 입력 필드에 지정할 값
   - widthThreshold : 좌측 레이블과 우측 입력 필드의 너비 비율(기본값 : 0.4f)
 
-</details>
-
 <br>
+
+</details>
 
 ## **Vector4Field**
 
@@ -1997,9 +1997,9 @@ Vector4Field.Default
   - value : 우측의 입력 필드에 지정할 값
   - widthThreshold : 좌측 레이블과 우측 입력 필드의 너비 비율(기본값 : 0.4f)
 
-</details>
-
 <br>
+
+</details>
 
 ## **Vector2IntField**
 
@@ -2044,9 +2044,9 @@ Vector2IntField.Default
   - value : 우측의 입력 필드에 지정할 값
   - widthThreshold : 좌측 레이블과 우측 입력 필드의 너비 비율(기본값 : 0.4f)
 
-</details>
-
 <br>
+
+</details>
 
 ## **Vector3IntField**
 
@@ -2091,9 +2091,9 @@ Vector3IntField.Default
   - value : 우측의 입력 필드에 지정할 값
   - widthThreshold : 좌측 레이블과 우측 입력 필드의 너비 비율(기본값 : 0.4f)
 
-</details>
-
 <br>
+
+</details>
 
 ## **ObjectField&lt;T&gt;**
 
@@ -2148,9 +2148,9 @@ ObjectField<Material>.Default
 - **SetData(string label, T value, bool allowSceneObjects, float widthThreshold)**
   - allowSceneObjects : 씬에 존재하는 오브젝트를 필드의 값으로 사용할 수 있는지 여부를 결정합니다. (기본값 : true)
 
-</details>
-
 <br>
+
+</details>
 
 ## **BoolField**
 
@@ -2199,9 +2199,9 @@ BoolField.Default
 - **SetData(string label, bool value, bool toggleLeft, float widthThreshold)**
   - toggleLeft : 토글을 좌측에 표시할지 여부
 
-</details>
-
 <br>
+
+</details>
 
 ## **ColorField**
 
@@ -2241,9 +2241,9 @@ ColorField.Default
   - value : 우측의 색상 필드에 지정할 값
   - widthThreshold : 좌측 레이블과 우측 색상 필드의 너비 비율(기본값 : 0.4f)
 
-</details>
-
 <br>
+
+</details>
 
 ## **IntSlider**
 
@@ -2286,9 +2286,9 @@ IntSlider.Default
   - maxValue : 슬라이더의 최대 범위값
   - widthThreshold : 좌측 레이블과 우측 슬라이더 너비 비율(기본값 : 0.4f)
 
-</details>
-
 <br>
+
+</details>
 
 ## **FloatSlider**
 
@@ -2331,9 +2331,9 @@ FloatSlider.Default
   - maxValue : 슬라이더의 최대 범위값
   - widthThreshold : 좌측 레이블과 우측 슬라이더 너비 비율(기본값 : 0.4f)
 
-</details>
-
 <br>
+
+</details>
 
 ## **DoubleSlider**
 
@@ -2376,9 +2376,9 @@ DoubleSlider.Default
   - maxValue : 슬라이더의 최대 범위값
   - widthThreshold : 좌측 레이블과 우측 슬라이더 너비 비율(기본값 : 0.4f)
 
-</details>
-
 <br>
+
+</details>
 
 ## **Dropdown&lt;T&gt;**
 
@@ -2439,9 +2439,9 @@ Dropdown<string>.Default
   - 현재 선택된 항목의 값을 참조합니다.
   - 참고 : GetValue() 메소드는 현재 선택된 항목의 인덱스를 참조합니다.
 
-</details>
-
 <br>
+
+</details>
 
 ## **EnumDropdown**
 
@@ -2488,9 +2488,9 @@ enumValue = (Space)outEnumValue;
   - selectedValue : 현재 선택된 값
   - widthThreshold : 좌측 레이블과 우측 드롭다운 너비 비율(기본값 : 0.4f)
 
-</details>
-
 <br>
+
+</details>
 
 ## **EnumDropdown&lt;T&gt;**
 
@@ -2536,9 +2536,9 @@ EnumDropdown<Space>.Default
   - selectedValue : 현재 선택된 값
   - widthThreshold : 좌측 레이블과 우측 드롭다운 너비 비율(기본값 : 0.4f)
 
-</details>
-
 <br>
+
+</details>
 
 ## **TextArea**
 
@@ -2583,9 +2583,9 @@ TextArea.Default
   - value : 입력 필드의 텍스트
   - placeholder : 필드에 값이 존재하지 않을 경우 표시할 텍스트 (기본값 : "")
 
-</details>
-
 <br>
+
+</details>
 
 ## **Toggle**
 
@@ -2618,9 +2618,9 @@ Toggle.Default
 - **SetData(bool value)**
   - 토글 체크 여부를 지정합니다.
 
-</details>
-
 <br>
+
+</details>
 
 ## **ColorPicker**
 
@@ -2653,9 +2653,9 @@ ColorPicker.Default
 - **SetData(Color value)**
   - 필드의 색상 값을 지정합니다.
 
-</details>
-
 <br>
+
+</details>
 
 ## **HelpBox**
 
@@ -2691,9 +2691,9 @@ HelpBox.Default
   - value : 메시지 박스 내의 텍스트
   - messageType : 텍스트 좌측의 아이콘 종류(정보, 경고, 에러)
 
-</details>
-
 <br>
+
+</details>
 
 ## **Button**
 
@@ -2729,9 +2729,9 @@ Button.Default
 - **SetData(string text)**
   - 버튼 내의 텍스트를 지정합니다.
 
-</details>
-
 <br>
+
+</details>
 
 ## **ToggleButton**
 
@@ -2772,9 +2772,9 @@ ToggleButton.Default
 - **SetData(string text, bool pressed)**
   - 버튼 내의 텍스트, 버튼을 눌렀는지 여부를 지정합니다.
 
-</details>
-
 <br>
+
+</details>
 
 ## **Box**
 
@@ -2860,9 +2860,9 @@ Button.Default
 - **Layout()**
   - 다른 GUI 요소들과는 달리, 레이아웃 기본 여백(2f) 만큼만 커서를 하단으로 이동합니다.
 
-</details>
-
 <br>
+
+</details>
 
 ## **HeaderBox**
 
@@ -2951,9 +2951,9 @@ Button.Default
 - **Layout()**
   - 헤더 영역 높이 + 외곽선 두께 + 레이아웃 요소 기본 하단 여백(2f)만큼 커서를 이동합니다.
 
-</details>
-
 <br>
+
+</details>
 
 ## **FoldoutHeaderBox**
 
@@ -3058,8 +3058,6 @@ if (foldout2)
 
 <br>
 
-<br>
-
 # 확장 메소드
 
 <details>
@@ -3116,9 +3114,9 @@ intValue.DrawField("Int Field").GetValue(out intValue);
 intValue = intValue.DrawField("Int Field").GetValue();
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ## **string**
 
@@ -3202,9 +3200,9 @@ string s = "Header Box";
 s.DrawHeaderBox(ref foldout, 2, 2f);
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ## **int**
 
@@ -3251,9 +3249,9 @@ i.DrawSlider("Int Slider", 0, 10).GetValue(out i);
 i.DrawSliderRef("Int Slider", 0, 10);
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ## **long**
 
@@ -3280,9 +3278,9 @@ l.DrawField("Long Field").GetValue(out l);
 l.DrawFieldRef("Long Field");
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ## **float**
 
@@ -3329,9 +3327,9 @@ f.DrawSlider("Float Slider", 0f, 1f).GetValue(out f);
 f.DrawSliderRef("Float Slider", 0f, 1f);
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ## **double**
 
@@ -3378,9 +3376,9 @@ d.DrawSlider("Double Slider", 0, 1).GetValue(out d);
 d.DrawSliderRef("Double Slider", 0, 1);
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ## **bool**
 
@@ -3424,9 +3422,9 @@ b.DrawToggle().GetValue(out b);
 b.DrawToggleRef();
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ## **Vector2**
 
@@ -3453,9 +3451,9 @@ v2.DrawField("Vector2 Field").GetValue(out v2);
 v2.DrawFieldRef("Vector2 Field");
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ## **Vector3**
 
@@ -3482,9 +3480,9 @@ v3.DrawField("Vector3 Field").GetValue(out v3);
 v3.DrawFieldRef("Vector3 Field");
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ## **Vector4**
 
@@ -3511,9 +3509,9 @@ v4.DrawField("Vector4 Field").GetValue(out v4);
 v4.DrawFieldRef("Vector4 Field");
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ## **Vector2Int**
 
@@ -3540,9 +3538,9 @@ v2i.DrawField("Vector2Int Field").GetValue(out v2i);
 v2i.DrawFieldRef("Vector2Int Field");
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ## **Vector3Int**
 
@@ -3569,9 +3567,9 @@ v3i.DrawField("Vector3Int Field").GetValue(out v3i);
 v3i.DrawFieldRef("Vector3Int Field");
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ## **Color**
 
@@ -3615,9 +3613,9 @@ c.DrawColorPicker().GetValue(out c);
 c.DrawColorPickerRef();
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ## **UnityEngine.Object 상속 타입**
 
@@ -3638,9 +3636,9 @@ go.DrawField("Game Object").GetValue(out go);
 tr.DrawField("Transform").GetValue(out tr);
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ## **enum**
 
@@ -3660,9 +3658,9 @@ tr.DrawField("Transform").GetValue(out tr);
 e.DrawDropdown("Enum").GetValue(out e);
 ```
 
-</details>
-
 <br>
+
+</details>
 
 ## **배열, 리스트**
 
