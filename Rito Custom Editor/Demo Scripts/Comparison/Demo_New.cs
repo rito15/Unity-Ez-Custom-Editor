@@ -32,7 +32,6 @@ namespace Rito.EditorUtilities.Demo
             protected override void OnSetup(RitoEditorGUI.Setting setting)
             {
                 setting
-                    .SetDefaultColorTheme(EColor.Blue)
                     .SetLayoutControlWidth(XLeft, XRight);
             }
 
@@ -63,7 +62,7 @@ namespace Rito.EditorUtilities.Demo
                         .SetData("Toggle Button", m.toggleButtonPressed)
                         .Draw(buttonPart + 0.01f, XRight, 20f).Layout()
                         .GetValue(out m.toggleButtonPressed);
-                } Space(80f);
+                }
             }
         }
     }

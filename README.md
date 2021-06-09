@@ -232,7 +232,7 @@ public class Demo_New : MonoBehaviour
                     .SetData("Toggle Button", m.toggleButtonPressed)
                     .Draw(buttonPart + 0.01f, XRight, 20f).Layout()
                     .GetValue(out m.toggleButtonPressed);
-            } Space(80f);
+            }
         }
     }
 }
