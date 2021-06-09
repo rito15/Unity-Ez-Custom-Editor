@@ -17,7 +17,6 @@ namespace Rito.EditorUtilities.Demo
         public bool foldout, toggleButtonPressed;
 
         public float[] floatArray = { 0.1f, 0.2f, 0.3f, 0.4f };
-        public float[] floatArray2 = { 10.1f, 20.2f, 0.3f, 0.4f };
         public int floatSelected;
 
         [UnityEditor.CustomEditor(typeof(Demo_New))]
