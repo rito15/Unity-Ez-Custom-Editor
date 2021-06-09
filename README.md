@@ -202,7 +202,6 @@ public class Demo_New : MonoBehaviour
         protected override void OnSetup(RitoEditorGUI.Setting setting)
         {
             setting
-                .SetDefaultColorTheme(EColor.Blue)
                 .SetLayoutControlWidth(XLeft, XRight);
         }
 
