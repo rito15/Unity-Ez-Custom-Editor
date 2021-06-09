@@ -114,23 +114,52 @@ namespace Rito.EditorUtilities
         *                               Foldout Header Box
         ***********************************************************************/
         #region .
-        public static FoldoutHeaderBox DrawFoldoutHeaderBox(this string @this, ref bool toggle,
+        public static FoldoutHeaderBox DrawFoldoutHeaderBox(this string @this, ref bool foldout,
             int contentCount, FoldoutHeaderBox foldoutHeaderBox,
             float outlineWidth = 0f, float headerTextIndent = 2f)
         {
             return foldoutHeaderBox
-                .SetData(toggle, @this, outlineWidth, headerTextIndent)
+                .SetData(foldout, @this, outlineWidth, headerTextIndent)
                 .DrawLayout(contentCount)
-                .GetValue(out toggle);
+                .GetValue(out foldout);
         }
-        public static FoldoutHeaderBox DrawFoldoutHeaderBox(this string @this, ref bool toggle,
+        public static FoldoutHeaderBox DrawFoldoutHeaderBox(this string @this, ref bool foldout,
             int contentCount, float outlineWidth = 0f, float headerTextIndent = 2f)
         {
             return FoldoutHeaderBox.Default
-                .SetData(toggle, @this, outlineWidth, headerTextIndent)
+                .SetData(foldout, @this, outlineWidth, headerTextIndent)
                 .DrawLayout(contentCount)
-                .GetValue(out toggle);
+                .GetValue(out foldout);
         }
+        
+        #endregion
+        /***********************************************************************
+        *                               Button
+        ***********************************************************************/
+        #region .
+        public static Button DrawButton(this string @this, Button button)
+        {
+            return button
+                .SetData(@this)
+                .DrawLayout();
+        }
+        public static Button DrawButton(this string @this)
+            => DrawButton(@this, Button.Default);
+        
+        #endregion
+        /***********************************************************************
+        *                               Toggle Button
+        ***********************************************************************/
+        #region .
+        public static ToggleButton DrawToggleButton(this string @this, ref bool pressed, ToggleButton toggleButton)
+        {
+            return toggleButton
+                .SetData(@this, pressed)
+                .DrawLayout()
+                .GetValue(out pressed);
+        }
+        public static ToggleButton DrawToggleButton(this string @this, ref bool pressed)
+            => DrawToggleButton(@this, ref pressed, ToggleButton.Default);
         
         #endregion
     }

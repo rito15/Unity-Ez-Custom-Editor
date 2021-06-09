@@ -309,16 +309,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c5f14de0b0f6b419ce0562a3b8c65e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stringValue: 2e2e22w
-  foldoutValue: 1
-  toggleButtonValue: 0
+  stringValue: String Value
+  foldout: 1
+  toggleButtonPressed: 0
   floatArray:
   - 0.1
   - 0.2
   - 0.3
   - 0.4
   floatSelected: 0
-  labelText: ABCD12345
 --- !u!114 &319512592
 MonoBehaviour:
   m_ObjectHideFlags: 0
