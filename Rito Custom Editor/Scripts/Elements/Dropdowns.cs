@@ -23,14 +23,18 @@ namespace Rito.EditorUtilities
         public Dropdown<T> SetData(string label, T[] options, int selectedIndex, float widthThreshold = 0.4f)
         {
             this.labelContent = new GUIContent(label);
-            this.options = options;
             this.value = selectedIndex;
             this.widthThreshold = widthThreshold;
 
-            this.stringOptions = new string[options.Length];
-            for (int i = 0; i < options.Length; i++)
-                this.stringOptions[i] = options[i].ToString();
+            // options 값이 동일한 경우에는 새롭게 string 배열 생성하지 않음
+            if (this.options == null || this.options != options)
+            {
+                this.options = options;
+                this.stringOptions = new string[options.Length];
 
+                for (int i = 0; i < options.Length; i++)
+                    this.stringOptions[i] = options[i].ToString();
+            }
             return this;
         }
         public Dropdown<T> SetData(string label, IList<T> options, int selectedIndex, float widthThreshold = 0.4f)

@@ -13,10 +13,11 @@ namespace Rito.EditorUtilities.Demo
 {
     public class Demo_New : MonoBehaviour
     {
-        public string stringValue;
+        public string stringValue = "String Value";
         public bool foldout, toggleButtonPressed;
 
         public float[] floatArray = { 0.1f, 0.2f, 0.3f, 0.4f };
+        public float[] floatArray2 = { 10.1f, 20.2f, 0.3f, 0.4f };
         public int floatSelected;
 
         [UnityEditor.CustomEditor(typeof(Demo_New))]
@@ -24,21 +25,21 @@ namespace Rito.EditorUtilities.Demo
         {
             private Demo_New m;
             private void OnEnable() => m = target as Demo_New;
+
+            private const float XLeft = 0.01f;
+            private const float XRight = 0.985f;
             
             protected override void OnSetup(RitoEditorGUI.Setting setting)
             {
                 setting
                     .SetDefaultColorTheme(EColor.Blue)
-                    .SetLayoutControlWidth(0.01f, 0.985f)
-                    //.ActivateRectDebugger()
-                    //.ActivateTooltipDebugger()
-                    ;
+                    .SetLayoutControlWidth(XLeft, XRight);
             }
 
             protected override void OnDrawInspector()
             {
                 FoldoutHeaderBox.Blue
-                    .SetData("Foldout Header Box", m.foldout, 2f, 4f)
+                    .SetData("Header Box", m.foldout, 2f, 4f)
                     .DrawLayout(3, 2f)
                     .GetValue(out m.foldout);
 
@@ -56,13 +57,13 @@ namespace Rito.EditorUtilities.Demo
 
                     Button.Blue
                         .SetData("Button")
-                        .Draw(0.01f, buttonPart, 20f);
+                        .Draw(XLeft, buttonPart, 20f);
 
                     ToggleButton.Blue
                         .SetData("Toggle Button", m.toggleButtonPressed)
-                        .Draw(buttonPart + 0.01f, 0.985f, 20f).Layout()
+                        .Draw(buttonPart + 0.01f, XRight, 20f).Layout()
                         .GetValue(out m.toggleButtonPressed);
-                } 
+                } Space(80f);
             }
         }
     }
