@@ -3330,9 +3330,9 @@ intValue.DrawField("Int Field").GetValue(out intValue);
 intValue = intValue.DrawField("Int Field").GetValue();
 ```
 
-<br>
-
 </details>
+
+<br>
 
 ## **string**
 
@@ -3924,4 +3924,20 @@ stringList.DrawDropdown("String List", sIndex).GetValue(out sIndex);
 
 <br>
 
+# Future Works
+
+<details>
+<summary markdown="span">
+.
+</summary>
+
+ - MinMax Sliders
+ - Vector Sliders
+ - ArrayField
+ - ListField
+ - DictionaryField
+ - Sprite & Material Preview Field
+ - Custom Class Field
+    
+</details>
 <br>
