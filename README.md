@@ -20,15 +20,233 @@
 
 # 기존 소스코드와 비교
 
- ==> 작성중 : Demo_Old, Demo_New
+![2021_0610_OldAndNew](https://user-images.githubusercontent.com/42164422/121400566-b4c2b700-c992-11eb-8d7e-1f8178b3a240.gif)
 
+<br>
+
+## [1] 기존 방식으로 작성하기
+
+<details>
+<summary markdown="span">
+.
+</summary>
+
+```cs
+public class Demo_Old : MonoBehaviour
+{
+    public string stringValue = "String Value";
+    public bool foldout, toggleButtonPressed;
+
+    public float[] floatArray = { 0.1f, 0.2f, 0.3f, 0.4f };
+    public int floatSelected;
+
+    [UnityEditor.CustomEditor(typeof(Demo_Old))]
+    private class CE : Editor
+    {
+        private Demo_Old m;
+        private string[] strFloatArray;
+
+        private readonly Color BoxOutlineColor = Color.blue;
+        private readonly Color HeaderBoxColor = Color.blue + Color.gray;
+        private readonly Color ContentBoxColor = new Color(0f, 0f, 0.15f, 1f);
+        private readonly Color HeaderLabelColor = new Color(0f, 0f, 0.1f, 1f);
+        private readonly Color FieldBackgroundColor = new Color(1f, 1f, 4f, 1f);
+        private readonly Color DropdownBackgroundColor = new Color(0.5f, 0.5f, 2f, 1f);
+        private readonly Color ControlBackgroundColor = new Color(0f, 0f, 2f, 1f);
+
+        private void OnEnable()
+        {
+            m = target as Demo_Old;
+
+            strFloatArray = new string[m.floatArray.Length];
+            for (int i = 0; i < m.floatArray.Length; i++)
+                strFloatArray[i] = m.floatArray[i].ToString();
+        }
+
+        public override void OnInspectorGUI()
+        {
+            SetStyles();
+            DrawControls();
+            RestoreStyles();
+        }
+
+        private void DrawControls()
+        {
+            const float PosX = 18f; // Left Margin
+            const float BoxPaddingRight = 8f;
+            float viewWidth = EditorGUIUtility.currentViewWidth - PosX - 4f;
+            float insideBoxWidth = viewWidth - BoxPaddingRight;
+
+            GUILayoutOption boxViewWidthOption = GUILayout.Width(insideBoxWidth);
+
+            // W : Width, H : Height
+
+            const float BoxPaddingLeft = 4f;
+            const float Outline = 2f;
+            const float BoxX = PosX - BoxPaddingLeft;
+            const float OutBoxX = BoxX - Outline;
+
+            const float HeaderBoxH = 20f;
+            float contentBoxH = m.foldout ? 64f : 0f;
+            float outBoxH = HeaderBoxH + contentBoxH + Outline * (m.foldout ? 3f : 2f);
+
+            float boxW = viewWidth;
+            float outBoxW = boxW + Outline * 2f;
+
+            const float OutBoxY = 4f;
+            const float HeaderBoxY = 4f + Outline;
+            const float ContentBoxY = HeaderBoxY + HeaderBoxH + Outline;
+
+            Rect outBoxRect     = new Rect(OutBoxX, OutBoxY, outBoxW, outBoxH);
+            Rect headerBoxRect  = new Rect(BoxX, HeaderBoxY, boxW, HeaderBoxH);
+            Rect contentBoxRect = new Rect(BoxX, ContentBoxY, boxW, contentBoxH);
+            Rect foldoutRect    = new Rect(headerBoxRect);
+            foldoutRect.xMin += 12f;
+
+            // Header Foldout
+            m.foldout =
+                EditorGUI.Foldout(foldoutRect, m.foldout, "", true);
+
+            // Box
+            EditorGUI.DrawRect(outBoxRect, BoxOutlineColor);
+            EditorGUI.DrawRect(headerBoxRect, HeaderBoxColor);
+            EditorGUI.DrawRect(contentBoxRect, ContentBoxColor);
+
+            EditorGUILayout.Space(1f);
+            EditorGUILayout.LabelField("Header Box", headerLabelStyle);
+
+            EditorGUILayout.Space(Outline);
+
+            if (m.foldout)
+            {
+                GUI.backgroundColor = FieldBackgroundColor;
+
+                // String
+                m.stringValue =
+                    EditorGUILayout.TextField("String FIeld", m.stringValue, boxViewWidthOption);
+
+                GUI.backgroundColor = DropdownBackgroundColor;
+
+                // Dropdown
+                m.floatSelected =
+                    EditorGUILayout.Popup("Float Dropdown", m.floatSelected, strFloatArray, boxViewWidthOption);
+
+                GUI.backgroundColor = ControlBackgroundColor;
+
+                // Buttons
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    const float buttonPart = 0.7f;
+
+                    GUILayout.Button("Button", GUILayout.Width(insideBoxWidth * buttonPart));
+                    m.toggleButtonPressed =
+                        GUILayout.Toggle(m.toggleButtonPressed, "Toggle Button",
+                        "Button", GUILayout.Width(insideBoxWidth * (1f - buttonPart) - 4f));
+                }
+            }
+        }
+
+        private GUIStyle headerLabelStyle;
+        private Color oldBackgroundColor;
+
+        private void SetStyles()
+        {
+            if (headerLabelStyle == null)
+            {
+                headerLabelStyle = new GUIStyle(GUI.skin.label);
+                headerLabelStyle.normal.textColor = HeaderLabelColor;
+                headerLabelStyle.fontStyle = FontStyle.Bold;
+            }
+
+            oldBackgroundColor = GUI.backgroundColor;
+        }
+
+        private void RestoreStyles()
+        {
+            GUI.backgroundColor = oldBackgroundColor;
+        }
+    }
+}
+```
+
+</details>
+
+<br>
+
+## [2] RitoCustomEditor 사용
+
+<details>
+<summary markdown="span">
+.
+</summary>
+
+```cs
+public class Demo_New : MonoBehaviour
+{
+    public string stringValue = "String Value";
+    public bool foldout, toggleButtonPressed;
+
+    public float[] floatArray = { 0.1f, 0.2f, 0.3f, 0.4f };
+    public float[] floatArray2 = { 10.1f, 20.2f, 0.3f, 0.4f };
+    public int floatSelected;
+
+    [UnityEditor.CustomEditor(typeof(Demo_New))]
+    private class CE : RitoEditor
+    {
+        private Demo_New m;
+        private void OnEnable() => m = target as Demo_New;
+
+        private const float XLeft = 0.01f;
+        private const float XRight = 0.985f;
+
+        protected override void OnSetup(RitoEditorGUI.Setting setting)
+        {
+            setting
+                .SetDefaultColorTheme(EColor.Blue)
+                .SetLayoutControlWidth(XLeft, XRight);
+        }
+
+        protected override void OnDrawInspector()
+        {
+            FoldoutHeaderBox.Blue
+                .SetData("Header Box", m.foldout, 2f, 4f)
+                .DrawLayout(3, 2f)
+                .GetValue(out m.foldout);
+
+            if (m.foldout)
+            {
+                StringField.Blue
+                    .SetData("String Field", m.stringValue)
+                    .DrawLayout().GetValue(out m.stringValue);
+
+                Dropdown<float>.Blue
+                    .SetData("Float Dropdown", m.floatArray, m.floatSelected)
+                    .DrawLayout().GetValue(out m.floatSelected);
+
+                const float buttonPart = 0.7f;
+
+                Button.Blue
+                    .SetData("Button")
+                    .Draw(XLeft, buttonPart, 20f);
+
+                ToggleButton.Blue
+                    .SetData("Toggle Button", m.toggleButtonPressed)
+                    .Draw(buttonPart + 0.01f, XRight, 20f).Layout()
+                    .GetValue(out m.toggleButtonPressed);
+            } Space(80f);
+        }
+    }
+}
+```
+
+</details>
 
 <br>
 
 # 테마 미리보기
 
 <details>
-<summary markdown="span"> 
+<summary markdown="span">
 .
 </summary>
 
@@ -3186,9 +3404,9 @@ string s = "Header Box";
 s.DrawHeaderBox(2, 2f);
 ```
 
-### **FoldoutHeaderBox(ref bool toggle, int contentCount, float outlineWidth = 0f, float headerTextIndent)**
+### **FoldoutHeaderBox(ref bool foldout, int contentCount, float outlineWidth = 0f, float headerTextIndent)**
  - 해당 문자열을 헤더 텍스트로 사용하는 FoldoutHeaderBox를 그립니다.
- - toggle : 박스가 펼쳐져 있는지 여부. 반드시 필드 변수를 사용해야 합니다.
+ - foldout : 박스가 펼쳐져 있는지 여부. 반드시 필드 변수를 사용해야 합니다.
  - contentCount : 박스 내부에 들어갈 레이아웃 요소 개수
  - outlineWidth : 박스의 외곽선 두께(기본값 : 0f)
  - headerTextIndent : 헤더 텍스트의 들여쓰기 너비(기본값 : 2f)
@@ -3198,6 +3416,25 @@ s.DrawHeaderBox(2, 2f);
 
 string s = "Header Box";
 s.DrawHeaderBox(ref foldout, 2, 2f);
+```
+
+### **Button()**
+ - 해당 문자열을 텍스트로 사용하는 Button을 그립니다.
+
+```cs
+string s = "Button";
+s.DrawButton();
+```
+
+### **ToggleButton(ref bool pressed)**
+ - 해당 문자열을 텍스트로 사용하는 ToggleButton을 그립니다.
+ - pressed : 버튼이 눌렸는지 여부. 반드시 필드 변수를 사용해야 합니다.
+
+```cs
+//private bool pressed;
+
+string s = "Toggle Button";
+s.ToggleButton(ref pressed);
 ```
 
 <br>
