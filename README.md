@@ -1702,7 +1702,7 @@ protected override void OnSetup(EzEditorUtility.Setting setting)
 
 #### **Set~()**
   - 특정 필드의 스타일을 지정하는 메소드입니다.
-  - 각 메소드의 이름은 `Set`으로 시작하며, 각 스타일의 필드와 동일한 이름으로 이어집니다.
+  - 각 메소드의 이름은 `Set`으로 시작하며, 각 스타일의 필드와 동일한 이름으로 이어집니다. (예시 : SetColor()
   - 해당 GUI 요소의 필드 개수만큼 존재합니다.
 
 #### **GetValue()**
