@@ -20,8 +20,6 @@
 
 # 기존 소스코드와 비교
 
-- 예시 
-
 ![2021_0610_OldAndNew](https://user-images.githubusercontent.com/42164422/121400566-b4c2b700-c992-11eb-8d7e-1f8178b3a240.gif)
 
 <br>
