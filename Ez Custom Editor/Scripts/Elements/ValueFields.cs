@@ -196,8 +196,10 @@ namespace Rito.EditorUtilities
     {
         public R SetData(string label, T value, float widthThreshold = 0.4f)
         {
-            this.labelContent = new GUIContent(label);
+            if(this.labelContent == null)
+                this.labelContent = new GUIContent();
 
+            this.labelContent.text = label;
             this.value = value;
             this.widthThreshold = widthThreshold;
             return this as R;

@@ -78,7 +78,7 @@ namespace Rito.EditorUtilities
         {
             FinishMethod?.Invoke(null, new object[] { this });
         }
-    } 
+    }
 }
 
 #endif

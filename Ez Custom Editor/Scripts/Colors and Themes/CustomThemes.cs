@@ -81,7 +81,7 @@ namespace Rito.EditorUtilities
     }
     public abstract partial class ValueFieldBase<T, R>
     {
-        public static R Gray = new R() { };
+        public static R Gray { get; } = new R() { };
         public static R White { get; } = new R
         {
             inputBackgroundColor = ColorReg.White.InputBG,
