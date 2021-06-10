@@ -421,7 +421,7 @@ protected override void OnSetup(EzEditorUtility.Setting setting)
         .ActivateTooltipDebugger()
         .SetDebugRectColor(Color.red)
         .SetDebugTooltipColor(Color.cyan)
-		.RegisterUndo();
+        .RegisterUndo();
 }
 ```
 
