@@ -17,7 +17,7 @@ namespace Rito.EditorUtilities.Demo
         public static void Open()
         {
             Sample_EditorWindow window = (Sample_EditorWindow)GetWindow(typeof(Sample_EditorWindow));
-            window.titleContent.text = "RitoEditorWindow - Test";
+            window.titleContent.text = "Editor Window Sample";
 
             var pos = window.position;
             pos.width = 500f;
