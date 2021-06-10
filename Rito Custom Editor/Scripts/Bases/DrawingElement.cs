@@ -85,6 +85,11 @@ namespace Rito.EditorUtilities
                 action(value);
             return this as R;
         }
+
+        public static implicit operator T(DrawingElement<T, R> element)
+        {
+            return element.GetValue();
+        }
     }
 }
 

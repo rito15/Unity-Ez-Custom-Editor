@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c5f14de0b0f6b419ce0562a3b8c65e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stringValue: String Value
+  stringValue: String Value123
   foldout: 1
   toggleButtonPressed: 0
   floatArray:
@@ -317,7 +317,7 @@ MonoBehaviour:
   - 0.2
   - 0.3
   - 0.4
-  floatSelected: 0
+  floatSelected: 1
 --- !u!114 &319512592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,6 +330,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56ec180bf11692c43ac3dfbdf113a8b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stringValue: String Value
+  foldout: 1
+  toggleButtonPressed: 0
+  floatArray:
+  - 0.1
+  - 0.2
+  - 0.3
+  - 0.4
+  floatSelected: 0
 --- !u!1 &385215512
 GameObject:
   m_ObjectHideFlags: 0

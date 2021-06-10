@@ -51,15 +51,15 @@ namespace Rito.EditorUtilities.Demo
                         .SetData("Float Dropdown", m.floatArray, m.floatSelected)
                         .DrawLayout().GetValue(out m.floatSelected);
 
-                    const float buttonPart = 0.7f;
+                    const float XMid = 0.7f;
 
                     Button.Blue
                         .SetData("Button")
-                        .Draw(XLeft, buttonPart, 20f);
+                        .Draw(XLeft, XMid, 20f);
 
                     ToggleButton.Blue
                         .SetData("Toggle Button", m.toggleButtonPressed)
-                        .Draw(buttonPart + 0.01f, XRight, 20f).Layout()
+                        .Draw(XMid + 0.01f, XRight, 20f).Layout()
                         .GetValue(out m.toggleButtonPressed);
                 }
             }

@@ -6,44 +6,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-/*
-    [TODO]
-
-    - 
-*/
-
-/*
-    [Memo]
-
-    - Draw() : 현재 CurrentY 값 기준으로 컨트롤 그리기. Space() 하지 않음
-    - DrawLayout() : 높이 고정, 하단 여백 고정, 내부적으로 Space(높이 + 하단 여백)
-
-    - Space(f) : CurrentY 이동 및 하단 여백 지정
-
-    - 일반 컨트롤의 경우
-        - Margin(f) : 컨트롤 높이 + 지정한 높이만큼 Space()
-        - Layout()  : 레이아웃 요소의 높이 + 여백만큼 고정값 Space()
-
-    - Box
-        - Margin(f) : Space()와 동일
-        - Layout()  : 레이아웃 요소의 여백만큼 고정값 Space()
-
-    - HeaderBox
-        - Margin(f) : 헤더 높이 + 아웃라인 두께 + 지정한 높이만큼 Space()
-        - Layout()  : 헤더 높이 + 아웃라인 두께 + 레이아웃 요소 여백만큼 Space()
-
-    - FoldoutHeaderBox
-        - Margin(), Layout()이 펼쳐진 경우의 컨텐츠박스 상단 여백에만 영향을 미침
-
-        - 펼친 경우 -> HeaderBox와 동일
-            - Margin(f) : 헤더 높이 + 아웃라인 두께 + 지정한 높이만큼 Space()
-            - Layout()  : 헤더 높이 + 아웃라인 두께 + 레이아웃 요소 여백만큼 Space()
-
-        - 접힌 경우
-            - Margin(f) : 헤더 높이만큼 Space()
-            - Layout()  : 헤더 높이만큼 Space()
-*/
-
 // 날짜 : 2021-05-24 AM 1:32:18
 // 작성자 : Rito
 
