@@ -418,7 +418,8 @@ protected override void OnSetup(EzEditorUtility.Setting setting)
         .ActivateRectDebugger()
         .ActivateTooltipDebugger()
         .SetDebugRectColor(Color.red)
-        .SetDebugTooltipColor(Color.cyan);
+        .SetDebugTooltipColor(Color.cyan)
+		.RegisterUndo();
 }
 ```
 
@@ -454,6 +455,11 @@ protected override void OnSetup(EzEditorUtility.Setting setting)
 
 - **SetDebugTooltipColor()**
   - Tooltip Debugger로 표시되는 영역의 색상을 지정합니다.
+  
+- **RegisterUndo()**
+  - 필드 값 변경 후 `Ctrl + Z`를 눌렀을 때 기존의 행동을 취소할 수 있도록 합니다.
+  - 대상 필드는 반드시 `MonoBehaviour`를 상속받는 클래스의 필드여야 합니다.
+  - 대상 필드는 `public`이거나 `[SerializeField]` 애트리뷰트를 지정한 상태여야 합니다.
 
 </details>
 

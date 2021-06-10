@@ -16,7 +16,7 @@ namespace Rito.EditorUtilities
     public static class EzEditorUtility
     {
         /***********************************************************************
-        *                               Internal Class
+        *                               Internal Setting Class
         ***********************************************************************/
         #region .
         public class Setting
@@ -103,6 +103,12 @@ namespace Rito.EditorUtilities
                 EZU.SetDefaultColorTheme(colorTheme);
                 return this;
             }
+            /// <summary> Undo 등록 </summary>
+            public Setting RegisterUndo(bool value = true)
+            {
+                EZU.IsUndoRegistered = value;
+                return this;
+            }
 
             /// <summary> OnEnable()에서 호출 </summary>
             private static void ResetSettings()
@@ -118,6 +124,7 @@ namespace Rito.EditorUtilities
                 EZU.SetLayoutControlHeight();
                 EZU.SetLayoutControlWidth();
                 EZU.SetDefaultColorTheme();
+                EZU.IsUndoRegistered = false;
 
                 // Margins
                 marginLeft = DefaultMarginLeft;
@@ -284,6 +291,8 @@ namespace Rito.EditorUtilities
         /// <summary> 레이아웃 요소의 X 우측 위치 조정값(픽셀) </summary>
         public static float LayoutXRightOffset { get; private set; } = 0f;
 
+
+        public static bool IsUndoRegistered { get; private set; }
 
         public static EColor DefaultColorTheme { get; private set; } = EColor.Gray;
 

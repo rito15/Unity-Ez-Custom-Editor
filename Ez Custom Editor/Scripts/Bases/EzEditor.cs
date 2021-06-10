@@ -27,7 +27,10 @@ namespace Rito.EditorUtilities
             OnSetup(settingBuilder);
             CallInit();
 
-            Undo.RecordObject(target, $"Edited : {target.name}");
+            if (EZU.IsUndoRegistered)
+            {
+                Undo.RecordObject(target, $"Edited : {target.name}");
+            }
             OnDrawInspector();
 
             CallFinish();

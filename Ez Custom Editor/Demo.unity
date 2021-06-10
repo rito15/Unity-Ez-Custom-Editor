@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c5f14de0b0f6b419ce0562a3b8c65e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stringValue: 424
+  stringValue: String Value
   foldout: 1
   toggleButtonPressed: 0
   floatArray:

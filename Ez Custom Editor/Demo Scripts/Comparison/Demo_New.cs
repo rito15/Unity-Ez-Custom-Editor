@@ -31,7 +31,8 @@ namespace Rito.EditorUtilities.Demo
             protected override void OnSetup(EzEditorUtility.Setting setting)
             {
                 setting
-                    .SetLayoutControlWidth(XLeft, XRight);
+                    .SetLayoutControlWidth(XLeft, XRight)
+                    .RegisterUndo();
             }
 
             protected override void OnDrawInspector()
