@@ -922,13 +922,11 @@ Label.Default
 .
 </summary>
 
-기존의 커스텀 에디터를 작성할 때 `EditorGUILayout.Space()`를 호출하듯이
+기존의 커스텀 에디터를 작성할 때는 `EditorGUILayout.Space()`를 호출하여 커서를 이동하였습니다.
 
-매번 개별적으로 `Space()`를 통해 커서를 이동시켜야 한다면,
+`EzEditor` 내에서는 위 메소드 대신, `Space()` 메소드를 호출하여 커서를 이동시켜야 합니다.
 
-굉장히 불편하고 번거로울 것입니다.
-
-따라서 메소드 체인을 통해 간편히 커서를 이동시키는 기능을 제공합니다.
+그리고 메소드 체인을 통해 간편히 커서를 이동시키는 기능을 제공합니다.
 
 <br>
 
@@ -1478,6 +1476,9 @@ FloatField.Brown
     .GetValueChanged(out bool isChanged)
     .OnValueChanged(v => Debug.Log(v))
     ;
+
+// 커서 이동 : EditorGUILayout.Space() 대신 Space() 호출
+Space(20f);
 ```
 
 </details>
