@@ -490,7 +490,7 @@ protected override void OnSetup(EzEditorUtility.Setting setting)
  - 슬라이더 : `IntSlider`, `FloatSlider`, `DoubleSlider`
  - 버튼 : `Button`, `ToggleButton`
  - 박스 : `Box`, `HeaderBox`, `FoldoutHeaderBox`
- - 드롭다운 : `Dropdown<T>`, `EnumDropdown`, `EnumDropdown<T>`
+ - 드롭다운 : `Dropdown<T>`, `EnumDropdown`, `EnumDropdown<T>`, `EnumFlagDropdown`, `EnumFlagDropdown<T>`
  - 단일 요소 : `Toggle`, `TextArea`, `ColorPicker`, `HelpBox`
 
 </details>
@@ -2673,6 +2673,7 @@ Dropdown<string>.Default
 
 - Enum 타입의 드롭다운을 레이블과 함께 표시합니다.
 - 값을 받아올 때, 대상 열거형 타입으로 형변환이 필요합니다.
+- `[Flags]`를 통한 다중 선택이 필요한 경우, `EnumFlagDropdown` 클래스를 이용합니다.
 
 ![2021_0607_EnumDropdown](https://user-images.githubusercontent.com/42164422/121014228-b5155380-c7d4-11eb-9149-a8e14725021b.gif)
 
@@ -2722,6 +2723,7 @@ enumValue = (Space)outEnumValue;
 
 - 제네릭으로 지정한 열거형 타입의 드롭다운을 레이블과 함께 표시합니다.
 - 제네릭을 이용하므로, 값을 받아올 때 형변환이 별도로 필요하지 않습니다.
+- `[Flags]`를 통한 다중 선택이 필요한 경우, `EnumFlagDropdown<T>` 클래스를 이용합니다.
 
 ![2021_0607_EnumDropdown](https://user-images.githubusercontent.com/42164422/121014228-b5155380-c7d4-11eb-9149-a8e14725021b.gif)
 

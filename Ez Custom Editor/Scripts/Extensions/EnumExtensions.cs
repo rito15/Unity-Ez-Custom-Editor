@@ -20,6 +20,15 @@ namespace Rito.EditorUtilities
         }
         public static EnumDropdown<T> DrawDropdown<T>(this T @this, string label) where T : Enum
             => DrawDropdown(@this, label, EnumDropdown<T>.Default);
+
+        public static EnumFlagDropdown<T> DrawFlagDropdown<T>(this T @this, string label, EnumFlagDropdown<T> enumDropdown) where T : Enum
+        {
+            return enumDropdown
+                .SetData(label, @this)
+                .DrawLayout();
+        }
+        public static EnumFlagDropdown<T> DrawFlagDropdown<T>(this T @this, string label) where T : Enum
+            => DrawFlagDropdown(@this, label, EnumFlagDropdown<T>.Default);
     }
 }
 
