@@ -12,5 +12,13 @@
 		"email":"ghdtkals15@gmail.com",
 		"url":"https://github.com/rito15"
 	},
-	"category": "Unity"
+	"category": "Unity",
+	"samples":
+	[
+		{
+			"displayName": "Sample Scene and Scripts",
+			"description": "",
+			"path": "Samples"
+		}
+	]
 }
