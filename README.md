@@ -1710,7 +1710,6 @@ protected override void OnSetup(EzEditorUtility.Setting setting)
     (`Box`, `HeaderBox`, `HelpBox` 제외)
   - 현재 입력 값을 반환합니다.
   - 반환 타입은 각 GUI 요소의 입력 값에 따라 결정됩니다.
-  - 값의 입력이 없는 는 항상 false를 반환합니다.
 
 #### **GetValue(out T variable)**
   - 값이 존재하는 GUI 요소의 경우에만 해당합니다.
