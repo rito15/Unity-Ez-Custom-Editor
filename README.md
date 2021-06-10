@@ -1,4 +1,4 @@
-# Rito Custom Editor
+# Ez Custom Editor
 
 - 커스텀 에디터를 편리하고 예쁘게 작성하기 위한 기능들을 제공합니다.
 
@@ -14,7 +14,7 @@
 
 # How To Import
 
-`[Window]` - `[Package Manager]` - `[+]` - `[Add package from git URL]` - `https://github.com/rito15/Unity-Rito-Custom-Editor.git`
+`[Window]` - `[Package Manager]` - `[+]` - `[Add package from git URL]` - `https://github.com/rito15/Unity-Ez-Custom-Editor.git`
 
 <br>
 
@@ -173,7 +173,7 @@ public class Demo_Old : MonoBehaviour
 
 <br>
 
-## [2] RitoCustomEditor 사용
+## [2] EzEditor 사용
 
 <details>
 <summary markdown="span">
@@ -190,7 +190,7 @@ public class Demo_New : MonoBehaviour
     public int floatSelected;
 
     [UnityEditor.CustomEditor(typeof(Demo_New))]
-    private class CE : RitoEditor
+    private class CE : EzEditor
     {
         private Demo_New m;
         private void OnEnable() => m = target as Demo_New;
@@ -198,7 +198,7 @@ public class Demo_New : MonoBehaviour
         private const float XLeft = 0.01f;
         private const float XRight = 0.985f;
             
-        protected override void OnSetup(RitoEditorGUI.Setting setting)
+        protected override void OnSetup(EzEditorUtility.Setting setting)
         {
             setting
                 .SetLayoutControlWidth(XLeft, XRight);
@@ -300,9 +300,9 @@ using UnityEditor;
 using Rito.EditorUtilities;
 
 [CustomEditor(typeof(MyComponent))]
-public class MyComponentEditor : RitoEditor
+public class MyComponentEditor : EzEditor
 {
-    protected override void OnSetup(RitoEditorGUI.Setting setting)
+    protected override void OnSetup(EzEditorUtility.Setting setting)
     {
         // Settings
     }
@@ -322,7 +322,7 @@ public class MyComponentEditor : RitoEditor
 
 `CustomEditor` 애트리뷰트를 사용하는 점은 동일하며,
 
-`Editor` 클래스 대신 `RitoEditor` 클래스를 상속받습니다.
+`Editor` 클래스 대신 `EzEditor` 클래스를 상속받습니다.
 
 <br>
 
@@ -347,7 +347,7 @@ public class MyComponentEditor : RitoEditor
 
 커스텀 에디터 윈도우 역시 기존의 작성 방식과 유사합니다.
 
-`EditorWindow` 클래스 대신 `RitoEditorWindow` 클래스를 상속받아 작성합니다.
+`EditorWindow` 클래스 대신 `EzEditorWindow` 클래스를 상속받아 작성합니다.
 
 ```cs
 #if UNITY_EDITOR
@@ -356,7 +356,7 @@ using UnityEngine;
 using UnityEditor;
 using Rito.EditorUtilities;
 
-public class TestWindow : RitoEditorWindow
+public class TestWindow : EzEditorWindow
 {
     [MenuItem("Test/Test")] // 메뉴 등록
     private static void Init()
@@ -366,7 +366,7 @@ public class TestWindow : RitoEditorWindow
         window.Show();
     }
 
-    protected override void OnSetup(RitoEditorGUI.Setting setting)
+    protected override void OnSetup(EzEditorUtility.Setting setting)
     {
         // Settings
     }
@@ -406,7 +406,7 @@ public class TestWindow : RitoEditorWindow
 설정하지 않은 옵션들은 기본 값으로 적용됩니다.
 
 ```cs
-protected override void OnSetup(RitoEditorGUI.Setting setting)
+protected override void OnSetup(EzEditorUtility.Setting setting)
 {
     setting
         .SetMargins(top: 12f, left: 12f, right: 20f, bottom: 16f)
@@ -1284,7 +1284,7 @@ HeaderBox.Brown
 // 펼쳐진 상태를 저장하기 위한 필드
 private bool foldout = true;
 
-protected override void OnSetup(RitoEditorGUI.Setting setting)
+protected override void OnSetup(EzEditorUtility.Setting setting)
 {
     setting
         .SetLayoutControlWidth(0.01f, 0.985f);
@@ -1495,7 +1495,7 @@ FloatField.Brown
 디버깅을 위해서는 `OnSetup()` 메소드 내에서 다음과 같이 옵션을 활성화해야 합니다.
 
 ```cs
-protected override void OnSetup(RitoEditorGUI.Setting setting)
+protected override void OnSetup(EzEditorUtility.Setting setting)
 {
     setting
         .ActivateRectDebugger()            // Rect Debugger 활성화
@@ -1612,7 +1612,7 @@ protected override void OnSetup(RitoEditorGUI.Setting setting)
 .
 </summary>
 
-## **RitoEditor**, **RitoEditorWindow**
+## **EzEditor**, **EzEditorWindow**
 
 <details>
 <summary markdown="span">

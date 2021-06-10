@@ -1,8 +1,8 @@
 {
-	"name" : "com.rito.rito-custom-editor",
+	"name" : "com.rito.ez-custom-editor",
 	"version": "1.0.0",
-	"displayName" :"Rito Custom Editor",
-	"description" :"Rito Custom Editor",
+	"displayName" :"Ez Custom Editor",
+	"description" :"Ez Custom Editor",
 	"unity": "2019.4",
 	"dependencies": {},
 	"keywords": ["rito","unity", "custom-editor", "utility"],
