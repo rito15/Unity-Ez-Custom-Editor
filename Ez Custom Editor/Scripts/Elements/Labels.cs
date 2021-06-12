@@ -13,33 +13,27 @@ namespace Rito.EditorUtilities
 {
     public abstract partial class LabelBase<R> : DrawingElement<string, R> where R : LabelBase<R>, new()
     {
-        public static R Default
+        public static R Default => ThemeDict[EzEditorUtility.DefaultColorTheme];
+        public static readonly Dictionary<EColor, R> ThemeDict = new Dictionary<EColor, R>()
         {
-            get
-            {
-                switch (EzEditorUtility.DefaultColorTheme)
-                {
-                    default:
-                    case EColor.Gray:    return Gray;
-                    case EColor.White:   return White;
-                    case EColor.Black:   return Black;
-                    case EColor.Red:     return Red;    
-                    case EColor.Green:   return Green;  
-                    case EColor.Blue:    return Blue;   
-                    case EColor.Pink:    return Pink;   
-                    case EColor.Magenta: return Magenta;
-                    case EColor.Violet:  return Violet; 
-                    case EColor.Purple:  return Purple; 
-                    case EColor.Brown:   return Brown;  
-                    case EColor.Gold:    return Gold;   
-                    case EColor.Orange:  return Orange; 
-                    case EColor.Yellow:  return Yellow; 
-                    case EColor.Lime:    return Lime;   
-                    case EColor.Mint:    return Mint;    
-                    case EColor.Cyan:    return Cyan;   
-                }
-            }
-        }
+            { EColor.Gray   , Gray    },
+            { EColor.White  , White   },
+            { EColor.Black  , Black   },
+            { EColor.Red    , Red     },
+            { EColor.Green  , Green   },
+            { EColor.Blue   , Blue    },
+            { EColor.Pink   , Pink    },
+            { EColor.Magenta, Magenta },
+            { EColor.Violet , Violet  },
+            { EColor.Purple , Purple  },
+            { EColor.Brown  , Brown   },
+            { EColor.Gold   , Gold    },
+            { EColor.Orange , Orange  },
+            { EColor.Yellow , Yellow  },
+            { EColor.Lime   , Lime    },
+            { EColor.Mint   , Mint    },
+            { EColor.Cyan   , Cyan    },
+        };
         public static R Bold { get; } = new R { fontStyle = FontStyle.Bold };
 
         protected GUIStyle style;

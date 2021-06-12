@@ -15,33 +15,27 @@ namespace Rito.EditorUtilities
 
     public partial class Box : GUIElement<Box>
     {
-        public static Box Default
+        public static Box Default => ThemeDict[EZU.DefaultColorTheme];
+        public static readonly Dictionary<EColor, Box> ThemeDict = new Dictionary<EColor, Box>()
         {
-            get
-            {
-                switch (EZU.DefaultColorTheme)
-                {
-                    default:
-                    case EColor.Gray:    return Gray;
-                    case EColor.White:   return White;
-                    case EColor.Black:   return Black;
-                    case EColor.Red:     return Red;    
-                    case EColor.Green:   return Green;  
-                    case EColor.Blue:    return Blue;   
-                    case EColor.Pink:    return Pink;   
-                    case EColor.Magenta: return Magenta;
-                    case EColor.Violet:  return Violet; 
-                    case EColor.Purple:  return Purple; 
-                    case EColor.Brown:   return Brown;  
-                    case EColor.Gold:    return Gold;   
-                    case EColor.Orange:  return Orange; 
-                    case EColor.Yellow:  return Yellow; 
-                    case EColor.Lime:    return Lime;   
-                    case EColor.Mint:    return Mint;    
-                    case EColor.Cyan:    return Cyan;   
-                }
-            }
-        }
+            { EColor.Gray   , Gray    },
+            { EColor.White  , White   },
+            { EColor.Black  , Black   },
+            { EColor.Red    , Red     },
+            { EColor.Green  , Green   },
+            { EColor.Blue   , Blue    },
+            { EColor.Pink   , Pink    },
+            { EColor.Magenta, Magenta },
+            { EColor.Violet , Violet  },
+            { EColor.Purple , Purple  },
+            { EColor.Brown  , Brown   },
+            { EColor.Gold   , Gold    },
+            { EColor.Orange , Orange  },
+            { EColor.Yellow , Yellow  },
+            { EColor.Lime   , Lime    },
+            { EColor.Mint   , Mint    },
+            { EColor.Cyan   , Cyan    },
+        };
 
         // Data
         protected float outlineWidth = 0f;

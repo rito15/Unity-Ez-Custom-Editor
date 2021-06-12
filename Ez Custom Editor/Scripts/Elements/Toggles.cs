@@ -13,33 +13,27 @@ namespace Rito.EditorUtilities
 {
     public partial class BoolField : DrawingElement<bool, BoolField>
     {
-        public static BoolField Default
+        public static BoolField Default => ThemeDict[EzEditorUtility.DefaultColorTheme];
+        public static readonly Dictionary<EColor, BoolField> ThemeDict = new Dictionary<EColor, BoolField>()
         {
-            get
-            {
-                switch (EzEditorUtility.DefaultColorTheme)
-                {
-                    default:
-                    case EColor.Gray:    return Gray;
-                    case EColor.White:   return White;
-                    case EColor.Black:   return Black;
-                    case EColor.Red:     return Red;    
-                    case EColor.Green:   return Green;  
-                    case EColor.Blue:    return Blue;   
-                    case EColor.Pink:    return Pink;   
-                    case EColor.Magenta: return Magenta;
-                    case EColor.Violet:  return Violet; 
-                    case EColor.Purple:  return Purple; 
-                    case EColor.Brown:   return Brown;  
-                    case EColor.Gold:    return Gold;   
-                    case EColor.Orange:  return Orange; 
-                    case EColor.Yellow:  return Yellow; 
-                    case EColor.Lime:    return Lime;   
-                    case EColor.Mint:    return Mint;    
-                    case EColor.Cyan:    return Cyan;   
-                }
-            }
-        }
+            { EColor.Gray   , Gray    },
+            { EColor.White  , White   },
+            { EColor.Black  , Black   },
+            { EColor.Red    , Red     },
+            { EColor.Green  , Green   },
+            { EColor.Blue   , Blue    },
+            { EColor.Pink   , Pink    },
+            { EColor.Magenta, Magenta },
+            { EColor.Violet , Violet  },
+            { EColor.Purple , Purple  },
+            { EColor.Brown  , Brown   },
+            { EColor.Gold   , Gold    },
+            { EColor.Orange , Orange  },
+            { EColor.Yellow , Yellow  },
+            { EColor.Lime   , Lime    },
+            { EColor.Mint   , Mint    },
+            { EColor.Cyan   , Cyan    },
+        };
         protected GUIStyle labelStyle;
 
         // Data
@@ -165,33 +159,27 @@ namespace Rito.EditorUtilities
     }
     public partial class Toggle : DrawingElement<bool, Toggle>
     {
-        public static Toggle Default
+        public static Toggle Default => ThemeDict[EzEditorUtility.DefaultColorTheme];
+        public static readonly Dictionary<EColor, Toggle> ThemeDict = new Dictionary<EColor, Toggle>()
         {
-            get
-            {
-                switch (EzEditorUtility.DefaultColorTheme)
-                {
-                    default:
-                    case EColor.Gray:    return Gray;
-                    case EColor.White:   return White;
-                    case EColor.Black:   return Black;
-                    case EColor.Red:     return Red;    
-                    case EColor.Green:   return Green;  
-                    case EColor.Blue:    return Blue;   
-                    case EColor.Pink:    return Pink;   
-                    case EColor.Magenta: return Magenta;
-                    case EColor.Violet:  return Violet; 
-                    case EColor.Purple:  return Purple; 
-                    case EColor.Brown:   return Brown;  
-                    case EColor.Gold:    return Gold;   
-                    case EColor.Orange:  return Orange; 
-                    case EColor.Yellow:  return Yellow; 
-                    case EColor.Lime:    return Lime;   
-                    case EColor.Mint:    return Mint;    
-                    case EColor.Cyan:    return Cyan;   
-                }
-            }
-        }
+            { EColor.Gray   , Gray    },
+            { EColor.White  , White   },
+            { EColor.Black  , Black   },
+            { EColor.Red    , Red     },
+            { EColor.Green  , Green   },
+            { EColor.Blue   , Blue    },
+            { EColor.Pink   , Pink    },
+            { EColor.Magenta, Magenta },
+            { EColor.Violet , Violet  },
+            { EColor.Purple , Purple  },
+            { EColor.Brown  , Brown   },
+            { EColor.Gold   , Gold    },
+            { EColor.Orange , Orange  },
+            { EColor.Yellow , Yellow  },
+            { EColor.Lime   , Lime    },
+            { EColor.Mint   , Mint    },
+            { EColor.Cyan   , Cyan    },
+        };
 
         // Style
         public Color color = Color.white;
